@@ -1,12 +1,12 @@
 import { Link, useNavigate } from "react-router";
-import { use, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import { FaEye } from "react-icons/fa";
 import { IoEyeOff } from "react-icons/io5";
-import { AuthContext } from "../../Provider/AuthContext";
+import useAuth from "../../hooks/useAuth";
 
 const Register = () => {
-  const { createUser, setUser, updateUser, signInWithGoogleFunc } = use(AuthContext);
+  const { createUser, setUser, updateUser, signInWithGoogleFunc } = useAuth()
   const [nameError, setNameError] = useState("");
   const [show, setShow] = useState(false);
   const navigate = useNavigate();

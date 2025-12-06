@@ -1,12 +1,12 @@
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { FaEye } from "react-icons/fa";
 import { IoEyeOff } from "react-icons/io5";
 import { toast } from "react-toastify";
-import { AuthContext } from "../../Provider/AuthContext";
+import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
-  const { signIn, setUser, signInWithGoogleFunc, sendPasswordResetEmailFunc } = use(AuthContext);
+  const { signIn, setUser, signInWithGoogleFunc, sendPasswordResetEmailFunc } = useAuth()
   const location = useLocation();
   const navigate = useNavigate();
   const [error, setError] = useState("");
