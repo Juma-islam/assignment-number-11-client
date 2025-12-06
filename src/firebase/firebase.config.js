@@ -1,12 +1,12 @@
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 const firebaseConfig = {
-  apiKey: "AIzaSyACCr4ks4z1gaUh9VvA3VlFHV8C5qL6s_A",
-  authDomain: "garments-tracker-projects.firebaseapp.com",
-  projectId: "garments-tracker-projects",
-  storageBucket: "garments-tracker-projects.firebasestorage.app",
-  messagingSenderId: "37255825196",
-  appId: "1:37255825196:web:98618822bd67a684a00e89"
+  apiKey: import.meta.env.VITE_apiKey,
+  authDomain: import.meta.env.VITE_authDomain,
+  projectId: import.meta.env.VITE_projectId,
+  storageBucket: import.meta.env.VITE_storageBucket,
+  messagingSenderId: import.meta.env.VITE_messagingSenderId,
+  appId: import.meta.env.VITE_appId
 };
 
 const app = initializeApp(firebaseConfig);
