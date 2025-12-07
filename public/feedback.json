@@ -1,0 +1,98 @@
+[
+{
+"id": "1",
+"user_email": "alice.rahman@example.com",
+"userName": "Alice Rahman",
+"delivery_email": "delivery1@garments.com",
+"ratings": 4.8,
+"review": "Fantastic product tracking! Everything arrived on time.",
+"parcel_id": "p1",
+"pick_up_email": "pickup1@garments.com",
+"user_photoURL": "https://randomuser.me/api/portraits/women/65.jpg",
+"date": "2025-01-15T10:30:00.000Z"
+},
+{
+"id": "2",
+"user_email": "rahim.khan@example.com",
+"userName": "Rahim Khan",
+"delivery_email": "delivery2@garments.com",
+"ratings": 4.2,
+"review": "Very helpful and smooth process. Recommended.",
+"parcel_id": "p2",
+"pick_up_email": "pickup2@garments.com",
+"user_photoURL": "https://randomuser.me/api/portraits/men/33.jpg",
+"date": "2025-02-01T14:15:00.000Z"
+},
+{
+"id": "3",
+"user_email": "sadia.akter@example.com",
+"userName": "Sadia Akter",
+"delivery_email": "delivery3@garments.com",
+"ratings": 5.0,
+"review": "Excellent service! Order updates in real-time.",
+"parcel_id": "p3",
+"pick_up_email": "pickup3@garments.com",
+"user_photoURL": "https://randomuser.me/api/portraits/women/45.jpg",
+"date": "2025-02-10T09:50:00.000Z"
+},
+{
+"id": "4",
+"user_email": "tanvir.hossain@example.com",
+"userName": "Tanvir Hossain",
+"delivery_email": "delivery4@garments.com",
+"ratings": 4.5,
+"review": "Very reliable, keeps me updated at every step.",
+"parcel_id": "p4",
+"pick_up_email": "pickup4@garments.com",
+"user_photoURL": "https://randomuser.me/api/portraits/men/12.jpg",
+"date": "2025-02-20T11:10:00.000Z"
+},
+{
+"id": "5",
+"user_email": "nusrat.jahan@example.com",
+"userName": "Nusrat Jahan",
+"delivery_email": "delivery5@garments.com",
+"ratings": 4.0,
+"review": "Good service, but packaging can improve.",
+"parcel_id": "p5",
+"pick_up_email": "pickup5@garments.com",
+"user_photoURL": "https://randomuser.me/api/portraits/women/23.jpg",
+"date": "2025-03-01T16:45:00.000Z"
+},
+{
+"id": "6",
+"user_email": "fahim.rahman@example.com",
+"userName": "Fahim Rahman",
+"delivery_email": "delivery6@garments.com",
+"ratings": 4.9,
+"review": "Amazing experience! Everything tracked perfectly.",
+"parcel_id": "p6",
+"pick_up_email": "pickup6@garments.com",
+"user_photoURL": "https://randomuser.me/api/portraits/men/28.jpg",
+"date": "2025-03-05T12:00:00.000Z"
+},
+{
+"id": "7",
+"user_email": "ayesha.siddique@example.com",
+"userName": "Ayesha Siddique",
+"delivery_email": "delivery7@garments.com",
+"ratings": 4.3,
+"review": "Fast and responsive service. Very happy!",
+"parcel_id": "p7",
+"pick_up_email": "pickup7@garments.com",
+"user_photoURL": "https://randomuser.me/api/portraits/women/30.jpg",
+"date": "2025-03-10T18:20:00.000Z"
+},
+{
+"id": "8",
+"user_email": "imran.ali@example.com",
+"userName": "Imran Ali",
+"delivery_email": "delivery8@garments.com",
+"ratings": 4.7,
+"review": "Quick delivery and very professional service.",
+"parcel_id": "p8",
+"pick_up_email": "pickup8@garments.com",
+"user_photoURL": "https://randomuser.me/api/portraits/men/5.jpg",
+"date": "2025-03-12T07:30:00.000Z"
+}
+]

@@ -1,17 +1,23 @@
-import React from 'react';
-import HeroBanner from './HeroBanner';
-import Container from '../../components/Shared/Container';
-import Hero from '../AboutUs/AboutUs';
-import HowItWorks from '../HowItWorks/HowItWorks';
+import React from "react";
+import HeroBanner from "./HeroBanner";
+import Container from "../../components/Shared/Container";
+import HowItWorks from "../HowItWorks/HowItWorks";
+import Reveiwes from "../Reviews/Reveiwes";
+import WhyChooseUs from "../WhyChooseUs/WhyChooseUs";
+import OurPartners from "../OurPartners/OurPartners";
+import CustomerFeedback from "../CustomerFeedback/CustomerFeedback";
+
 
 const Home = () => {
-    return (
-        <Container>
-             <HeroBanner></HeroBanner>
-             <HowItWorks></HowItWorks>
-             
-        </Container>
-    );
+  return (
+    <Container>
+      <HeroBanner></HeroBanner>
+      <HowItWorks></HowItWorks>
+      {/* <CustomerFeedback></CustomerFeedback> */}
+     <WhyChooseUs></WhyChooseUs>
+     <OurPartners></OurPartners>
+    </Container>
+  );
 };
 
 export default Home;
