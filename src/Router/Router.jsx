@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router";
-import Home from '../Pages/Home/Home'
+import Home from "../Pages/Home/Home";
 import MainLayouts from "../Layouts/MainLayouts";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
@@ -10,34 +10,35 @@ import ProductDetails from "../Pages/ProductDetails/ProductDetails";
 const router = createBrowserRouter([
   {
     path: "/",
-   Component : MainLayouts,
-   errorElement: <ErrorPage/>,
-   children : [
-    {
+    Component: MainLayouts,
+    errorElement: <ErrorPage />,
+    children: [
+      {
         index: true,
-        Component: Home
-    },
-    {
-        path: '/login',
-        Component: Login
-    },
-    {
-        path: '/register',
-        Component: Register
-    },
-    {
-        path: '/all-product',
-        Component: AllProduct
-    },
-     {
-                path: 'product-details/:id',
-                element: <ProductDetails></ProductDetails>
-            }
-   
-   ]
+        Component: Home,
+      },
+      {
+        path: "/login",
+        Component: Login,
+      },
+      {
+        path: "/register",
+        Component: Register,
+      },
+      {
+        path: "/all-product",
+        Component: AllProduct,
+      },
+      {
+        path: "product-details/:id",
+        element: <ProductDetails></ProductDetails>,
+      },
+      {
+        path: "product-details/:id",
+        element: <ProductDetails></ProductDetails>,
+      },
+    ],
   },
 ]);
 
-
 export default router;
-
