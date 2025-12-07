@@ -5,6 +5,7 @@ import logo from "../../../assets/logo.png";
 import { FaHome, FaUser } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
 import { FiPhone, FiShoppingBag } from "react-icons/fi";
+import { MdDashboard } from "react-icons/md";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
@@ -47,7 +48,7 @@ const Navbar = () => {
           All Product
         </NavLink>
       </li>
-      <li className="font-semibold hover:bg-secondary rounded-md  hover:text-white">
+      {/* <li className="font-semibold hover:bg-secondary rounded-md  hover:text-white">
         <NavLink className={({ isActive }) => (isActive ? "bg-secondary font-semibold" : "")} to="/about-us">
           <span>
             <FaUser />
@@ -62,7 +63,38 @@ const Navbar = () => {
           </span>
           Contact
         </NavLink>
-      </li>
+      </li> */}
+      {user ? (
+        <>
+          <li className="font-semibold hover:bg-secondary rounded-md hover:text-white">
+            <NavLink className={({ isActive }) => (isActive ? "bg-secondary font-semibold" : "")} to="/dashboard">
+              <span>
+            <MdDashboard />
+          </span>
+              Dashboard
+            </NavLink>
+          </li>
+        </>
+      ) : (
+        <>
+          <li className="font-semibold hover:bg-secondary rounded-md  hover:text-white">
+            <NavLink className={({ isActive }) => (isActive ? "bg-secondary font-semibold" : "")} to="/about-us">
+              <span>
+                <FaUser />
+              </span>
+              About Us
+            </NavLink>
+          </li>
+          <li className="font-semibold hover:bg-secondary rounded-md hover:text-white">
+            <NavLink className={({ isActive }) => (isActive ? "bg-secondary font-semibold" : "")} to="/contact">
+              <span>
+                <FiPhone />
+              </span>
+              Contact
+            </NavLink>
+          </li>
+        </>
+      )}
     </>
   );
   return (
@@ -87,18 +119,6 @@ const Navbar = () => {
             {links}
             {user && (
               <>
-                {/* <li className="font-semibold hover:text-indigo-500 dark:text-black">
-                  <NavLink to="/add-issues">Add Issues</NavLink>
-                </li>
-                <li className="font-semibold hover:text-indigo-500 dark:text-black">
-                  <NavLink to="/my-issues">My Issues</NavLink>
-                </li>
-                <li className="font-semibold hover:text-indigo-500 dark:text-black">
-                  <NavLink to="/my-contributions">My Contributions</NavLink>
-                </li>
-                <li className="font-semibold hover:text-indigo-500 dark:text-black">
-                  <NavLink to="/my-profile">My Profile</NavLink>
-                </li> */}
                 <input
                   onChange={(e) => handleTheme(e.target.checked)}
                   checked={theme === "dark"}

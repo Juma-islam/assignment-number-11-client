@@ -4,31 +4,29 @@ import { FaEye } from "react-icons/fa";
 import { IoEyeOff } from "react-icons/io5";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
+import { useForm } from "react-hook-form";
 
 const Login = () => {
-  const { signIn, setUser, signInWithGoogleFunc, sendPasswordResetEmailFunc } = useAuth()
-  const location = useLocation();
+  const { signIn, setUser, signInWithGoogleFunc } = useAuth();
   const navigate = useNavigate();
-  const [error, setError] = useState("");
-  const [show, setShow] = useState();
-  const [email, setEmail] = useState();
-  const handleLogin = (e) => {
-    e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
+  const location = useLocation();
+  const [show, setShow] = useState(false);
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    const { email, password } = data;
     signIn(email, password)
       .then((result) => {
-        const user = result.user;
-        console.log(user);
-        navigate(`${location.state ? location.state : "/"}`);
+        setUser(result.user);
+        toast.success("Login Successful!");
+        navigate(location.state ? location.state : "/");
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        // const errorMessage = error.message;
-        // alert(errorCode, errorMessage)
-        setError(errorCode);
-      });
+      .catch((err) => toast.error(err.message));
   };
 
   const handleGoogleSignIn = () => {
@@ -36,73 +34,54 @@ const Login = () => {
       .then((res) => {
         setUser(res.user);
         toast.success("Logged in with Google");
-        navigate(`${location.state ? location.state : "/"}`);
+        navigate(location.state ? location.state : "/");
       })
-      .catch((error) => {
-        toast.error(error.message);
-      });
+      .catch((err) => toast.error(err.message));
   };
+
   return (
     <div className="flex justify-center min-h-screen items-center">
-      <title>Login page</title>
-      <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl py-5">
-        <h1 className="text-2xl font-semibold text-center">Please Login your account</h1>
-        <form onSubmit={handleLogin} className="card-body">
-          <fieldset className="fieldset">
-            {/* email  */}
+      <div className="card bg-base-100 w-full max-w-sm shadow-2xl py-6">
+        <h1 className="text-3xl font-bold text-center mb-4">Sign In</h1>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+          <fieldset>
             <label className="label">Email</label>
             <input
               type="email"
-              onChange={(e) => setEmail(e.target.value)}
-              name="email"
-              className="input input-bordered w-full bg-white/20  placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-pink-400"
               placeholder="Email"
-              required
+              className="input input-bordered w-full bg-white/20  focus:outline-none focus:ring-2 focus:ring-pink-400"
+              {...register("email", { required: "Email is required" })}
             />
-            {/* password  */}
+            {errors.email && <p className="text-error">{errors.email.message}</p>}
+
             <div className="relative">
-              <label className="block text-sm font-medium mb-1">Password</label>
+              <label className="label">Password</label>
               <input
                 type={show ? "text" : "password"}
-                name="password"
                 placeholder="••••••••"
-                className="input input-bordered w-full bg-white/20  placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-pink-400"
+                className="input input-bordered w-full bg-white/20  focus:outline-none focus:ring-2 focus:ring-pink-400"
+                {...register("password", { required: "Password is required" })}
               />
-              <span onClick={() => setShow(!show)} className="absolute top-9 right-3 cursor-pointer z-50">
+              <span onClick={() => setShow(!show)} className="absolute right-3 top-10 cursor-pointer">
                 {show ? <FaEye /> : <IoEyeOff />}
               </span>
+              {errors.password && <p className="text-error">{errors.password.message}</p>}
             </div>
 
-            <div>
-              <a
-                onClick={() => {
-                  if (!email) {
-                    toast.error("please enter your email first");
-                    return;
-                  }
-                  sendPasswordResetEmailFunc(email)
-                    .then(() => toast.success("password reset email sent!"))
-                    .catch((error) => toast.error(error.message));
-                  return;
-                }}
-                className="link link-hover"
-              >
-                Forgot password? <span className="underline text-blue-600">Link</span>
-              </a>
-            </div>
-            {error && <p className="text-sm text-red-500">{error}</p>}
-            <button type="submit" className="btn btn-neutral mt-4">
+            <button
+              type="submit"
+              className="w-full mt-4 bg-gradient-to-r from-pink-500 to-pink-700 hover:from-pink-600 hover:to-pink-800 text-white font-semibold py-3 px-5 rounded-lg shadow-md transition-all duration-300"
+            >
               Sign In
             </button>
 
-            {/* Divider */}
-            <div className="flex items-center justify-center gap-2 my-2">
+            <div className="flex justify-center items-center gap-2 my-3">
               <div className="h-px w-16 bg-green-500"></div>
-              <span className="text-sm text-green-500">or</span>
+              <span className="text-green-500 text-sm">or</span>
               <div className="h-px w-16 bg-green-500"></div>
             </div>
 
-            {/* Google Signin */}
             <button
               onClick={handleGoogleSignIn}
               type="button"
@@ -111,9 +90,10 @@ const Login = () => {
               <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="google" className="w-5 h-5" />
               Continue with Google
             </button>
-            <p className="text-center mt-2">
-              Don't have an account ?{" "}
-              <Link to="/register" className="text-blue-500 hover:text-blue-800 underline">
+
+            <p className="text-center mt-2 w-full">
+              Don’t have an account?{" "}
+              <Link to="/register" className="text-blue-500 underline">
                 Sign Up
               </Link>
             </p>

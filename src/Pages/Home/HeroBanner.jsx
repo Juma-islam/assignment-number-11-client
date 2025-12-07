@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
-// import Button from "../../components/Shared/Button/Button";
-import bannerImage from '../../assets/abstract-store-with-futuristic-concept-architecture.jpg'
+import bannerImage from '../../assets/bannerImage.jpg'
 import { Link } from "react-router";
 
 export default function HeroBanner() {
