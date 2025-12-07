@@ -26,7 +26,7 @@ const router = createBrowserRouter([
         Component: Register,
       },
       {
-        path: "/all-product",
+        path: "/all-products",
         Component: AllProduct,
       },
       {

@@ -2,7 +2,6 @@ import React from "react";
 import HeroBanner from "./HeroBanner";
 import Container from "../../components/Shared/Container";
 import HowItWorks from "../HowItWorks/HowItWorks";
-import Reveiwes from "../Reviews/Reveiwes";
 import WhyChooseUs from "../WhyChooseUs/WhyChooseUs";
 import OurPartners from "../OurPartners/OurPartners";
 import CustomerFeedback from "../CustomerFeedback/CustomerFeedback";
@@ -13,7 +12,7 @@ const Home = () => {
     <Container>
       <HeroBanner></HeroBanner>
       <HowItWorks></HowItWorks>
-      {/* <CustomerFeedback></CustomerFeedback> */}
+      <CustomerFeedback></CustomerFeedback>
      <WhyChooseUs></WhyChooseUs>
      <OurPartners></OurPartners>
     </Container>

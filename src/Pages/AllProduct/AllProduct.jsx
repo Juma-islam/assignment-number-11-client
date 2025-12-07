@@ -9,9 +9,9 @@ const AllProduct = () => {
   const fetchAxios = useAxios()
 
   const { data: Products = [], isLoading,} = useQuery({
-    queryKey: ['all-product'],
+    queryKey: ['all-products'],
     queryFn: async () => {
-      const res = await fetchAxios.get('/all-product')
+      const res = await fetchAxios.get('/all-products')
       return res.data
     }
   })
