@@ -1,0 +1,74 @@
+[
+  {
+    "productName": "Industrial Sewing Machine",
+    "category": "Machinery",
+    "images": [
+      "https://i.ibb.co.com/3mFKFqcp/dress.avif"
+    ],
+    "price": 450,
+    "availableQuantity": 30
+  },
+  {
+    "productName": "Automatic Cutting Machine",
+    "category": "Machinery",
+    "images": [
+      "https://i.ibb.co.com/3mFKFqcp/dress.avif"
+    ],
+    "price": 1200,
+    "availableQuantity": 12
+  },
+  {
+    "productName": "Fabric Bundle – Premium Cotton",
+    "category": "Fabric",
+    "images": [
+      "https://i.ibb.co.com/3mFKFqcp/dress.avif"
+    ],
+    "price": 80,
+    "availableQuantity": 200
+  },
+  {
+    "productName": "Digital Color Printer",
+    "category": "Printing",
+    "images": [
+      "https://i.ibb.co.com/3mFKFqcp/dress.avif"
+    ],
+    "price": 900,
+    "availableQuantity": 15
+  },
+  {
+    "productName": "Embroidery Machine 12-Head",
+    "category": "Machinery",
+    "images": [
+      "https://i.ibb.co.com/3mFKFqcp/dress.avif"
+    ],
+    "price": 2500,
+    "availableQuantity": 5
+  },
+  {
+    "productName": "Safety Gloves Pack",
+    "category": "Safety Equipment",
+    "images": [
+      "https://i.ibb.co.com/3mFKFqcp/dress.avif"
+    ],
+    "price": 15,
+    "availableQuantity": 350
+  },
+  {
+    "productName": "Workplace LED Light",
+    "category": "Electronics",
+    "images": [
+      "https://i.ibb.co.com/3mFKFqcp/dress.avif"
+    ],
+    "price": 25,
+    "availableQuantity": 100
+  },
+  {
+    "productName": "Heat Press Machine",
+    "category": "Printing",
+    "images": [
+      "https://i.ibb.co.com/3mFKFqcp/dress.avif"
+    ],
+    "price": 650,
+    "availableQuantity": 20
+  }
+]

@@ -214,14 +214,14 @@ const Register = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    const { name, email, photo, password } = data;
+    const { name, email, photo, password, role } = data;
 
     createUser(email, password)
       .then((result) => {
         const user = result.user;
         updateUser({ displayName: name, photoURL: photo })
           .then(() => {
-            setUser({ ...user, displayName: name, photoURL: photo });
+            setUser({ ...user, displayName: name, photoURL: photo, role, status: "pending" });
             toast.success("Signup Successful!");
             navigate("/");
           })
@@ -236,7 +236,7 @@ const Register = () => {
   const handleGoogleSignIn = () => {
     signInWithGoogleFunc()
       .then((res) => {
-        setUser(res.user);
+        setUser({...res.user, role: "buyer", status: "pending"});
         toast.success("Signin Successful with Google!");
       })
       .catch((err) => toast.error(err.message));
@@ -269,7 +269,7 @@ const Register = () => {
               {...register("email", { required: "Email is required" })}
             />
             {errors.email && <p className="text-error">{errors.email.message}</p>}
-
+            {/* photo  */}
             <label className="label">Photo URL</label>
             <input
               type="text"
@@ -278,7 +278,12 @@ const Register = () => {
               {...register("photo", { required: "Photo URL is required" })}
             />
             {errors.photo && <p className="text-error">{errors.photo.message}</p>}
-
+            <label className="label">Role</label>
+            <select className="input input-bordered w-full bg-white/20  focus:outline-none focus:ring-2 focus:ring-pink-400" {...register("role", { required: true })}>
+              <option value="buyer">Buyer</option>
+              <option value="manager">Manager</option>
+            </select>
+            {/* password  */}
             <div className="relative">
               <label className="label">Password</label>
               <input
