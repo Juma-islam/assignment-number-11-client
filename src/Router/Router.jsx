@@ -8,6 +8,8 @@ import AllProduct from "../Pages/AllProduct/AllProduct";
 import ProductDetails from "../Pages/ProductDetails/ProductDetails";
 import PrivateRouter from "./PrivateRouter";
 import ProductsOrder from "../Pages/ProductsOrder/ProductsOrder";
+import Payment from "../Pages/Payment/Payment";
+import Dashboard from "../Pages/PaymentCancel/Dashboard/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -39,8 +41,25 @@ const router = createBrowserRouter([
                 path: 'product-details/:id/order-form',
                 element: <ProductsOrder></ProductsOrder>
             },
+             {
+                path: 'product-details/:id/order-form/payment',
+                element: <Payment></Payment>
+            }
     ],
   },
+
+
+  {
+    path: 'dashboard',
+    element: <PrivateRouter><Dashboard></Dashboard></PrivateRouter>,
+    children: [
+      {
+        
+      }
+    ]
+  }
 ]);
+
+
 
 export default router;
