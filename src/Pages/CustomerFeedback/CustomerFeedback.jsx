@@ -64,7 +64,7 @@ const CustomerFeedback = () => {
   return (
     <section className="py-20 px-4 bg-gradient-to-br from-slate-50 via-white to-indigo-50 overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
+       
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -80,7 +80,7 @@ const CustomerFeedback = () => {
           </p>
         </motion.div>
 
-        {/* Main Carousel */}
+        
         <div className="relative">
           <div className="flex items-center justify-center">
             <motion.div
@@ -91,17 +91,17 @@ const CustomerFeedback = () => {
               transition={{ duration: 0.7, ease: "easeInOut" }}
               className="relative max-w-5xl w-full"
             >
-              {/* Background Quote Icon */}
+              
               <div className="absolute -top-10 -left-10 text-9xl text-indigo-100 opacity-30">
                 <Quote className="w-48 h-48" />
               </div>
 
-              {/* Testimonial Card */}
+            
               <div className="bg-white rounded-3xl shadow-2xl p-10 md:p-14 border border-gray-100 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-purple-500/5 to-pink-500/5" />
                 
                 <div className="relative z-10">
-                  {/* Rating & Verified Badge */}
+                 
                   <div className="flex items-center mb-6">
                     {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
                       <motion.div
@@ -118,12 +118,12 @@ const CustomerFeedback = () => {
                     </span>
                   </div>
 
-                  {/* Testimonial Text */}
+                  
                   <p className="text-2xl md:text-3xl font-medium text-gray-800 leading-relaxed mb-10 italic">
                     "{testimonials[currentIndex].comment}"
                   </p>
 
-                  {/* User Info */}
+                  
                   <div className="flex items-center gap-6">
                     <div className="relative">
                       <img
@@ -154,7 +154,7 @@ const CustomerFeedback = () => {
             </motion.div>
           </div>
 
-          {/* Navigation Arrows */}
+       
           <button
             onClick={prevTestimonial}
             className="absolute left-4 md:left-0 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white shadow-2xl rounded-full p-4 backdrop-blur-sm transition-all hover:scale-110 z-10"
@@ -170,7 +170,7 @@ const CustomerFeedback = () => {
             <ChevronRight className="w-8 h-8 text-indigo-600" />
           </button>
 
-          {/* Dots Indicator */}
+          
           <div className="flex justify-center gap-3 mt-12">
             {testimonials.map((_, index) => (
               <button
@@ -187,7 +187,7 @@ const CustomerFeedback = () => {
           </div>
         </div>
 
-        {/* Stats Section */}
+        
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}

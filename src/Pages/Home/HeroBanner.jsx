@@ -3,18 +3,17 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
-import bannerImg2 from "../../assets/gtPic.avif"
+import bannerImg from "../../assets/3d-dress-fire-with-flames_23-2151073729(1).jpg"
 
 const HeroBanner = () => {
   return (
     <section className="relative bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-800 py-24 overflow-hidden">
-      {/* Background Pattern */}
+   
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml,...')]"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
-        {/* Left Side - Text */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -47,7 +46,7 @@ const HeroBanner = () => {
             </Link>
           </div>
 
-          {/* Small Stats */}
+        
           <div className="mt-12 grid grid-cols-3 gap-6 text-white">
             <div className="text-center">
               <h3 className="text-3xl font-bold">500+</h3>
@@ -64,7 +63,7 @@ const HeroBanner = () => {
           </div>
         </motion.div>
 
-        {/* Right Side - Image */}
+     
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -72,7 +71,7 @@ const HeroBanner = () => {
           className="flex justify-center"
         >
           <img
-            src={bannerImg2}
+            src={bannerImg}
             alt="Garments Factory Dashboard"
             className="rounded-2xl shadow-2xl w-full max-w-lg border-8 border-white/20"
           />

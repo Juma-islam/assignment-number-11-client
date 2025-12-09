@@ -28,9 +28,7 @@ const OurPartners = () => {
           transition={{ duration: 0.9 }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl md:text-6xl font-bold text-white mb-4">
-            Trusted by Global Brands
-          </h2>
+          <h2 className="text-5xl md:text-6xl font-bold text-white mb-4">Trusted by Global Brands</h2>
           <p className="text-xl text-teal-200 max-w-2xl mx-auto">
             Leading garment manufacturers and fashion houses rely on our platform for seamless production
           </p>
@@ -42,7 +40,7 @@ const OurPartners = () => {
           spaceBetween={40}
           slidesPerView={2}
           centeredSlides={true}
-          loop={true}
+          // loop={true}
           autoplay={{
             delay: 3000,
             disableOnInteraction: false,
@@ -71,16 +69,19 @@ const OurPartners = () => {
                 <div className="relative bg-white/10 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/20 overflow-hidden">
                   {/* Glow Effect on Hover */}
                   <div className="absolute inset-0 bg-gradient-to-br from-teal-400/20 to-cyan-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-xl" />
-                  
+
                   {/* Logo Container */}
                   <div className="relative z-10 flex items-center justify-center h-32">
                     <img
                       src={partner.logo}
                       alt={partner.name}
                       className="max-w-full max-h-20 object-contain filter brightness-0 invert grayscale group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700"
-                      onError={(e) => {
-                        e.target.src = `https://via.placeholder.com/200x80/1a1a1a/ffffff?text=${partner.name}`;
-                      }}
+                      // onError={(e) => {
+                      //   e.target.onerror = e.target; // prevents infinite loop
+                      //   e.target.src = `https://placehold.co/200x80/1a1a1a/ffffff/png?text=${encodeURIComponent(
+                      //     partner.name
+                      //   )}`;
+                      // }}
                     />
                   </div>
 

@@ -6,6 +6,7 @@ import Register from "../Pages/Register/Register";
 import ErrorPage from "../Pages/ErrorPage";
 import AllProduct from "../Pages/AllProduct/AllProduct";
 import ProductDetails from "../Pages/ProductDetails/ProductDetails";
+import PrivateRouter from "./PrivateRouter";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
       },
       {
         path: "product-details/:id",
-        element: <ProductDetails></ProductDetails>,
+        element: <PrivateRouter><ProductDetails></ProductDetails></PrivateRouter>,
       },
       {
         path: "product-details/:id",
