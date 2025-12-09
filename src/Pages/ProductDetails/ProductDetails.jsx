@@ -4,7 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../hooks/useAxios";
 import useRoles from "../../hooks/useRoles";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
-import NoDetails from "../NoDetails/NoDetails";
+import NoDetails from "../../components/Shared/NoDetails/NoDetails";
+
 
 const ProductDetails = () => {
   const { id } = useParams();

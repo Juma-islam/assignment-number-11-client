@@ -1,22 +1,17 @@
 
-
 import { useLocation, useNavigate } from 'react-router'
 import LoadingSpinner from '../components/Shared/LoadingSpinner'
 import useAuth from '../hooks/useAuth'
 
 
-
 const PrivateRouter = ({ children }) => {
-    const { firebaseUser, loading } = useAuth()
+    const { user, loading } = useAuth()
     const location = useLocation()
     const navigate = useNavigate()
-
     if (loading) return <LoadingSpinner />
-
-    if (firebaseUser && firebaseUser.email) {
+    if (user && user.email) {
         return children
     }
-
     return (
         <>
             <div className="fixed inset-0 backdrop-blur-sm bg-black/40 z-40"></div>

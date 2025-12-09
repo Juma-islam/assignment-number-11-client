@@ -7,6 +7,7 @@ import ErrorPage from "../Pages/ErrorPage";
 import AllProduct from "../Pages/AllProduct/AllProduct";
 import ProductDetails from "../Pages/ProductDetails/ProductDetails";
 import PrivateRouter from "./PrivateRouter";
+import ProductsOrder from "../Pages/ProductsOrder/ProductsOrder";
 
 const router = createBrowserRouter([
   {
@@ -35,9 +36,9 @@ const router = createBrowserRouter([
         element: <PrivateRouter><ProductDetails></ProductDetails></PrivateRouter>,
       },
       {
-        path: "product-details/:id",
-        element: <ProductDetails></ProductDetails>,
-      },
+                path: 'product-details/:id/order-form',
+                element: <ProductsOrder></ProductsOrder>
+            },
     ],
   },
 ]);
