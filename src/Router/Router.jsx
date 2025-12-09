@@ -10,6 +10,10 @@ import PrivateRouter from "./PrivateRouter";
 import ProductsOrder from "../Pages/ProductsOrder/ProductsOrder";
 import Payment from "../Pages/Payment/Payment";
 import Dashboard from "../Pages/PaymentCancel/Dashboard/Dashboard";
+import DashboardMain from "../Pages/DashboardMain/DashboardMain";
+import PaymentSuccess from "../Pages/PaymentSuccess/PaymentSuccess";
+import PaymentCancel from "../Pages/PaymentCancel/PaymentCancel";
+import MyOrders from "../Pages/MyOrders/MyOrders";
 
 const router = createBrowserRouter([
   {
@@ -54,8 +58,21 @@ const router = createBrowserRouter([
     element: <PrivateRouter><Dashboard></Dashboard></PrivateRouter>,
     children: [
       {
-        
-      }
+        index: true,
+        Component: DashboardMain
+      },
+      {
+        path: 'payment-success',
+        Component: PaymentSuccess
+      },
+      {
+        path: 'payment-cancelled',
+        Component: PaymentCancel
+      },
+       {
+                path: 'my-orders',
+                element: <MyOrders></MyOrders>
+            },
     ]
   }
 ]);

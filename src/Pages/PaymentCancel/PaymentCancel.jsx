@@ -12,7 +12,7 @@ const PaymentCancel = () => {
         if (orderId) {
             axiosSecure.delete(`/orders/${orderId}`).catch(err => console.error(err));
         }
-    }, [orderId]);
+    }, [orderId, axiosSecure]);
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-base-200 px-4">
