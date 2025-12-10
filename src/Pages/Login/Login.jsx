@@ -5,12 +5,14 @@ import { IoEyeOff } from "react-icons/io5";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
 import { useForm } from "react-hook-form";
+import useAxios from "../../hooks/useAxios";
 
 const Login = () => {
   const { signIn, setUser, signInWithGoogleFunc } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [show, setShow] = useState(false);
+  const axiosSecure = useAxios();
 
   const {
     register,
@@ -31,10 +33,20 @@ const Login = () => {
 
   const handleGoogleSignIn = () => {
     signInWithGoogleFunc()
-      .then((res) => {
+      .then(async (res) => {
+        const user = res.user;
+        const saveUser = {
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          role: "buyer",
+          status: "pending",
+        };
+        await axiosSecure.post("/users", saveUser);
+
         setUser(res.user);
-        toast.success("Logged in with Google");
-        navigate(location.state ? location.state : "/");
+         toast.success(`Logged in   Successful with Google!. ${user?.displayName}`)
+        navigate(`${location.state ? location.state : "/"}`, { replace: true });
       })
       .catch((err) => toast.error(err.message));
   };
@@ -93,7 +105,7 @@ const Login = () => {
 
             <p className="text-center mt-2 w-full">
               Don’t have an account?{" "}
-              <Link to="/register" className="text-blue-500 underline">
+              <Link state={location.state ? location.state : "/"} to="/register" className="text-blue-500 underline">
                 Sign Up
               </Link>
             </p>

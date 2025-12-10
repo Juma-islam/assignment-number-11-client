@@ -14,6 +14,11 @@ import DashboardMain from "../Pages/DashboardMain/DashboardMain";
 import PaymentSuccess from "../Pages/PaymentSuccess/PaymentSuccess";
 import PaymentCancel from "../Pages/PaymentCancel/PaymentCancel";
 import MyOrders from "../Pages/MyOrders/MyOrders";
+import MyProfile from "../Pages/MyProfile/MyProfile";
+import AdminRouter from "./AdminRouter";
+import ManageUsers from "../Pages/ManageUsers/ManageUsers";
+import AllAdminOrders from "../Pages/AllAdminOrders/AllAdminOrders";
+import AdminAllProducts from "../Pages/AdminAllProducts/AdminAllProducts";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +77,22 @@ const router = createBrowserRouter([
        {
                 path: 'my-orders',
                 element: <MyOrders></MyOrders>
+            },
+       {
+                path: 'my-profile',
+                element: <MyProfile></MyProfile>
+            },
+            {
+              path: 'all-products',
+              element: <AdminRouter><AdminAllProducts></AdminAllProducts></AdminRouter>
+            },
+            {
+              path: 'manage-users',
+              element: <AdminRouter><ManageUsers></ManageUsers></AdminRouter>
+            },
+            {
+              path: 'all-orders',
+              element: <AdminRouter><AllAdminOrders></AllAdminOrders></AdminRouter>
             },
     ]
   }

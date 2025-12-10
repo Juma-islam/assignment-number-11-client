@@ -201,11 +201,13 @@ import { FaEye } from "react-icons/fa";
 import { IoEyeOff } from "react-icons/io5";
 import useAuth from "../../hooks/useAuth";
 import { useForm } from "react-hook-form";
+import useAxios from "../../hooks/useAxios";
 
 const Register = () => {
   const { createUser, setUser, updateUser, signInWithGoogleFunc } = useAuth();
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
+  const axiosSecure = useAxios();
 
   const {
     register,
@@ -220,7 +222,15 @@ const Register = () => {
       .then((result) => {
         const user = result.user;
         updateUser({ displayName: name, photoURL: photo })
-          .then(() => {
+          .then(async() => {
+            const saveUser = {
+              name: data.displayName,
+              email: data.email,
+              photoURL: data.photoURL,
+              role: data.role,
+              status: 'pending',
+            }
+            await axiosSecure.post('/users', saveUser)
             setUser({ ...user, displayName: name, photoURL: photo, role, status: "pending" });
             toast.success("Signup Successful!");
             navigate("/");
@@ -235,9 +245,20 @@ const Register = () => {
 
   const handleGoogleSignIn = () => {
     signInWithGoogleFunc()
-      .then((res) => {
+      .then(async (res) => {
+const user = res.user
+        const saveUser ={
+          name: user.displayName,
+           email: user.email,
+          photoURL: user.photoURL,
+          role: "buyer",
+          status: "pending",
+
+        };
+        await axiosSecure.post("/users", saveUser);
         setUser({...res.user, role: "buyer", status: "pending"});
-        toast.success("Signin Successful with Google!");
+        toast.success(`Signin Successful with Google! ${user?.displayName}`);
+        navigate(location.state ? location.state : "/", { replace: true })
       })
       .catch((err) => toast.error(err.message));
   };

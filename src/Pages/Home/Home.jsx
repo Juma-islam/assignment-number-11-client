@@ -5,12 +5,14 @@ import HowItWorks from "../HowItWorks/HowItWorks";
 import WhyChooseUs from "../WhyChooseUs/WhyChooseUs";
 import OurPartners from "../OurPartners/OurPartners";
 import CustomerFeedback from "../CustomerFeedback/CustomerFeedback";
+import OurProducts from "../OurProducts/OurProducts";
 
 
 const Home = () => {
   return (
     <Container>
       <HeroBanner></HeroBanner>
+      <OurProducts></OurProducts>
       <HowItWorks></HowItWorks>
       <CustomerFeedback></CustomerFeedback>
      <WhyChooseUs></WhyChooseUs>
