@@ -1,7 +1,9 @@
 import React from "react";
-import { FaUser, FaUsersCog } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import { IoCartOutline } from "react-icons/io5";
-import { MdOutlineProductionQuantityLimits } from "react-icons/md";
+import { MdOutlineProductionQuantityLimits, MdManageAccounts, MdPendingActions } from "react-icons/md";
+import { IoMdAddCircleOutline } from "react-icons/io";
+import { AiOutlineLike } from "react-icons/ai";
 import { Link, Outlet } from "react-router";
 import useRoles from "../../../hooks/useRoles";
 import Footer from "../../../components/Shared/Footer/Footer";
@@ -82,14 +84,14 @@ const Dashboard = () => {
                       className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                       data-tip="User Management"
                     >
-                      <FaUsersCog />
+                      <MdManageAccounts />
 
                       <span className="is-drawer-close:hidden">User Management</span>
                     </button>
                   </li>
                 </Link>
 
-                <Link to="/dashboard/admin-products">
+                <Link to="/dashboard/all-products">
                   <li>
                     <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Products">
                       <MdOutlineProductionQuantityLimits />
@@ -109,15 +111,76 @@ const Dashboard = () => {
               </>
             )}
 
-            <Link to="/dashboard/my-orders">
-              <li>
-                <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Orders">
-                  <IoCartOutline />
+            {/* Manager Routes */}
 
-                  <span className="is-drawer-close:hidden">My Orders</span>
-                </button>
-              </li>
-            </Link>
+            {user?.role === "manager" && (
+              <>
+                <Link to="/dashboard/add-products">
+                  <li>
+                    <button
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="Add New Product"
+                    >
+                      <IoMdAddCircleOutline />
+
+                      <span className="is-drawer-close:hidden">Add New Product</span>
+                    </button>
+                  </li>
+                </Link>
+
+                <Link to="/dashboard/manage-products">
+                  <li>
+                    <button
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="Manage Products"
+                    >
+                      <MdOutlineProductionQuantityLimits />
+
+                      <span className="is-drawer-close:hidden">Manage Products</span>
+                    </button>
+                  </li>
+                </Link>
+
+                <Link to="/dashboard/pending-orders">
+                  <li>
+                    <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Pending Orders">
+                      <MdPendingActions />
+
+                      <span className="is-drawer-close:hidden">Pending Orders</span>
+                    </button>
+                  </li>
+                </Link>
+
+                <Link to="/dashboard/approved-orders">
+                  <li>
+                    <button
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="Approved Orders"
+                    >
+                      <AiOutlineLike />
+
+                      <span className="is-drawer-close:hidden">Approved Orders</span>
+                    </button>
+                  </li>
+                </Link>
+              </>
+            )}
+
+            {/* Buyer Routes */}
+
+            {user?.role === "buyer" && (
+              <>
+                <Link to="/dashboard/my-orders">
+                  <li>
+                    <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Orders">
+                      <IoCartOutline />
+
+                      <span className="is-drawer-close:hidden">My Orders</span>
+                    </button>
+                  </li>
+                </Link>
+              </>
+            )}
 
             <Link to="/dashboard/my-profile">
               <li>

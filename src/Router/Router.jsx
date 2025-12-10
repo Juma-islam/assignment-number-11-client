@@ -20,6 +20,11 @@ import ManageUsers from "../Pages/ManageUsers/ManageUsers";
 import AllAdminOrders from "../Pages/AllAdminOrders/AllAdminOrders";
 import AdminAllProducts from "../Pages/AdminAllProducts/AdminAllProducts";
 import OrderDetails from "../Pages/OrderDetails/OrderDetails";
+import ManagerRouter from "./ManagerRouter";
+import AddProducts from "../Pages/AddProducts/AddProducts";
+import ManageProducts from "../Pages/ManageProducts/ManageProducts";
+import PendingOrders from "../components/PendingOrders/PendingOrders";
+import ApprovedOrders from "../components/ApprovedOrders/ApprovedOrders";
 
 const router = createBrowserRouter([
   {
@@ -54,7 +59,8 @@ const router = createBrowserRouter([
              {
                 path: 'product-details/:id/order-form/payment',
                 element: <Payment></Payment>
-            }
+            },
+             
     ],
   },
 
@@ -99,6 +105,22 @@ const router = createBrowserRouter([
                 path: 'all-orders/order-details/:orderId',
                 element: <OrderDetails></OrderDetails>
             },
+            {
+                path: 'add-products',
+                element: <ManagerRouter><AddProducts></AddProducts></ManagerRouter>
+            },
+             {
+                path: 'manage-products',
+                element: <ManagerRouter><ManageProducts></ManageProducts></ManagerRouter>
+            },
+            {
+                path: 'pending-orders',
+                element: <ManagerRouter><PendingOrders></PendingOrders></ManagerRouter>
+            },
+            {
+                path: 'approved-orders',
+                element: <ManagerRouter><ApprovedOrders></ApprovedOrders></ManagerRouter>
+            }
     ]
   }
 ]);
