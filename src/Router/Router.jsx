@@ -28,6 +28,7 @@ import ApprovedOrders from "../components/ApprovedOrders/ApprovedOrders";
 import BuyerRouter from "./BuyerRouter";
 import TrackOrder from "../Pages/TrackOrder/TrackOrder";
 import TrackOrderBuyer from "../Pages/TrackOrderBuyer/TrackOrderBuyer";
+import TrackOrderManager from "../Pages/TrackOrderManager/TrackOrderManager";
 
 const router = createBrowserRouter([
   {
@@ -170,11 +171,23 @@ const router = createBrowserRouter([
           </ManagerRouter>
         ),
       },
+       {
+                path: 'pending-orders/order-details/:orderId',
+                element: <OrderDetails></OrderDetails>
+            },
       {
         path: "approved-orders",
         element: (
           <ManagerRouter>
             <ApprovedOrders></ApprovedOrders>
+          </ManagerRouter>
+        ),
+      },
+      {
+        path: 'approved-orders/view-tracking/:id',
+        element: (
+          <ManagerRouter>
+            <TrackOrderManager></TrackOrderManager>
           </ManagerRouter>
         ),
       },

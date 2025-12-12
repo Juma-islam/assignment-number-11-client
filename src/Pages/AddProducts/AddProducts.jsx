@@ -1,14 +1,25 @@
 import React, { useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
+import useAxios from "../../hooks/useAxios";
+import useAuth from "../../hooks/useAuth";
+import useRoles from "../../hooks/useRoles";
+
 
 const AddProducts = () => {
+    const axiosSecure = useAxios()
+    const {firebaseUser} = useAuth()
+    const navigate = useNavigate()
+    const user = useRoles()
+    
     const {
         register,
         handleSubmit,
         control,
-        // reset,
         watch,
-        formState: { errors }
+        formState: { errors },
+        // setValue
     } = useForm({
         defaultValues: {
             images: [{ url: "" }]
@@ -48,16 +59,40 @@ const AddProducts = () => {
         );
     };
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         const images = data.images.map((img) => img.url).filter((u) => u);
 
+        // Convert string numbers to actual numbers
         const finalData = {
             ...data,
+            price: parseFloat(data.price),
+            availableQuantity: parseInt(data.availableQuantity),
+            minimumOrderQuantity: parseInt(data.minimumOrderQuantity),
             images: images,
+            createdBy: firebaseUser.displayName
         };
+        
+        console.log('Submitting product data:', finalData);
+        console.log('Price type:', typeof finalData.price);
+        console.log('Available Quantity type:', typeof finalData.availableQuantity);
 
-        console.log("Final Submitted Data:", finalData);
+        try{
+            const res = await axiosSecure.post('/products', finalData)
+            
+            if (res.data.insertedId){
+                toast.success('Your product added successfully!')
+                navigate('/dashboard/manage-products')
+            } else {
+                toast.error('Sorry, something went wrong!')
+            }
+            
+        } catch (err){
+            console.error('Error adding product:', err);
+            toast.error('Operation failed!')
+        }
     };
+
+    if (user?.role === "manager" & user?.status === "pending") return <ManagerApprovalPending></ManagerApprovalPending>
 
     return (
         <div className="max-w-3xl mx-auto bg-base-100 shadow-xl p-8 rounded-xl my-10">
@@ -96,19 +131,21 @@ const AddProducts = () => {
                         <option value="Jacket">Jacket</option>
                         <option value="Accessories">Accessories</option>
                         <option value="Shoes">Shoes</option>
+                        <option value="Traditional Wear">Traditional Wear</option>
                     </select>
                     {errors.category && <p className="text-red-500">{errors.category.message}</p>}
                 </div>
 
                 <div>
-                    <label className="label"><span className="label-text font-semibold">Price</span></label>
+                    <label className="label"><span className="label-text font-semibold">Price (USD)</span></label>
                     <input
                         type="number"
                         step="0.01"
                         className="input input-bordered w-full"
                         {...register("price", {
                             required: "Price is required",
-                            min: { value: 0.01, message: "Must be greater than 0" }
+                            min: { value: 0.01, message: "Must be greater than 0" },
+                            valueAsNumber: true // This converts to number
                         })}
                     />
                     {errors.price && <p className="text-red-500">{errors.price.message}</p>}
@@ -121,7 +158,8 @@ const AddProducts = () => {
                         className="input input-bordered w-full"
                         {...register("availableQuantity", {
                             required: "Available quantity required",
-                            min: { value: 1, message: "Minimum 1 required" }
+                            min: { value: 1, message: "Minimum 1 required" },
+                            valueAsNumber: true // This converts to number
                         })}
                     />
                     {errors.availableQuantity && <p className="text-red-500">{errors.availableQuantity.message}</p>}
@@ -134,7 +172,8 @@ const AddProducts = () => {
                         className="input input-bordered w-full"
                         {...register("minimumOrderQuantity", {
                             required: "MOQ is required",
-                            min: { value: 1, message: "Minimum 1 required" }
+                            min: { value: 1, message: "Minimum 1 required" },
+                            valueAsNumber: true // This converts to number
                         })}
                     />
                     {errors.minimumOrderQuantity && <p className="text-red-500">{errors.minimumOrderQuantity.message}</p>}
@@ -206,7 +245,8 @@ const AddProducts = () => {
                     {errors.paymentOption && <p className="text-red-500">{errors.paymentOption.message}</p>}
                 </div>
 
-                <button type="submit" className="btn btn-primary w-full">Add Product</button>
+                <button disabled={user?.status === "suspended"} type="submit" className="btn btn-primary w-full">Add Product</button>
+                {user?.status === "suspended" && (<p className="text-red-500 text-xs">*You are suspended.</p>)}
             </form>
 
             {/* IMAGE PREVIEW MODAL */}
