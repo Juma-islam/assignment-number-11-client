@@ -31,7 +31,7 @@ const OurProducts = () => {
         {ourProducts.map((product) => <AllProductCard key={product._id} product={product}></AllProductCard>)}
       </div>
       <div className='text-center mt-15'>
-        <Link to="/all-products"><button className='btn btn-primary'>View More</button></Link>
+        <Link to="/products"><button className='btn btn-primary'>View More</button></Link>
       </div>
     </div>
 

@@ -41,7 +41,7 @@ const Navbar = () => {
         </NavLink>
       </li>
       <li className="font-semibold hover:bg-secondary rounded-md hover:text-white">
-        <NavLink className={({ isActive }) => (isActive ? "bg-secondary font-semibold" : "")} to="/all-products">
+        <NavLink className={({ isActive }) => (isActive ? "bg-secondary font-semibold" : "")} to="/products">
           <span>
             <FiShoppingBag />
           </span>

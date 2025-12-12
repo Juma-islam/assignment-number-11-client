@@ -1,8 +1,7 @@
 import { useEffect } from "react";
-import useAxios from "../../hooks/useAxios";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router";
-
+import useAxios from "../../hooks/useAxios";
 
 const PaymentSuccess = () => {
     const axiosSecure = useAxios();

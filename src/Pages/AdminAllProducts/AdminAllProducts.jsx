@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react'
-
 import { useQuery } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
 import useAxios from '../../hooks/useAxios'
+import LoadingSpinner from '../../components/Shared/LoadingSpinner'
 import UpdateProductModal from '../../components/Modals/UpdateProductModal'
 
 const AdminAllProducts = () => {
@@ -11,7 +11,7 @@ const AdminAllProducts = () => {
     const modalRef = useRef()
     const [selectedProduct, setSelectedProduct] = useState(null)
 
-    const { data: products = [], refetch: refetchProducts } = useQuery({
+    const { data: products = [], refetch: refetchProducts, isLoading } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
             const res = await axiosSecure.get('/products')
@@ -78,28 +78,30 @@ const AdminAllProducts = () => {
 
             }
         })
-
     }
 
+    if (isLoading) return <LoadingSpinner></LoadingSpinner>
+
     return (
-        <div className="p-4 md:p-8">
+        <div className="p-4 md:p-8 min-h-screen">
             <h1 className="text-2xl font-bold mb-6">All Products</h1>
 
             {/* Mobile Card View */}
             <div className="md:hidden space-y-4">
                 {products.length === 0 ? (
-                    <div className="text-center py-10 bg-white shadow rounded-lg">
+                    <div className="text-center py-10 shadow rounded-lg">
                         <p className="text-gray-500">No products available</p>
                     </div>
                 ) : (
                     products.map((product) => (
-                        <div key={product._id} className="bg-white shadow rounded-lg p-4 border border-gray-100">
+                        <div key={product._id} className="shadow rounded-lg p-4 border border-gray-100">
                             <div className="flex items-center space-x-4">
                                 <img src={product.images[0]} alt={product.productName} className="w-20 h-20 object-cover rounded-md" />
                                 <div className="flex-grow">
-                                    <h3 className="font-semibold text-gray-800">{product.productName}</h3>
-                                    <p className="text-sm text-gray-500">{product.category}</p>
-                                    <p className="font-medium text-gray-900">${product.price}</p>
+                                    <h3 className="font-semibold">{product.productName}</h3>
+                                    <p className="text-sm text-gray-300">{product.category}</p>
+                                    <p className="text-sm text-gray-300">{product.createdBy}</p>
+                                    <p className="font-medium">${product.price}</p>
                                 </div>
                             </div>
 
@@ -128,9 +130,9 @@ const AdminAllProducts = () => {
             </div>
 
             {/* Desktop Table View */}
-            <div className="hidden md:block overflow-x-auto bg-white shadow rounded-lg">
+            <div className="hidden md:block overflow-x-auto shadow rounded-lg">
                 <table className="min-w-full text-sm">
-                    <thead className="bg-gray-100">
+                    <thead className="bg-base-200">
                         <tr>
                             <th className="p-3 text-left font-semibold">Image</th>
                             <th className="p-3 text-left font-semibold">Product Name</th>
@@ -151,7 +153,7 @@ const AdminAllProducts = () => {
                             </tr>
                         ) : (
                             products.map((product) => (
-                                <tr key={product._id} className="border-b hover:bg-gray-50">
+                                <tr key={product._id} className="border-b">
                                     <td className="p-3">
                                         <img src={product.images[0]} alt={product.productName} className="w-16 h-16 object-cover rounded-md" />
                                     </td>

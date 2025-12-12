@@ -2,8 +2,8 @@ import React from 'react'
 import { useParams, useNavigate } from 'react-router'
 import { useQuery } from '@tanstack/react-query'
 import Swal from 'sweetalert2'
-import LoadingSpinner from '../../components/Shared/LoadingSpinner'
 import useAxios from '../../hooks/useAxios'
+import LoadingSpinner from '../../components/Shared/LoadingSpinner'
 
 const Payment = () => {
 
@@ -19,6 +19,7 @@ const Payment = () => {
             return res.data
         }
     })
+
 
     const { productPrice, productId, buyerEmail, quantity, productTitle } = pendingOrder || {}
 
@@ -42,11 +43,8 @@ const Payment = () => {
 
                 const res = await axiosSecure.post('/create-checkout-session', paymentInfo)
                 window.location.assign(res.data.url)
-
             }
         });
-
-
     }
 
     const handleCancel = () => {

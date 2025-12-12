@@ -19,7 +19,9 @@ const UpdateProductModal = ({ modalRef, selectedProduct, refetchProducts }) => {
             price: "",
             availableQuantity: "",
             minimumOrderQuantity: "",
-            paymentOption: ""
+            paymentOption: "",
+            productDescription: "",
+            demoVideoLink: ""
         }
     });
 
@@ -35,6 +37,8 @@ const UpdateProductModal = ({ modalRef, selectedProduct, refetchProducts }) => {
                 availableQuantity: selectedProduct.availableQuantity,
                 minimumOrderQuantity: selectedProduct.minimumOrderQuantity,
                 paymentOption: selectedProduct.paymentOption,
+                productDescription: selectedProduct.productDescription || "",
+                demoVideoLink: selectedProduct.demoVideoLink || ""
             });
 
             setImageUrls(selectedProduct.images || []);
@@ -76,13 +80,11 @@ const UpdateProductModal = ({ modalRef, selectedProduct, refetchProducts }) => {
                 modalRef.current.close();
                 await refetchProducts()
                 toast.success("Product has been updated!")
-                
             }
         } catch (err) {
             console.log(err)
             toast.error('Sorry, something went wrong!')
         }
-
     };
 
     return (
@@ -136,6 +138,7 @@ const UpdateProductModal = ({ modalRef, selectedProduct, refetchProducts }) => {
                                     <option>Jacket</option>
                                     <option>Accessories</option>
                                     <option>Shoes</option>
+                                    <option>Traditional Wear</option>
                                 </select>
                                 {errors.category && (
                                     <p className="text-red-500 text-sm">{errors.category.message}</p>
@@ -191,6 +194,26 @@ const UpdateProductModal = ({ modalRef, selectedProduct, refetchProducts }) => {
                                 {errors.paymentOption && (
                                     <p className="text-red-500 text-sm">{errors.paymentOption.message}</p>
                                 )}
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium">Product Description</label>
+                                <textarea
+                                    {...register("productDescription", { required: "Description is required" })}
+                                    className="textarea textarea-bordered w-full"
+                                ></textarea>
+                                {errors.productDescription && (
+                                    <p className="text-red-500 text-sm">{errors.productDescription.message}</p>
+                                )}
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium">Demo Video Link</label>
+                                <input
+                                    {...register("demoVideoLink")}
+                                    className="input input-bordered w-full"
+                                    placeholder="https://youtube.com/..."
+                                />
                             </div>
 
                             <div className="mt-6">

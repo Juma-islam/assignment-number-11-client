@@ -12,9 +12,9 @@ const AllProduct = () => {
   const skip = (page-1) * limit
 
   const { data: Products = [], isLoading,} = useQuery({
-    queryKey: ['all-products', page],
+    queryKey: ['products', page],
     queryFn: async () => {
-      const res = await fetchAxios.get(`/all-products?limit=${limit}&skip=${skip}`)
+      const res = await fetchAxios.get(`/products?limit=${limit}&skip=${skip}`)
       return res.data
     }
   })
