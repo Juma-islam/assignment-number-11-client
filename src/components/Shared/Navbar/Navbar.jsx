@@ -7,7 +7,7 @@ import { FaHome, FaUser } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
 import { FiPhone, FiShoppingBag } from "react-icons/fi";
 import { MdDashboard } from "react-icons/md";
-import { Sun, Moon } from "lucide-react"; // npm install lucide-react (if not installed)
+import { Sun, Moon } from "lucide-react"; 
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
