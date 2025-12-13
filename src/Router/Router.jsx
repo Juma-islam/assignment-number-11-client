@@ -29,6 +29,8 @@ import BuyerRouter from "./BuyerRouter";
 import TrackOrder from "../Pages/TrackOrder/TrackOrder";
 import TrackOrderBuyer from "../Pages/TrackOrderBuyer/TrackOrderBuyer";
 import TrackOrderManager from "../Pages/TrackOrderManager/TrackOrderManager";
+import AboutUs from "../Pages/AboutUs/AboutUs";
+import Contact from "../Pages/Contact/Contact";
 
 const router = createBrowserRouter([
   {
@@ -68,6 +70,14 @@ const router = createBrowserRouter([
         path: "product-details/:id/order-form/payment",
         element: <Payment></Payment>,
       },
+      {
+        path: '/about-us',
+        element: <AboutUs></AboutUs>
+      },
+      {
+        path: '/contact',
+        element: <Contact></Contact>
+      }
     ],
   },
 

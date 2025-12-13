@@ -1,44 +1,41 @@
-import { motion } from 'framer-motion';
-import { FaShoppingCart, FaCut, FaSitemap, FaTruck } from 'react-icons/fa'; // Use react-icons for icons
+import { motion } from "framer-motion";
+import { FaShoppingCart, FaCut, FaClipboardCheck, FaTruck } from "react-icons/fa";
 
 const HowItWorks = () => {
   const steps = [
-    { icon: <FaShoppingCart />, title: 'Place Order', desc: 'Browse products and book your order seamlessly.' },
-    { icon: <FaCut />, title: 'Production Starts', desc: 'Cutting, sewing, and finishing with real-time tracking.' },
-    { icon: <FaSitemap />, title: 'Quality Check', desc: 'Rigorous QC to ensure top-notch garments.' },
-    { icon: <FaTruck />, title: 'Delivery', desc: 'Shipped on time with live updates.' },
+    { icon: <FaShoppingCart className="w-12 h-12" />, title: "Place Order", desc: "Select styles & place bulk orders in minutes" },
+    { icon: <FaCut className="w-12 h-12" />, title: "Production Begins", desc: "Cutting, sewing & printing with live updates" },
+    { icon: <FaClipboardCheck className="w-12 h-12" />, title: "Quality Assurance", desc: "Multiple QC checks before packing" },
+    { icon: <FaTruck className="w-12 h-12" />, title: "Ship & Track", desc: "Real-time delivery tracking worldwide" },
   ];
 
   return (
-    <section className="py-16 bg-gradient-to-b from-white to-teal-50">
-      <div className="container mx-auto px-4">
+    <section className="py-24 bg-white">
+      <div className="max-w-7xl mx-auto px-6">
         <motion.h2
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-4xl font-bold text-center text-teal-800 mb-12"
+          className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-20"
         >
-          How It Works
+          How It <span className="text-indigo-600">Works</span>
         </motion.h2>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {steps.map((step, index) => (
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          {steps.map((step, i) => (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              className="flex flex-col items-center p-6 bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow"
+              key={i}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.2 }}
+              className="text-center group"
             >
-              <motion.div
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                className="text-5xl text-teal-500 mb-4"
-              >
+              <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 text-indigo-600 mb-6 group-hover:scale-110 transition-transform">
                 {step.icon}
-              </motion.div>
-              <h3 className="text-2xl font-semibold text-teal-700 mb-2">{step.title}</h3>
-              <p className="text-gray-600 text-center">{step.desc}</p>
-              {index < steps.length - 1 && (
-                <div className="hidden md:block w-full h-1 bg-teal-200 mt-4" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-3">{step.title}</h3>
+              <p className="text-gray-600">{step.desc}</p>
+              {i < steps.length - 1 && (
+                <div className="hidden lg:block absolute top-12 left-full w-full h-0.5 bg-gradient-to-r from-indigo-200 to-transparent -z-10" style={{ width: '100%', left: '50%' }} />
               )}
             </motion.div>
           ))}
