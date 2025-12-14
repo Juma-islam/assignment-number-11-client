@@ -167,11 +167,11 @@ const OrderDetails = () => {
       <div className="bg-white p-6 shadow rounded-lg">
         <h2 className="text-xl font-semibold text-gray-700 mb-4">Tracking History</h2>
 
-        {trackingHistory.length === 0 ? (
+        {trackingHistory?.length === 0 ? (
           <p>No tracking history available</p>
         ) : (
           <ul className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical">
-            {trackingHistory.map((entry, index) => (
+            {trackingHistory?.map((entry, index) => (
               <li key={index}>
                 <hr />
                 <div className="timeline-middle">

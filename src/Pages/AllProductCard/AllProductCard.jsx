@@ -13,13 +13,13 @@ const AllProductCard = ({ product }) => {
       <figure className="overflow-hidden rounded-t-2xl">
         <img
           src={product.images[0]}
-          alt={product.productName}
+          alt={product.title}
           className="w-full h-60 object-cover transition-transform duration-300 hover:scale-105"
         />
       </figure>
 
       <div className="p-5 flex-grow flex flex-col space-y-2">
-        <h2 className="text-lg font-bold">{product.productName}</h2>
+        <h2 className="text-lg font-bold">{product.title}</h2>
         <p className="text-sm ">{product.category}</p>
 
         <div className="flex items-center justify-between mt-2">

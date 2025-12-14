@@ -41,7 +41,7 @@ const ProductDetails = () => {
         {product.images?.length === 1 && (
           <img
             src={product.images[0]}
-            alt={product.productName}
+            alt={product.title}
             className="w-full h-auto rounded-lg shadow-md object-cover"
           />
         )}
@@ -51,7 +51,7 @@ const ProductDetails = () => {
             
             <img
               src={product.images[0]}
-              alt={product.productName}
+              alt={product.title}
               className="w-full h-[420px] object-cover rounded-lg shadow-md"
             />
 
@@ -70,10 +70,10 @@ const ProductDetails = () => {
       </div>
 
       <div className="space-y-6">
-        <h1 className="text-3xl font-bold">{product.productName}</h1>
+        <h1 className="text-3xl font-bold">{product.title}</h1>
 
         <p className="text-gray-700 leading-relaxed">
-          {product.productDescription}
+          {product.description}
         </p>
 
         <div className="text-lg font-semibold">
