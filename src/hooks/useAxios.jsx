@@ -2,7 +2,7 @@ import axios from "axios";
 import useAuth from "./useAuth";
 import { useEffect } from "react";
 
- const fetchAxios = axios.create({
+ const axiosSecure = axios.create({
         baseURL: 'http://localhost:5000'
     })
 
@@ -12,7 +12,7 @@ const useAxios = () => {
 
   useEffect(() => {
     // Request interceptor
-    const requestInterceptor = fetchAxios.interceptors.request.use(
+    const requestInterceptor = axiosSecure.interceptors.request.use(
       (config) => {
         if (user?.accessToken) {
           config.headers.Authorization = `Bearer ${user.accessToken}`;
@@ -25,11 +25,11 @@ const useAxios = () => {
     );
 
     return () => {
-      fetchAxios.interceptors.request.eject(requestInterceptor);
+      axiosSecure.interceptors.request.eject(requestInterceptor);
     };
   }, [user]);
 
-  return fetchAxios;
+  return axiosSecure;
 }
 
 export default useAxios

@@ -1,14 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
-
 import { useRef, useState, useEffect } from 'react'
-import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { Link } from 'react-router'
+import LoadingSpinner from '../Shared/LoadingSpinner'
 import useAxios from '../../hooks/useAxios'
 import useRoles from '../../hooks/useRoles'
 import useAuth from '../../hooks/useAuth'
-import LoadingSpinner from '../Shared/LoadingSpinner'
-import ManagerApprovalPending from '../ManagerApprovalPending/ManagerApprovalPending'
+import { useForm } from 'react-hook-form'
 
 const ApprovedOrders = () => {
     const axiosSecure = useAxios()
@@ -105,6 +103,7 @@ const ApprovedOrders = () => {
 
     return (
         <div className="p-4 md:p-8 min-h-screen">
+            <title> Approved Orders - Manager Dashboard</title>
             <h1 className="text-2xl font-bold mb-6">Approved Orders</h1>
 
             {/* Mobile Card View */}

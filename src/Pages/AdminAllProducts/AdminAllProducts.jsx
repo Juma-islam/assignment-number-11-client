@@ -6,6 +6,7 @@ import useAxios from '../../hooks/useAxios'
 import LoadingSpinner from '../../components/Shared/LoadingSpinner'
 import UpdateProductModal from '../../components/Modals/UpdateProductModal'
 
+
 const AdminAllProducts = () => {
     const axiosSecure = useAxios()
     const modalRef = useRef()
@@ -78,12 +79,14 @@ const AdminAllProducts = () => {
 
             }
         })
+
     }
 
     if (isLoading) return <LoadingSpinner></LoadingSpinner>
 
     return (
         <div className="p-4 md:p-8 min-h-screen">
+            <title>ThreadOps || Products - Admin Dashboard</title>
             <h1 className="text-2xl font-bold mb-6">All Products</h1>
 
             {/* Mobile Card View */}

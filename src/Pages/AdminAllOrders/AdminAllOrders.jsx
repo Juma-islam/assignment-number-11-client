@@ -42,6 +42,7 @@ const AdminAllOrders = () => {
 
     return (
         <div className="p-4 md:p-8">
+            <title>ThreadOps || Orders - Admin Dashboard</title>
             <h1 className="text-2xl font-bold mb-6">All Orders</h1>
 
             <div className="flex justify-between items-center mb-6">

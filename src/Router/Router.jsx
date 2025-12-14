@@ -17,7 +17,6 @@ import MyOrders from "../Pages/MyOrders/MyOrders";
 import MyProfile from "../Pages/MyProfile/MyProfile";
 import AdminRouter from "./AdminRouter";
 import ManageUsers from "../Pages/ManageUsers/ManageUsers";
-import AllAdminOrders from "../Pages/AllAdminOrders/AllAdminOrders";
 import AdminAllProducts from "../Pages/AdminAllProducts/AdminAllProducts";
 import OrderDetails from "../Pages/OrderDetails/OrderDetails";
 import ManagerRouter from "./ManagerRouter";
@@ -31,6 +30,7 @@ import TrackOrderBuyer from "../Pages/TrackOrderBuyer/TrackOrderBuyer";
 import TrackOrderManager from "../Pages/TrackOrderManager/TrackOrderManager";
 import AboutUs from "../Pages/AboutUs/AboutUs";
 import Contact from "../Pages/Contact/Contact";
+import AdminAllOrders from "../Pages/AdminAllOrders/AdminAllOrders";
 
 const router = createBrowserRouter([
   {
@@ -51,7 +51,7 @@ const router = createBrowserRouter([
         Component: Register,
       },
       {
-        path: "/products",
+        path: "/allProducts",
         Component: AllProduct,
       },
       {
@@ -149,7 +149,7 @@ const router = createBrowserRouter([
         path: "all-orders",
         element: (
           <AdminRouter>
-            <AllAdminOrders></AllAdminOrders>
+            <AdminAllOrders></AdminAllOrders>
           </AdminRouter>
         ),
       },

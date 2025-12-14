@@ -3,10 +3,11 @@ import { useQuery } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
 import useAxios from '../../hooks/useAxios'
-import UpdateProductModal from '../../components/Modals/UpdateProductModal'
 import useRoles from '../../hooks/useRoles'
-import ManagerApprovalPending from '../../components/ManagerApprovalPending/ManagerApprovalPending'
 import useAuth from '../../hooks/useAuth'
+import ManagerApprovalPending from '../../components/ManagerApprovalPending/ManagerApprovalPending'
+import UpdateProductModal from '../../components/Modals/UpdateProductModal'
+
 
 const ManageProducts = () => {
   const axiosSecure = useAxios()
@@ -83,6 +84,7 @@ const ManageProducts = () => {
 
   return (
     <div className="p-4 md:p-8 min-h-screen">
+      <title> Manage Products - Manager Dashboard</title>
       <h1 className="text-2xl font-bold mb-6">Manage Your Products</h1>
 
       <div className="mb-6 flex gap-4 items-center">

@@ -9,14 +9,14 @@ import NoDetails from "../../components/Shared/NoDetails/NoDetails";
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const fetchAxios = useAxios()
+  const axiosSecure = useAxios()
   const navigate = useNavigate()
   const user = useRoles()
 
   const { data: product, isLoading, error } = useQuery({
     queryKey: ["products", id],
     queryFn: async () => {
-      const res = await fetchAxios.get(`/products/${id}`);
+      const res = await axiosSecure.get(`/products/${id}`);
       return res.data;
     },
   });

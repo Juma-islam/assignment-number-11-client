@@ -43,8 +43,11 @@ const Payment = () => {
 
                 const res = await axiosSecure.post('/create-checkout-session', paymentInfo)
                 window.location.assign(res.data.url)
+
             }
         });
+
+
     }
 
     const handleCancel = () => {
@@ -83,6 +86,8 @@ const Payment = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+
+            <title> Payment</title>
 
             <div className="bg-white shadow-xl rounded-2xl w-full max-w-xl p-8 border border-gray-200">
 

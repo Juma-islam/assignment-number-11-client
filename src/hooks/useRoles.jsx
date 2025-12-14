@@ -5,17 +5,17 @@ import useAuth from "./useAuth";
 import useAxios from "./useAxios";
 
 const useRoles = () => {
-  const fetchAxios = useAxios();
-  const { firebaseUser } = useAuth();
+  const axiosSecure = useAxios();
+  const { user } = useAuth();
   const { data: logInUser } = useQuery({
-    queryKey: ["role", firebaseUser?.email],
+    queryKey: ["role", user?.email],
     queryFn: async () => {
-      const res = await fetchAxios.get(`/users?email=${firebaseUser.email}`);
+      const res = await axiosSecure.get(`/users?email=${user.email}`);
       return res.data;
     },
   });
-  const user = logInUser;
-  return user;
+  const users = logInUser;
+  return users;
 };
 
 export default useRoles;

@@ -1,17 +1,22 @@
 import React, { useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
+// import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+// import useAuth from "../../../Hooks/useAuth";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+// import useRoles from "../../../Hooks/useRoles";
+// import ManagerApprovalPending from "../../../components/ManagerApprovalPending/ManagerApprovalPending";
+import { FaPlus, FaTrash, FaEye, FaChevronLeft, FaChevronRight, FaUpload } from "react-icons/fa";
 import useAxios from "../../hooks/useAxios";
 import useAuth from "../../hooks/useAuth";
 import useRoles from "../../hooks/useRoles";
-
+import ManagerApprovalPending from "../../components/ManagerApprovalPending/ManagerApprovalPending";
 
 const AddProducts = () => {
     const axiosSecure = useAxios()
-    const {firebaseUser} = useAuth()
+    const {user} = useAuth()
     const navigate = useNavigate()
-    const user = useRoles()
+    const users = useRoles()
     
     const {
         register,
@@ -69,7 +74,7 @@ const AddProducts = () => {
             availableQuantity: parseInt(data.availableQuantity),
             minimumOrderQuantity: parseInt(data.minimumOrderQuantity),
             images: images,
-            createdBy: firebaseUser.displayName
+            createdBy: user.displayName
         };
         
         console.log('Submitting product data:', finalData);
@@ -92,196 +97,331 @@ const AddProducts = () => {
         }
     };
 
-    if (user?.role === "manager" & user?.status === "pending") return <ManagerApprovalPending></ManagerApprovalPending>
+    if (users?.role === "manager" & users?.status === "pending") return <ManagerApprovalPending></ManagerApprovalPending>
 
     return (
-        <div className="max-w-3xl mx-auto bg-base-100 shadow-xl p-8 rounded-xl my-10">
-            <h2 className="text-2xl font-bold mb-6 text-center">Add New Product</h2>
+        <div className="max-w-4xl mx-auto py-10">
+            <title> Add Product - Manager Dashboard</title>
+            
+            <div className="mb-8 text-center">
+                <h1 className="text-3xl font-bold mb-2">Add New Product</h1>
+                <p className="opacity-70">Fill in the details below to add a new product to your inventory</p>
+            </div>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            <div className="card bg-base-100 shadow-xl">
+                <div className="card-body p-6 md:p-8">
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
 
-                <div>
-                    <label className="label"><span className="label-text font-semibold">Product Name</span></label>
-                    <input
-                        type="text"
-                        className="input input-bordered w-full"
-                        {...register("productName", { required: "Product name is required" })}
-                    />
-                    {errors.productName && <p className="text-red-500">{errors.productName.message}</p>}
-                </div>
-
-                <div>
-                    <label className="label"><span className="label-text font-semibold">Product Description</span></label>
-                    <textarea
-                        className="textarea textarea-bordered w-full"
-                        {...register("productDescription", { required: "Description is required" })}
-                    ></textarea>
-                    {errors.productDescription && <p className="text-red-500">{errors.productDescription.message}</p>}
-                </div>
-
-                <div>
-                    <label className="label"><span className="label-text font-semibold">Category</span></label>
-                    <select
-                        className="select select-bordered w-full"
-                        {...register("category", { required: "Select a category" })}
-                    >
-                        <option value="">Select Category</option>
-                        <option value="Shirt">Shirt</option>
-                        <option value="Pant">Pant</option>
-                        <option value="Jacket">Jacket</option>
-                        <option value="Accessories">Accessories</option>
-                        <option value="Shoes">Shoes</option>
-                        <option value="Traditional Wear">Traditional Wear</option>
-                    </select>
-                    {errors.category && <p className="text-red-500">{errors.category.message}</p>}
-                </div>
-
-                <div>
-                    <label className="label"><span className="label-text font-semibold">Price (USD)</span></label>
-                    <input
-                        type="number"
-                        step="0.01"
-                        className="input input-bordered w-full"
-                        {...register("price", {
-                            required: "Price is required",
-                            min: { value: 0.01, message: "Must be greater than 0" },
-                            valueAsNumber: true // This converts to number
-                        })}
-                    />
-                    {errors.price && <p className="text-red-500">{errors.price.message}</p>}
-                </div>
-
-                <div>
-                    <label className="label"><span className="label-text font-semibold">Available Quantity</span></label>
-                    <input
-                        type="number"
-                        className="input input-bordered w-full"
-                        {...register("availableQuantity", {
-                            required: "Available quantity required",
-                            min: { value: 1, message: "Minimum 1 required" },
-                            valueAsNumber: true // This converts to number
-                        })}
-                    />
-                    {errors.availableQuantity && <p className="text-red-500">{errors.availableQuantity.message}</p>}
-                </div>
-
-                <div>
-                    <label className="label"><span className="label-text font-semibold">Minimum Order Quantity (MOQ)</span></label>
-                    <input
-                        type="number"
-                        className="input input-bordered w-full"
-                        {...register("minimumOrderQuantity", {
-                            required: "MOQ is required",
-                            min: { value: 1, message: "Minimum 1 required" },
-                            valueAsNumber: true // This converts to number
-                        })}
-                    />
-                    {errors.minimumOrderQuantity && <p className="text-red-500">{errors.minimumOrderQuantity.message}</p>}
-                </div>
-
-                <div>
-                    <label className="label"><span className="label-text font-semibold">Image URLs</span></label>
-
-                    {fields.map((item, index) => (
-                        <div key={item.id} className="flex gap-2 mb-2">
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text font-semibold text-base">Product Name</span>
+                            </label>
                             <input
-                                type="url"
-                                placeholder="https://example.com/image.jpg"
-                                className="input input-bordered w-full"
-                                {...register(`images.${index}.url`, {
-                                    required: "Image URL required"
-                                })}
+                                type="text"
+                                placeholder="Enter product name"
+                                className="input input-bordered w-full focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                {...register("productName", { required: "Product name is required" })}
                             />
-
-                            {fields.length > 1 && (
-                                <button
-                                    type="button"
-                                    className="btn btn-error"
-                                    onClick={() => remove(index)}
-                                >
-                                    X
-                                </button>
+                            {errors.productName && (
+                                <label className="label">
+                                    <span className="label-text-alt text-error">{errors.productName.message}</span>
+                                </label>
                             )}
                         </div>
-                    ))}
 
-                    <button
-                        type="button"
-                        className="btn btn-outline btn-primary mt-2"
-                        onClick={() => append({ url: "" })}
-                    >
-                        + Add More Image URL
-                    </button>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text font-semibold text-base">Product Description</span>
+                            </label>
+                            <textarea
+                                placeholder="Describe your product in detail"
+                                className="textarea textarea-bordered w-full h-32 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                {...register("productDescription", { required: "Description is required" })}
+                            ></textarea>
+                            {errors.productDescription && (
+                                <label className="label">
+                                    <span className="label-text-alt text-error">{errors.productDescription.message}</span>
+                                </label>
+                            )}
+                        </div>
 
-                    <button
-                        type="button"
-                        className="btn btn-secondary ml-3 mt-2"
-                        onClick={openPreview}
-                        disabled={watchedImages.length === 0}
-                    >
-                        Preview Images
-                    </button>
-                </div>
-
-                <div>
-                    <label className="label"><span className="label-text font-semibold">Demo Video Link</span></label>
-                    <input
-                        type="url"
-                        className="input input-bordered w-full"
-                        {...register("demoVideoLink")}
-                    />
-                </div>
-
-                <div>
-                    <label className="label"><span className="label-text font-semibold">Payment Options</span></label>
-                    <select
-                        className="select select-bordered w-full"
-                        {...register("paymentOption", { required: "Select a payment option" })}
-                    >
-                        <option value="">Select Payment Method</option>
-                        <option value="Cash on Delivery">Cash on Delivery</option>
-                        <option value="Stripe">Stripe</option>
-                    </select>
-                    {errors.paymentOption && <p className="text-red-500">{errors.paymentOption.message}</p>}
-                </div>
-
-                <button disabled={user?.status === "suspended"} type="submit" className="btn btn-primary w-full">Add Product</button>
-                {user?.status === "suspended" && (<p className="text-red-500 text-xs">*You are suspended.</p>)}
-            </form>
-
-            {/* IMAGE PREVIEW MODAL */}
-            {previewModalOpen && (
-                <dialog open className="modal">
-                    <div className="modal-box">
-                        <h3 className="font-bold text-xl text-center mb-4">Image Preview</h3>
-
-                        {imageList.length > 0 && (
-                            <div className="flex flex-col items-center">
-                                <img
-                                    src={imageList[currentImageIndex]}
-                                    className="rounded-lg border w-full max-h-80 object-contain"
-                                />
-
-                                <div className="flex justify-between w-full mt-4">
-                                    <button className="btn btn-outline" onClick={prevImage}>Prev</button>
-                                    <button className="btn btn-outline" onClick={nextImage}>Next</button>
-                                </div>
-
-                                <p className="text-center mt-2">
-                                    {currentImageIndex + 1} / {imageList.length}
-                                </p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text font-semibold text-base">Category</span>
+                                </label>
+                                <select
+                                    className="select select-bordered w-full focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                    {...register("category", { required: "Select a category" })}
+                                >
+                                    <option value="">Select Category</option>
+                                    <option value="Shirt">Shirt</option>
+                                    <option value="Pant">Pant</option>
+                                    <option value="Jacket">Jacket</option>
+                                    <option value="Accessories">Accessories</option>
+                                    <option value="Shoes">Shoes</option>
+                                    <option value="Traditional Wear">Traditional Wear</option>
+                                </select>
+                                {errors.category && (
+                                    <label className="label">
+                                        <span className="label-text-alt text-error">{errors.category.message}</span>
+                                    </label>
+                                )}
                             </div>
-                        )}
 
-                        <div className="modal-action">
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text font-semibold text-base">Price (USD)</span>
+                                </label>
+                                <div className="relative">
+                                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2">$</span>
+                                    <input
+                                        type="number"
+                                        step="0.01"
+                                        placeholder="0.00"
+                                        className="input input-bordered w-full pl-8 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                        {...register("price", {
+                                            required: "Price is required",
+                                            min: { value: 0.01, message: "Must be greater than 0" },
+                                            valueAsNumber: true
+                                        })}
+                                    />
+                                </div>
+                                {errors.price && (
+                                    <label className="label">
+                                        <span className="label-text-alt text-error">{errors.price.message}</span>
+                                    </label>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text font-semibold text-base">Available Quantity</span>
+                                </label>
+                                <input
+                                    type="number"
+                                    placeholder="Enter quantity"
+                                    className="input input-bordered w-full focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                    {...register("availableQuantity", {
+                                        required: "Available quantity required",
+                                        min: { value: 1, message: "Minimum 1 required" },
+                                        valueAsNumber: true
+                                    })}
+                                />
+                                {errors.availableQuantity && (
+                                    <label className="label">
+                                        <span className="label-text-alt text-error">{errors.availableQuantity.message}</span>
+                                    </label>
+                                )}
+                            </div>
+
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text font-semibold text-base">Minimum Order Quantity (MOQ)</span>
+                                </label>
+                                <input
+                                    type="number"
+                                    placeholder="Enter MOQ"
+                                    className="input input-bordered w-full focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                    {...register("minimumOrderQuantity", {
+                                        required: "MOQ is required",
+                                        min: { value: 1, message: "Minimum 1 required" },
+                                        valueAsNumber: true
+                                    })}
+                                />
+                                {errors.minimumOrderQuantity && (
+                                    <label className="label">
+                                        <span className="label-text-alt text-error">{errors.minimumOrderQuantity.message}</span>
+                                    </label>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text font-semibold text-base">Image URLs</span>
+                            </label>
+                            <div className="space-y-3">
+                                {fields.map((item, index) => (
+                                    <div key={item.id} className="flex gap-3 items-center">
+                                        <div className="flex-1">
+                                            <input
+                                                type="url"
+                                                placeholder="https://example.com/image.jpg"
+                                                className="input input-bordered w-full focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                                {...register(`images.${index}.url`, {
+                                                    required: "Image URL required"
+                                                })}
+                                            />
+                                        </div>
+                                        {fields.length > 1 && (
+                                            <button
+                                                type="button"
+                                                className="btn btn-error btn-square btn-sm"
+                                                onClick={() => remove(index)}
+                                            >
+                                                <FaTrash />
+                                            </button>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="flex flex-wrap gap-3 mt-4">
+                                <button
+                                    type="button"
+                                    className="btn btn-outline btn-primary gap-2"
+                                    onClick={() => append({ url: "" })}
+                                >
+                                    <FaPlus /> Add Image URL
+                                </button>
+
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary gap-2"
+                                    onClick={openPreview}
+                                    disabled={watchedImages.length === 0}
+                                >
+                                    <FaEye /> Preview Images
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text font-semibold text-base">Demo Video Link</span>
+                                </label>
+                                <input
+                                    type="url"
+                                    placeholder="https://example.com/video.mp4"
+                                    className="input input-bordered w-full focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                    {...register("demoVideoLink")}
+                                />
+                            </div>
+
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text font-semibold text-base">Payment Options</span>
+                                </label>
+                                <select
+                                    className="select select-bordered w-full focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                    {...register("paymentOption", { required: "Select a payment option" })}
+                                >
+                                    <option value="">Select Payment Method</option>
+                                    <option value="Cash on Delivery">Cash on Delivery</option>
+                                    <option value="Stripe">Stripe</option>
+                                </select>
+                                {errors.paymentOption && (
+                                    <label className="label">
+                                        <span className="label-text-alt text-error">{errors.paymentOption.message}</span>
+                                    </label>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="form-control pt-4">
+                            <button 
+                                type="submit" 
+                                className="btn btn-primary btn-lg gap-2"
+                                disabled={user?.status === "suspended"}
+                            >
+                                <FaUpload /> Add Product
+                            </button>
+                            {user?.status === "suspended" && (
+                                <label className="label">
+                                    <span className="label-text-alt text-error font-semibold">
+                                        *Your account is suspended. You cannot add new products.
+                                    </span>
+                                </label>
+                            )}
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            {previewModalOpen && (
+                <dialog open className="modal modal-middle">
+                    <div className="modal-box max-w-2xl p-0 overflow-hidden">
+                        <div className="p-6 border-b">
+                            <h3 className="font-bold text-xl text-center">Image Preview</h3>
+                        </div>
+
+                        <div className="p-6">
+                            {imageList.length > 0 ? (
+                                <div className="flex flex-col items-center">
+                                    <div className="relative w-full h-96 bg-base-200 rounded-lg flex items-center justify-center overflow-hidden">
+                                        <img
+                                            src={imageList[currentImageIndex]}
+                                            className="max-w-full max-h-full object-contain"
+                                            alt={`Preview ${currentImageIndex + 1}`}
+                                        />
+                                        
+                                        <div className="absolute inset-0 flex items-center justify-between p-4">
+                                            <button 
+                                                className="btn btn-circle btn-outline btn-lg"
+                                                onClick={prevImage}
+                                            >
+                                                <FaChevronLeft size={20} />
+                                            </button>
+                                            <button 
+                                                className="btn btn-circle btn-outline btn-lg"
+                                                onClick={nextImage}
+                                            >
+                                                <FaChevronRight size={20} />
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div className="mt-4 text-center">
+                                        <p className="text-sm opacity-70">
+                                            Image {currentImageIndex + 1} of {imageList.length}
+                                        </p>
+                                    </div>
+
+                                    {imageList.length > 1 && (
+                                        <div className="flex gap-2 mt-6 overflow-x-auto py-2">
+                                            {imageList.map((img, index) => (
+                                                <button
+                                                    key={index}
+                                                    className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 ${
+                                                        index === currentImageIndex 
+                                                            ? 'border-primary' 
+                                                            : 'border-base-300'
+                                                    }`}
+                                                    onClick={() => setCurrentImageIndex(index)}
+                                                >
+                                                    <img 
+                                                        src={img} 
+                                                        className="w-full h-full object-cover"
+                                                        alt={`Thumbnail ${index + 1}`}
+                                                    />
+                                                </button>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            ) : (
+                                <div className="text-center py-12">
+                                    <p className="opacity-70">No images to preview</p>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="modal-action p-6 pt-0">
                             <button
-                                className="btn btn-primary"
+                                className="btn btn-primary w-full"
                                 onClick={() => setPreviewModalOpen(false)}
                             >
-                                Close
+                                Close Preview
                             </button>
                         </div>
                     </div>
+                    <form method="dialog" className="modal-backdrop">
+                        <button onClick={() => setPreviewModalOpen(false)}>close</button>
+                    </form>
                 </dialog>
             )}
         </div>

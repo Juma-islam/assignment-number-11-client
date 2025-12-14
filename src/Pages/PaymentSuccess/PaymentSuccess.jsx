@@ -23,6 +23,8 @@ const PaymentSuccess = () => {
     return (
         <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-green-50 to-green-100 p-6">
 
+            <title> Payment Success</title>
+
             <div className="bg-white shadow-2xl rounded-2xl p-10 max-w-lg w-full text-center animate-fadeIn">
 
                 <div className="flex justify-center mb-6">

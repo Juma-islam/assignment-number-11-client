@@ -38,6 +38,7 @@ const DashboardMain = () => {
 
   return (
     <div className="min-h-screen p-4 md:p-6">
+        <title>ThreadOps || Dashboard Home</title>
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-end mb-4">
           <div className={`badge badge-lg ${userRole === 'admin' ? 'badge-primary' : 
