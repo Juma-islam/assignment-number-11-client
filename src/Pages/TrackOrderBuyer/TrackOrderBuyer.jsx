@@ -95,7 +95,7 @@ const TrackOrderBuyer = () => {
 
   return (
     <div className="min-h-screen p-4 md:p-6">
-      <title>ThreadOps || Track Your Order</title>
+      <title> Track Order</title>
 
       <div className="max-w-6xl mx-auto">
         <div className="mb-6 md:mb-8">

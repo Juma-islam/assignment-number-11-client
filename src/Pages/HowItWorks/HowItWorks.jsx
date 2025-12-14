@@ -10,7 +10,7 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section className="py-24 bg-white">
+    <section className="py-5 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}

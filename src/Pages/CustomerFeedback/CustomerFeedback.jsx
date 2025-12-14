@@ -62,7 +62,7 @@ const CustomerFeedback = () => {
   }, []);
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-br from-slate-50 via-white to-indigo-50 overflow-hidden">
+    <section className="py-10 px-4 bg-gradient-to-br from-slate-50 via-white to-indigo-50 overflow-hidden">
       <div className="max-w-7xl mx-auto">
        
         <motion.div

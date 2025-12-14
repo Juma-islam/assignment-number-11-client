@@ -116,7 +116,7 @@ const WhyChooseUs = () => {
   ];
 
   return (
-    <section className="py-28 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+    <section className="py-10 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0 }}

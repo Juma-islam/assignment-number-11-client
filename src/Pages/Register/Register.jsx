@@ -1,169 +1,204 @@
-
 import { Link, useLocation, useNavigate } from "react-router";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { FaEye } from "react-icons/fa";
 import { IoEyeOff } from "react-icons/io5";
-import useAuth from "../../hooks/useAuth";
 import { useForm } from "react-hook-form";
+import useAuth from "../../hooks/useAuth";
 import useAxios from "../../hooks/useAxios";
+
+const image_hosting_key = import.meta.env.VITE_IMGBB_API_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const Register = () => {
   const { createUser, setUser, updateUser, signInWithGoogleFunc } = useAuth();
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const axiosSecure = useAxios();
-  const location = useLocation()
+  const location = useLocation();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
   } = useForm();
 
-  const onSubmit = (data) => {
-    const { name, email, photo, password, } = data;
+  const onSubmit = async (data) => {
+    try {
+      const imageFile = new FormData();
+      imageFile.append("image", data.photo[0]);
 
-    createUser(email, password)
-      .then((result) => {
-        const user = result.user;
-        updateUser({ displayName: name, photoURL: photo })
-          .then(async() => {
-            const saveUser = {
-              name: data.displayName,
-              email: data.email,
-              photoURL: data.photoURL,
-              role: data.role,
-              status: 'pending',
-            }
-            await axiosSecure.post('/users', saveUser)
-            setUser({ ...user, displayName: name, photoURL: photo,
-              //  role, status: "pending"
-               });
-            toast.success("Signup Successful!");
-            reset()
-            navigate(location.state ? location.state : "/", { replace: true });
-          })
-          .catch((err) => {
-            console.log(err);
-            setUser(user);
-          });
-      })
-      .catch((err) => toast.error(err.message));
+      const imgRes = await fetch(image_hosting_api, {
+        method: "POST",
+        body: imageFile,
+      });
+
+      const imgData = await imgRes.json();
+      if (!imgData.success) {
+        toast.error("Image upload failed");
+        return;
+      }
+
+      const photoURL = imgData.data.display_url;
+
+      const result = await createUser(data.email, data.password);
+      const user = result.user;
+
+      await updateUser({
+        displayName: data.name,
+        photoURL,
+      });
+
+      const saveUser = {
+        name: data.name,
+        email: data.email,
+        photoURL,
+        role: data.role,
+        status: "pending",
+        joinDate: new Date(),
+      };
+
+      await axiosSecure.post("/users", saveUser);
+
+      setUser({ ...user, displayName: data.name, photoURL });
+      toast.success("Signup Successful!");
+      reset();
+      navigate(location.state ? location.state : "/", { replace: true });
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
-  const handleGoogleSignIn = () => {
-    signInWithGoogleFunc()
-      .then(async (res) => {
-const user = res.user
-        const saveUser ={
-          name: user.displayName,
-           email: user.email,
-          photoURL: user.photoURL,
-          role: "buyer",
-          status: "pending",
+  const handleGoogleSignIn = async () => {
+    try {
+      const res = await signInWithGoogleFunc();
+      const user = res.user;
 
-        };
-        await axiosSecure.post("/users", saveUser);
-        setUser({...res.user,
-          //  role: "buyer", status: "pending"
-          });
-        toast.success(`Signin Successful with Google! ${user?.displayName}`);
-        navigate(location.state ? location.state : "/", { replace: true })
-      })
-      .catch((err) => toast.error(err.message));
+      const saveUser = {
+        name: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+        role: "buyer",
+        status: "pending",
+        joinDate: new Date(),
+      };
+
+      await axiosSecure.post("/users", saveUser);
+      setUser(user);
+
+      toast.success(`Signin Successful! ${user.displayName}`);
+      navigate(location.state ? location.state : "/", { replace: true });
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   return (
-    <div className="flex justify-center min-h-screen items-center">
-      <div className="card bg-base-100 w-full max-w-sm shadow-2xl py-5">
-        <div className="mb-8 text-center">
-          <h1 className="my-3 text-4xl font-bold">Sign Up</h1>
-          <p className="text-sm text-gray-400">Welcome to Register Page</p>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-100 via-white to-pink-200 px-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-bold text-gray-800">Create Account </h1>
+          <p className="text-sm text-gray-500 mt-1">
+            Join us and start your journey
+          </p>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-          <fieldset>
-            <label className="label">Name</label>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+
+          {/* Name */}
+          <div>
+            <label className="text-sm font-medium text-gray-600">Name</label>
             <input
               type="text"
-              placeholder="Name"
-              className="input input-bordered w-full bg-white/20  focus:outline-none focus:ring-2 focus:ring-pink-400"
+              placeholder="Your name"
+              className="mt-1 w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-400 outline-none"
               {...register("name", { required: "Name is required" })}
             />
-            {errors.name && <p className="text-error">{errors.name.message}</p>}
+            {errors.name && <p className="text-error text-sm">{errors.name.message}</p>}
+          </div>
 
-            <label className="label">Email</label>
+          {/* Email */}
+          <div>
+            <label className="text-sm font-medium text-gray-600">Email</label>
             <input
               type="email"
-              placeholder="Email"
-              className="input input-bordered w-full bg-white/20  focus:outline-none focus:ring-2 focus:ring-pink-400"
+              placeholder="you@example.com"
+              className="mt-1 w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-400 outline-none"
               {...register("email", { required: "Email is required" })}
             />
-            {errors.email && <p className="text-error">{errors.email.message}</p>}
-            {/* photo  */}
-            <label className="label">Photo URL</label>
+          </div>
+
+          {/* Photo */}
+          <div>
+            <label className="text-sm font-medium text-gray-600">Profile Photo</label>
             <input
-              type="text"
-              placeholder="Photo URL"
-              className="input input-bordered w-full bg-white/20  focus:outline-none focus:ring-2 focus:ring-pink-400"
-              {...register("photo", { required: "Photo URL is required" })}
+              type="file"
+              className="mt-1 file-input file-input-bordered w-full"
+              {...register("photo", { required: "Photo is required" })}
             />
-            {errors.photo && <p className="text-error">{errors.photo.message}</p>}
-            <label className="label">Role</label>
-            <select className="input input-bordered w-full bg-white/20  focus:outline-none focus:ring-2 focus:ring-pink-400" {...register("role", { required: true })}>
+          </div>
+
+          {/* Role */}
+          <div>
+            <label className="text-sm font-medium text-gray-600">Role</label>
+            <select
+              className="mt-1 select select-bordered w-full"
+              {...register("role", { required: true })}
+            >
               <option value="buyer">Buyer</option>
               <option value="manager">Manager</option>
             </select>
-            {/* password  */}
-            <div className="relative">
-              <label className="label">Password</label>
-              <input
-                type={show ? "text" : "password"}
-                placeholder="•••••••"
-                className="input input-bordered w-full bg-white/20  focus:outline-none focus:ring-2 focus:ring-pink-400"
-                {...register("password", {
-                  required: "Password is required",
-                  pattern: {
-                    value: /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/,
-                    message: "Password must have uppercase, lowercase & 6+ chars",
-                  },
-                })}
-              />
-              <span onClick={() => setShow(!show)} className="absolute top-10 right-3 cursor-pointer">
-                {show ? <FaEye /> : <IoEyeOff />}
-              </span>
-              {errors.password && <p className="text-error">{errors.password.message}</p>}
-            </div>
+          </div>
 
+          {/* Password */}
+          <div className="relative">
+            <label className="text-sm font-medium text-gray-600">Password</label>
+            <input
+              type={show ? "text" : "password"}
+              placeholder="••••••••"
+              className="mt-1 w-full px-4 py-3 pr-10 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-400 outline-none"
+              {...register("password", {
+                required: "Password is required",
+                pattern: {
+                  value: /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/,
+                  message: "Uppercase, lowercase & 6+ chars required",
+                },
+              })}
+            />
             <button
-              type="submit"
-              className="w-full mt-4 bg-gradient-to-r from-pink-500 to-pink-700 hover:from-pink-600 hover:to-pink-800 text-white font-semibold py-3 px-5 rounded-lg shadow-md transition-all duration-300"
-            >
-              Sign Up
-            </button>
-            <div className="flex items-center justify-center gap-2 my-3">
-              <div className="h-px w-16 bg-green-500"></div>
-              <span className="text-sm text-green-500">or</span>
-              <div className="h-px w-16 bg-green-500"></div>
-            </div>
-            <button
-              onClick={handleGoogleSignIn}
               type="button"
-              className="flex items-center justify-center gap-3 btn btn-outline text-gray-800 px-5 py-2 rounded-lg w-full font-semibold hover:bg-gray-100 transition-colors cursor-pointer"
+              onClick={() => setShow(!show)}
+              className="absolute right-3 top-11 text-gray-500"
             >
-              <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="google" className="w-5 h-5" />
-              Continue with Google
+              {show ? <FaEye /> : <IoEyeOff />}
             </button>
+          </div>
 
-            <p className="text-center mt-2">
-              Already have an account?{" "}
-              <Link to="/login" className="text-blue-500 underline">
-                Sign In
-              </Link>
-            </p>
-          </fieldset>
+          <button
+            type="submit"
+            className="w-full py-3 rounded-lg bg-gradient-to-r from-pink-500 to-pink-600 text-white font-semibold hover:opacity-90 transition"
+          >
+            Sign Up
+          </button>
+
+          <button
+            onClick={handleGoogleSignIn}
+            type="button"
+            className="w-full flex items-center justify-center gap-3 border rounded-lg py-2 hover:bg-gray-100 transition"
+          >
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="w-5" />
+            Continue with Google
+          </button>
+
+          <p className="text-center text-sm mt-3">
+            Already have an account?{" "}
+            <Link to="/login" className="text-pink-500 underline">
+              Sign In
+            </Link>
+          </p>
+
         </form>
       </div>
     </div>
@@ -171,3 +206,5 @@ const user = res.user
 };
 
 export default Register;
+
+

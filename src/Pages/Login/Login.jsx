@@ -1,10 +1,10 @@
-import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
+import { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { IoEyeOff } from "react-icons/io5";
 import { toast } from "react-toastify";
-import useAuth from "../../hooks/useAuth";
 import { useForm } from "react-hook-form";
+import useAuth from "../../hooks/useAuth";
 import useAxios from "../../hooks/useAxios";
 
 const Login = () => {
@@ -20,96 +20,102 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    const { email, password } = data;
-    signIn(email, password)
-      .then((result) => {
-        setUser(result.user);
-        toast.success("Login Successful!");
-        navigate(location.state ? location.state : "/");
-      })
-      .catch((err) => toast.error(err.message));
+  const onSubmit = async (data) => {
+    try {
+      const result = await signIn(data.email, data.password);
+      setUser(result.user);
+      toast.success("Login Successful!");
+      navigate(location.state ? location.state : "/", { replace: true });
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
-  const handleGoogleSignIn = () => {
-    signInWithGoogleFunc()
-      .then(async (res) => {
-        const user = res.user;
-        const saveUser = {
-          name: user.displayName,
-          email: user.email,
-          photoURL: user.photoURL,
-          role: "buyer",
-          status: "pending",
-        };
-        await axiosSecure.post("/users", saveUser);
+  const handleGoogleSignIn = async () => {
+    try {
+      const res = await signInWithGoogleFunc();
+      const user = res.user;
 
-        setUser(res.user);
-         toast.success(`Logged in   Successful with Google!. ${user?.displayName}`)
-        navigate(`${location.state ? location.state : "/"}`, { replace: true });
-      })
-      .catch((err) => toast.error(err.message));
+      const saveUser = {
+        name: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+        role: "buyer",
+        status: "pending",
+      };
+
+      await axiosSecure.post("/users", saveUser);
+      setUser(user);
+
+      toast.success(`Logged in Successfully! ${user.displayName}`);
+      navigate(location.state ? location.state : "/", { replace: true });
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   return (
-    <div className="flex justify-center min-h-screen items-center">
-      <div className="card bg-base-100 w-full max-w-sm shadow-2xl py-6">
-        <h1 className="text-3xl font-bold text-center mb-4">Sign In</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-100 via-white to-pink-200 px-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
 
-        <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-          <fieldset>
-            <label className="label">Email</label>
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-bold text-gray-800">Welcome Back</h1>
+          <p className="text-sm text-gray-500">Login to your account</p>
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+
+          <div>
+            <label className="text-sm font-medium text-gray-600">Email</label>
             <input
               type="email"
-              placeholder="Email"
-              className="input input-bordered w-full bg-white/20  focus:outline-none focus:ring-2 focus:ring-pink-400"
+              placeholder="you@example.com"
+              className="mt-1 w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-400 outline-none"
               {...register("email", { required: "Email is required" })}
             />
-            {errors.email && <p className="text-error">{errors.email.message}</p>}
+            {errors.email && <p className="text-error text-sm">{errors.email.message}</p>}
+          </div>
 
-            <div className="relative">
-              <label className="label">Password</label>
-              <input
-                type={show ? "text" : "password"}
-                placeholder="••••••••"
-                className="input input-bordered w-full bg-white/20  focus:outline-none focus:ring-2 focus:ring-pink-400"
-                {...register("password", { required: "Password is required" })}
-              />
-              <span onClick={() => setShow(!show)} className="absolute right-3 top-10 cursor-pointer">
-                {show ? <FaEye /> : <IoEyeOff />}
-              </span>
-              {errors.password && <p className="text-error">{errors.password.message}</p>}
-            </div>
-
+          <div className="relative">
+            <label className="text-sm font-medium text-gray-600">Password</label>
+            <input
+              type={show ? "text" : "password"}
+              placeholder="••••••••"
+              className="mt-1 w-full px-4 py-3 pr-10 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-400 outline-none"
+              {...register("password", { required: "Password is required" })}
+            />
             <button
-              type="submit"
-              className="w-full mt-4 bg-gradient-to-r from-pink-500 to-pink-700 hover:from-pink-600 hover:to-pink-800 text-white font-semibold py-3 px-5 rounded-lg shadow-md transition-all duration-300"
-            >
-              Sign In
-            </button>
-
-            <div className="flex justify-center items-center gap-2 my-3">
-              <div className="h-px w-16 bg-green-500"></div>
-              <span className="text-green-500 text-sm">or</span>
-              <div className="h-px w-16 bg-green-500"></div>
-            </div>
-
-            <button
-              onClick={handleGoogleSignIn}
               type="button"
-              className="flex items-center justify-center gap-3 btn btn-outline text-gray-800 px-5 py-2 rounded-lg w-full font-semibold hover:bg-gray-100 transition-colors cursor-pointer"
+              onClick={() => setShow(!show)}
+              className="absolute right-3 top-11 text-gray-500"
             >
-              <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="google" className="w-5 h-5" />
-              Continue with Google
+              {show ? <FaEye /> : <IoEyeOff />}
             </button>
+          </div>
 
-            <p className="text-center mt-2 w-full">
-              Don’t have an account?{" "}
-              <Link state={location.state ? location.state : "/"} to="/register" className="text-blue-500 underline">
-                Sign Up
-              </Link>
-            </p>
-          </fieldset>
+          <button
+            type="submit"
+            className="w-full py-3 rounded-lg bg-gradient-to-r from-pink-500 to-pink-600 text-white font-semibold hover:opacity-90 transition"
+          >
+            Sign In
+          </button>
+
+          <button
+            onClick={handleGoogleSignIn}
+            type="button"
+            className="w-full flex items-center justify-center gap-3 border rounded-lg py-2 hover:bg-gray-100 transition"
+          >
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="w-5" />
+            Continue with Google
+          </button>
+
+          <p className="text-center text-sm mt-3">
+            Don’t have an account?{" "}
+            <Link to="/register" className="text-pink-500 underline">
+              Sign Up
+            </Link>
+          </p>
+
         </form>
       </div>
     </div>
