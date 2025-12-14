@@ -113,7 +113,7 @@ const ManageUsers = () => {
 
   return (
     <div className="p-4 md:p-8 min-h-screen">
-      <title>ThreadOps || User Managemant - Admin Dashboard</title>
+      <title> User Management - Admin Dashboard</title>
       <h1 className="text-2xl font-bold mb-6">User Management</h1>
 
       {/* Mobile Card View */}
