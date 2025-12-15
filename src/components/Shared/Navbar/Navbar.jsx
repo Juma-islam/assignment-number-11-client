@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router"; // Fixed import
+import { Link, NavLink } from "react-router"; 
 import { toast } from "react-toastify";
 import logo from "../../../assets/logo.png";
 import { FaHome, FaUser } from "react-icons/fa";
