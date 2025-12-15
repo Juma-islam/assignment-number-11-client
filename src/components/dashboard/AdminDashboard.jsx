@@ -8,7 +8,7 @@ import UsersTable from "./Matched/Tables/UsersTable";
 
 export const AdminDashboard = ({
   userData,
-  firebaseUser,
+  user,
   products = [],
   allUsers = [],
   orders = [],
@@ -62,7 +62,7 @@ export const AdminDashboard = ({
     <div className="space-y-6">
       <UserHeader
         userData={userData}
-        firebaseUser={firebaseUser}
+        user={user}
         role="admin"
         gradient="from-blue-600 to-purple-600"
         title="Admin Dashboard"

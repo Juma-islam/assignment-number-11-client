@@ -36,7 +36,7 @@ const AdminAllProducts = () => {
   });
 
   const handleToggleHome = async (product) => {
-    console.log("toggle clicked:", product.productName);
+    console.log("toggle clicked:", product.title);
     try {
       const updatedStatus = !product?.showOnHomePage;
       const res = await axiosSecure.patch(`/products/${product._id}/showOnHome`, { showOnHomePage: updatedStatus });
@@ -104,9 +104,9 @@ const AdminAllProducts = () => {
           products.map((product) => (
             <div key={product._id} className="shadow rounded-lg p-4 border border-gray-100">
               <div className="flex items-center space-x-4">
-                <img src={product.images[0]} alt={product.productName} className="w-20 h-20 object-cover rounded-md" />
+                <img src={product.images[0]} alt={product.title} className="w-20 h-20 object-cover rounded-md" />
                 <div className="flex-grow">
-                  <h3 className="font-semibold">{product.productName}</h3>
+                  <h3 className="font-semibold">{product.title}</h3>
                   <p className="text-sm text-gray-300">{product.category}</p>
                   <p className="text-sm text-gray-300">{product.createdBy}</p>
                   <p className="font-medium">${product.price}</p>
@@ -167,11 +167,11 @@ const AdminAllProducts = () => {
                   <td className="p-3">
                     <img
                       src={product.images[0]}
-                      alt={product.productName}
+                      alt={product.title}
                       className="w-16 h-16 object-cover rounded-md"
                     />
                   </td>
-                  <td className="p-3 font-medium">{product.productName}</td>
+                  <td className="p-3 font-medium">{product.title}</td>
                   <td className="p-3">${product.price}</td>
                   <td className="p-3">{product.category}</td>
                   <td className="p-3">{product.createdBy}</td>

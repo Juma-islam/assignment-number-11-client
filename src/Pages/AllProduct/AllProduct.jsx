@@ -36,7 +36,7 @@ const AllProduct = () => {
       const term = searchTerm.toLowerCase()
       result = result.filter(product => {
         // productName 
-        return product.productName?.toLowerCase().includes(term) ||
+        return product.title?.toLowerCase().includes(term) ||
                product.category?.toLowerCase().includes(term)
       })
     }

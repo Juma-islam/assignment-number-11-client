@@ -7,6 +7,7 @@ import useAxios from '../../hooks/useAxios'
 import useRoles from '../../hooks/useRoles'
 import useAuth from '../../hooks/useAuth'
 import { useForm } from 'react-hook-form'
+import ManagerApprovalPending from '../ManagerApprovalPending/ManagerApprovalPending'
 
 const ApprovedOrders = () => {
     const axiosSecure = useAxios()

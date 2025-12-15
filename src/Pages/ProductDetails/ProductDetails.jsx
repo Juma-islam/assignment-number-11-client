@@ -80,7 +80,7 @@
 //           <p>💲 Price: ${product.price}</p>
 //           <p>📦 Available: {product.availableQuantity} units</p>
 //           <p>📥 Minimum Order: {product.minimumOrderQuantity} units</p>
-//           <p>💳 Payment: {product.paymentOption}</p>
+//           <p>💳 Payment: {product.paymentOptions}</p>
 //         </div>
 
 //         {product.demoVideoLink && (
@@ -193,7 +193,7 @@ const ProductDetails = () => {
           <p>💲 Price: ৳{product.price}</p>
           <p>📦 Available: {product.availableQuantity} units</p>
           <p>📥 Minimum Order: {product.minimumOrderQuantity} units</p>
-          <p>💳 Payment: {product.paymentOptions}</p>
+          <p>💳 Payment: {product.paymentOptionss}</p>
         </div>
 
         {/* ================= Demo Video ================= */}

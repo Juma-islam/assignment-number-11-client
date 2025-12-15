@@ -3,7 +3,7 @@ import { FaUserShield, FaUserTie, FaUserCircle } from 'react-icons/fa';
 
 export const UserHeader = ({ 
   userData, 
-  firebaseUser, 
+  user, 
   role, 
   gradient, 
   title, 
@@ -35,7 +35,7 @@ export const UserHeader = ({
           <div className="avatar">
             <div className="w-12 h-12 rounded-full border-2 border-white">
               <img 
-                src={userData?.photoURL || firebaseUser?.photoURL || `https://ui-avatars.com/api/?name=${userData?.name || 'User'}&background=random`} 
+                src={userData?.photoURL || user?.photoURL || `https://ui-avatars.com/api/?name=${userData?.name || 'User'}&background=random`} 
                 alt="User" 
               />
             </div>

@@ -30,12 +30,12 @@ const UpdateProductModal = ({ modalRef, selectedProduct, refetchProducts }) => {
   useEffect(() => {
     if (selectedProduct) {
       reset({
-        productName: selectedProduct.productName,
+        productName: selectedProduct.title,
         category: selectedProduct.category,
         price: selectedProduct.price,
         availableQuantity: selectedProduct.availableQuantity,
         minimumOrderQuantity: selectedProduct.minimumOrderQuantity,
-        paymentOption: selectedProduct.paymentOption,
+        paymentOption: selectedProduct.paymentOptions,
         productDescription: selectedProduct.productDescription || "",
         demoVideoLink: selectedProduct.demoVideoLink || "",
       });
@@ -100,7 +100,7 @@ const UpdateProductModal = ({ modalRef, selectedProduct, refetchProducts }) => {
             <div className="border-b pb-4 flex items-center gap-4">
               <img src={selectedProduct.images?.[0]} alt="" className="w-14 h-14 rounded-full object-cover" />
               <div>
-                <h3 className="font-semibold text-lg">{selectedProduct.productName}</h3>
+                <h3 className="font-semibold text-lg">{selectedProduct.title}</h3>
                 <p className="text-sm text-gray-500">{selectedProduct.createdBy}</p>
               </div>
             </div>

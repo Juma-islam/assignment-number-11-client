@@ -5,6 +5,7 @@ import useAxios from "../../hooks/useAxios";
 import useRoles from "../../hooks/useRoles";
 import useAuth from "../../hooks/useAuth";
 import ManagerApprovalPending from "../ManagerApprovalPending/ManagerApprovalPending";
+import LoadingSpinner from "../Shared/LoadingSpinner";
 
 const PendingOrders = () => {
   const axiosSecure = useAxios();
@@ -63,7 +64,7 @@ const PendingOrders = () => {
     }
   };
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <LoadingSpinner />;
   if ((users?.role === "manager") & (users?.status === "pending"))
     return <ManagerApprovalPending></ManagerApprovalPending>;
 

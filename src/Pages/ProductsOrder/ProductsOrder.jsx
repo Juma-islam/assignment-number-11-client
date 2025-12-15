@@ -61,7 +61,7 @@ const ProductsOrder = () => {
                 const res = await axiosSecure.post('/orders', finalOrder)
                 const orderId = res.data.insertedId
 
-                if (product.paymentOption === "Cash on Delivery") {
+                if (product.paymentOptions === "Cash on Delivery") {
                     Swal.fire({
                         icon: "success",
                         title: "Your order has been places!",
@@ -107,7 +107,7 @@ const ProductsOrder = () => {
                     <label className="font-semibold">Product</label>
                     <input
                         type="text"
-                        value={product.productName}
+                        value={product.title}
                         readOnly
                         className="input input-bordered w-full bg-gray-200"
                     />
@@ -117,7 +117,7 @@ const ProductsOrder = () => {
                     <label className="font-semibold">Price & Payment</label>
                     <input
                         type="text"
-                        value={`$${product.price} — ${product.paymentOption}`}
+                        value={`$${product.price} — ${product.paymentOptions}`}
                         readOnly
                         className="input input-bordered w-full bg-gray-200"
                     />

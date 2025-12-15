@@ -6,7 +6,7 @@ import { OrderStatusChart } from "./Matched/OrderStatusChart";
 import { RecentOrders } from "./Matched/Tables/RecentOrders";
 import { ProductsTable } from "./Matched/Tables/ProductsTable";
 
-export const ManagerDashboard = ({ userData, firebaseUser, products = [], orders = [] }) => {
+export const ManagerDashboard = ({ userData, user, products = [], orders = [] }) => {
   const pendingProduction = orders.filter((o) => o.status === "Approved").length;
   const needsApproval = orders.filter((o) => o.status === "Pending").length;
   const completedOrders = orders.filter((o) => o.status === "Delivered").length;
@@ -55,7 +55,7 @@ export const ManagerDashboard = ({ userData, firebaseUser, products = [], orders
     <div className="space-y-6">
       <UserHeader
         userData={userData}
-        firebaseUser={firebaseUser}
+        user={user}
         role="manager"
         gradient="from-green-600 to-teal-600"
         title="Manager Dashboard"

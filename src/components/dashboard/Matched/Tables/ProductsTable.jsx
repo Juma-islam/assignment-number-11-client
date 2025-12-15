@@ -55,7 +55,7 @@ export const ProductsTable = ({ products = [], title = "Products" }) => {
                                                 </div>
                                             </div>
                                             <div>
-                                                <p className="font-medium">{product.productName}</p>
+                                                <p className="font-medium">{product.title}</p>
                                                 <p className="text-xs text-gray-500 truncate max-w-[200px]">
                                                     {product.productDescription?.substring(0, 50)}...
                                                 </p>

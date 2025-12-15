@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { UserHeader } from "./Matched/UserHeader";
 import { StatsCards } from "./Matched/StatsCards";
 
-export const BuyerDashboard = ({ userData, firebaseUser, orders = [] }) => {
+export const BuyerDashboard = ({ userData, user, orders = [] }) => {
   const navigate = useNavigate();
   const totalSpent = orders.reduce((sum, order) => sum + (order.orderPrice || 0), 0);
   const activeOrders = orders.filter((o) => !["Delivered", "Rejected"].includes(o.status)).length;
@@ -55,7 +55,7 @@ export const BuyerDashboard = ({ userData, firebaseUser, orders = [] }) => {
     <div className="space-y-6">
       <UserHeader
         userData={userData}
-        firebaseUser={firebaseUser}
+        user={user}
         role="buyer"
         gradient="from-purple-600 to-pink-600"
         title="My Dashboard"
