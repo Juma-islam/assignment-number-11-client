@@ -30,31 +30,31 @@ const Navbar = () => {
 
   const links = (
     <>
-      <li className="font-semibold hover:bg-secondary rounded-md hover:text-white">
+      <li className="font-semibold hover:bg-secondary rounded-md text-white">
         <NavLink className={({ isActive }) => (isActive ? "bg-secondary font-semibold" : "")} to="/">
           <span><FaHome /></span> Home
         </NavLink>
       </li>
-      <li className="font-semibold hover:bg-secondary rounded-md hover:text-white">
+      <li className="font-semibold hover:bg-secondary rounded-md text-white">
         <NavLink className={({ isActive }) => (isActive ? "bg-secondary font-semibold" : "")} to="/allProducts">
           <span><FiShoppingBag /></span> All Products
         </NavLink>
       </li>
       
       {user ? (
-        <li className="font-semibold hover:bg-secondary rounded-md hover:text-white">
+        <li className="font-semibold hover:bg-secondary rounded-md text-white">
           <NavLink className={({ isActive }) => (isActive ? "bg-secondary font-semibold" : "")} to="/dashboard">
             <span><MdDashboard /></span> Dashboard
           </NavLink>
         </li>
       ) : (
         <>
-          <li className="font-semibold hover:bg-secondary rounded-md hover:text-white">
+          <li className="font-semibold hover:bg-secondary rounded-md text-white">
             <NavLink className={({ isActive }) => (isActive ? "bg-secondary font-semibold" : "")} to="/about-us">
               <span><FaUser /></span> About Us
             </NavLink>
           </li>
-          <li className="font-semibold hover:bg-secondary rounded-md hover:text-white">
+          <li className="font-semibold hover:bg-secondary rounded-md text-white">
             <NavLink className={({ isActive }) => (isActive ? "bg-secondary font-semibold" : "")} to="/contact">
               <span><FiPhone /></span> Contact
             </NavLink>

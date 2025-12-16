@@ -178,7 +178,7 @@ const Register = () => {
 
           <button
             type="submit"
-            className="w-full py-3 rounded-lg bg-gradient-to-r from-pink-500 to-pink-600 text-white font-semibold hover:opacity-90 transition"
+            className="w-full py-3 cursor-pointer rounded-lg bg-gradient-to-r from-pink-500 to-pink-600 text-white font-semibold hover:opacity-90 transition"
           >
             Sign Up
           </button>
@@ -186,7 +186,7 @@ const Register = () => {
           <button
             onClick={handleGoogleSignIn}
             type="button"
-            className="w-full flex items-center justify-center gap-3 border rounded-lg py-2 hover:bg-gray-100 transition"
+            className="w-full cursor-pointer flex items-center justify-center gap-3 border rounded-lg py-2 hover:bg-gray-100 transition"
           >
             <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="w-5" />
             Continue with Google
