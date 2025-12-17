@@ -1,10 +1,8 @@
 import React from "react";
-
 import { useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import useAxios from "../../hooks/useAxios";
-import { format } from "date-fns";
 
 const OrderDetails = () => {
   const { orderId } = useParams();
@@ -22,7 +20,6 @@ const OrderDetails = () => {
     },
   });
 
- 
   const {
     data: userData = {},
     isLoading: usersLoading,
@@ -30,12 +27,12 @@ const OrderDetails = () => {
     queryKey: ["users"],
     queryFn: async () => {
       const res = await axiosSecure.get("/users");
-      return res.data; 
+      return res.data;
     },
   });
 
-  const users = Array.isArray(userData) 
-    ? userData 
+  const users = Array.isArray(userData)
+    ? userData
     : userData.users || userData.data || [];
 
   const { data: products = [] } = useQuery({
@@ -84,6 +81,27 @@ const OrderDetails = () => {
 
   const getPaymentColor = (s) => (s === "Paid" ? "badge-success" : "badge-warning");
 
+  // Native date formatting without date-fns
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
+  const formatDateTime = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
   const timelineSteps = [
     { status: "Order Placed", icon: "🛒" },
     { status: "Payment Completed", icon: "💳" },
@@ -114,7 +132,7 @@ const OrderDetails = () => {
             </span>
           </div>
           <p className="mt-4 opacity-90">
-            Ordered on: {format(new Date(orderDate), "PPP")}
+            Ordered on: {formatDate(orderDate)}
           </p>
         </div>
 
@@ -186,7 +204,7 @@ const OrderDetails = () => {
                       <div className="flex-1 bg-base-200 p-5 rounded-2xl shadow-md">
                         <h3 className="font-bold text-lg">{entry.orderStatus}</h3>
                         <p className="text-sm text-gray-500 mt-1">
-                          {format(new Date(entry.entryDate), "PPP 'at' p")}
+                          {formatDateTime(entry.entryDate)}
                         </p>
                         {entry.location && <p className="mt-2"><strong>Location:</strong> {entry.location}</p>}
                         {entry.note && <p className="mt-2 italic text-gray-600">{entry.note}</p>}
@@ -204,4 +222,3 @@ const OrderDetails = () => {
 };
 
 export default OrderDetails;
-
