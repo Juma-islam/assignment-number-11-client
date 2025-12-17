@@ -1,3 +1,7 @@
+
+
+
+// {`order-details/${order._id}`}
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
 import { toast } from "react-toastify";
@@ -6,6 +10,7 @@ import useRoles from "../../hooks/useRoles";
 import useAuth from "../../hooks/useAuth";
 import ManagerApprovalPending from "../ManagerApprovalPending/ManagerApprovalPending";
 import LoadingSpinner from "../Shared/LoadingSpinner";
+import { FaCheck, FaTimes, FaEye } from "react-icons/fa";
 
 const PendingOrders = () => {
   const axiosSecure = useAxios();
@@ -26,204 +31,209 @@ const PendingOrders = () => {
     },
   });
 
-  const pendingOrders = myPendingorders.filter((orders) => orders?.status === "Pending");
+  const pendingOrders = myPendingorders.filter((order) => order?.status === "Pending");
 
   const handleApproveOrder = async (order) => {
-    if (isSuspended) return;
+    if (isSuspended) {
+      toast.warning("Suspended account cannot approve orders!");
+      return;
+    }
 
     try {
       const res = await axiosSecure.patch(`/orders/${order._id}`, {
         status: "Approved",
+        approvedAt: new Date(),
       });
 
       if (res.data.modifiedCount > 0) {
         refetch();
-        toast.success("Order approved and product quantity updated!");
+        toast.success(`Order ${order._id.slice(-6)} approved successfully!`);
       }
     } catch (error) {
-      console.error("Error approving order:", error);
-      toast.error(error.response?.data?.message || "Sorry, something went wrong!");
+      console.error(error);
+      toast.error(error.response?.data?.message || "Approval failed!");
     }
   };
 
   const handleRejectOrder = async (id) => {
-    if (isSuspended) return;
+    if (isSuspended) {
+      toast.warning("Suspended account cannot reject orders!");
+      return;
+    }
 
     try {
       const res = await axiosSecure.patch(`/orders/${id}`, {
         status: "Rejected",
+        rejectedAt: new Date(),
       });
 
       if (res.data.modifiedCount > 0) {
         refetch();
-        toast.success("Order Rejected!");
+        toast.success("Order rejected.");
       }
     } catch (error) {
-      console.log(error);
-      toast.error("Sorry, something went wrong!");
+      console.error(error);
+      toast.error("Rejection failed!");
     }
   };
 
   if (isLoading) return <LoadingSpinner />;
-  if ((users?.role === "manager") & (users?.status === "pending"))
-    return <ManagerApprovalPending></ManagerApprovalPending>;
+  if (users?.role === "manager" && users?.status === "pending")
+    return <ManagerApprovalPending />;
 
   return (
     <div className="p-4 md:p-8 min-h-screen">
-      <h1 className="text-2xl font-bold mb-6">Pending Orders</h1>
+      <title>Pending Orders - Manager Dashboard</title>
+
+      <h1 className="text-3xl font-bold mb-8 text-center md:text-left">Pending Orders</h1>
 
       {/* Suspension Notice */}
       {isSuspended && (
-        <div className="bg-warning/20 text-warning-content p-4 rounded-lg mb-6 border border-warning">
-          <p className="font-semibold">Your account is currently suspended. You cannot approve or reject orders.</p>
+        <div className="alert alert-warning shadow-lg mb-8 rounded-xl">
+          <div className="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-8 w-8" fill="none" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <div>
+              <h3 className="font-bold">Account Suspended!</h3>
+              <p>You cannot approve or reject any orders until your account is restored.</p>
+            </div>
+          </div>
         </div>
       )}
 
-      {/* Mobile Card View */}
-      <div className="md:hidden space-y-4">
+      {/* Mobile Cards */}
+      <div className="grid grid-cols-1 md:hidden gap-6">
         {pendingOrders.length === 0 ? (
-          <div className="text-center py-10 shadow rounded-lg">
-            <p className="text-gray-500">No orders found</p>
+          <div className="text-center py-16 bg-base-200 rounded-xl">
+            <p className="text-xl text-gray-500">No pending orders at the moment</p>
           </div>
         ) : (
           pendingOrders.map((order) => (
-            <div key={order._id} className="shadow rounded-lg p-4 border border-gray-100">
-              <div className="flex justify-between items-start mb-3">
-                <div>
-                  <h3 className="font-semibold">{order.productTitle}</h3>
-                  <p className="text-xs text-gray-500 mt-1">Order ID: {order._id}</p>
-                  <p className="text-xs text-gray-300 mt-1">
-                    Customer: {order.firstName} {order.lastName}
-                  </p>
-                  <p className="text-xs text-gray-300 mt-1">
-                    {" "}
-                    Order Date:{" "}
-                    {new Date(order.orderDate).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "numeric",
-                      day: "numeric",
-                    })}{" "}
-                    {new Date(order.orderDate).toLocaleTimeString("en-US", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </p>
+            <div key={order._id} className="card bg-base-100 shadow-xl border border-base-300">
+              <div className="card-body p-5">
+                <div className="flex justify-between items-start mb-4">
+                  <div>
+                    <h3 className="font-bold text-lg">{order.productTitle}</h3>
+                    <p className="text-sm text-gray-500">Order ID: {order._id.slice(-8)}</p>
+                  </div>
+                  <span className="badge badge-warning badge-lg">Pending</span>
                 </div>
-              </div>
 
-              <div className="mb-2">
-                <p className="text-gray-500 text-xs">Quantity</p>
-                <p className="font-medium">{order.quantity}</p>
-              </div>
+                <div className="grid grid-cols-2 gap-4 text-sm mb-5">
+                  <div>
+                    <p className="text-gray-500">Customer</p>
+                    <p className="font-medium">{order.firstName} {order.lastName}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500">Quantity</p>
+                    <p className="font-bold">{order.quantity}</p>
+                  </div>
+                  <div className="col-span-2">
+                    <p className="text-gray-500">Order Date</p>
+                    <p className="font-medium">
+                      {new Date(order.orderDate || order.createdAt).toLocaleDateString()} at{" "}
+                      {new Date(order.orderDate || order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </p>
+                  </div>
+                </div>
 
-              <div className="flex gap-2">
-                <button
-                  onClick={() => handleApproveOrder(order)}
-                  disabled={isSuspended}
-                  className={`btn flex-1 ${
-                    isSuspended ? "btn-disabled opacity-50 cursor-not-allowed" : "btn-success text-white"
-                  }`}
-                >
-                  Approve
-                </button>
-                <button
-                  onClick={() => handleRejectOrder(order._id)}
-                  disabled={isSuspended}
-                  className={`btn flex-1 ${
-                    isSuspended ? "btn-disabled opacity-50 cursor-not-allowed" : "btn-error text-white"
-                  }`}
-                >
-                  Reject
-                </button>
-                <Link to={`order-details/${order._id}`}>
-                  <button className="btn btn-primary hover:bg-primary/90 text-white rounded text-sm font-medium transition-colors flex-1">
-                    View Details
+                <div className="card-actions grid grid-cols-3 gap-3">
+                  <button
+                    onClick={() => handleApproveOrder(order)}
+                    disabled={isSuspended}
+                    className={`btn btn-success flex items-center justify-center gap-2 ${isSuspended ? 'btn-disabled' : ''}`}
+                  >
+                    <FaCheck /> Approve
                   </button>
-                </Link>
+                  <button
+                    onClick={() => handleRejectOrder(order._id)}
+                    disabled={isSuspended}
+                    className={`btn btn-error flex items-center justify-center gap-2 ${isSuspended ? 'btn-disabled' : ''}`}
+                  >
+                    <FaTimes /> Reject
+                  </button>
+                  <Link to={`/dashboard/order-details/${order._id}`} className="flex-1">
+                    <button className="btn btn-primary w-full flex items-center justify-center gap-2">
+                      <FaEye /> View
+                    </button>
+                  </Link>
+                </div>
               </div>
             </div>
           ))
         )}
       </div>
 
-      {/* Desktop Table View */}
-      <div className="hidden md:block overflow-x-auto shadow rounded-lg">
-        <table className="min-w-full text-sm">
-          <thead className="bg-base-200">
-            <tr>
-              <th className="p-3 text-left font-semibold">Order ID</th>
-              <th className="p-3 text-left font-semibold">Customer</th>
-              <th className="p-3 text-left font-semibold">Product</th>
-              <th className="p-3 text-left font-semibold">Quantity</th>
-              <th className="p-3 text-left font-semibold">Order Date</th>
-              <th className="p-3 text-center font-semibold">Actions</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {pendingOrders.length === 0 ? (
+      {/* Desktop Table - Beautiful */}
+      <div className="hidden md:block overflow-x-auto">
+        <div className="bg-base-100 shadow-2xl rounded-2xl overflow-hidden">
+          <table className="table table-zebra w-full">
+            <thead className="bg-gradient-to-r from-orange-500 to-amber-500 text-white">
               <tr>
-                <td colSpan="7" className="p-8 text-center text-gray-500">
-                  No orders found
-                </td>
+                <th className="py-5 text-left">Order ID</th>
+                <th className="py-5 text-left">Customer</th>
+                <th className="py-5 text-left">Product</th>
+                <th className="py-5 text-center">Quantity</th>
+                <th className="py-5 text-center">Order Date</th>
+                <th className="py-5 text-center">Status</th>
+                <th className="py-5 text-center">Actions</th>
               </tr>
-            ) : (
-              pendingOrders.map((order) => (
-                <tr key={order._id} className="border-b">
-                  <td className="p-3 font-mono text-gray-600">{order._id}</td>
-                  <td className="p-3">
-                    {order.firstName} {order.lastName}
-                  </td>
-                  <td className="p-3 font-medium">{order.productTitle}</td>
-                  <td className="p-3">{order.quantity}</td>
-                  <td className="p-3">
-                    {new Date(order.orderDate).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "numeric",
-                      day: "numeric",
-                    })}{" "}
-                    {new Date(order.orderDate).toLocaleTimeString("en-US", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </td>
-
-                  <td className="p-3 text-center">
-                    <div className="flex justify-center gap-2">
-                      <button
-                        onClick={() => handleApproveOrder(order)}
-                        disabled={isSuspended}
-                        className={`py-2 px-3 rounded text-sm font-medium transition-colors ${
-                          isSuspended
-                            ? "bg-gray-400 cursor-not-allowed opacity-50"
-                            : "bg-success hover:bg-success/90 text-white"
-                        }`}
-                      >
-                        Approve
-                      </button>
-                      <button
-                        onClick={() => handleRejectOrder(order._id)}
-                        disabled={isSuspended}
-                        className={`py-2 px-3 rounded text-sm font-medium transition-colors ${
-                          isSuspended
-                            ? "bg-gray-400 cursor-not-allowed opacity-50"
-                            : "bg-error hover:bg-error/90 text-white"
-                        }`}
-                      >
-                        Reject
-                      </button>
-                      <Link to={`order-details/${order._id}`}>
-                        <button className="py-2 px-3 bg-primary hover:bg-primary/90 text-white rounded text-sm font-medium transition-colors">
-                          View
-                        </button>
-                      </Link>
-                    </div>
+            </thead>
+            <tbody>
+              {pendingOrders.length === 0 ? (
+                <tr>
+                  <td colSpan="7" className="text-center py-16 text-gray-500 text-xl">
+                    No pending orders found
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                pendingOrders.map((order) => (
+                  <tr key={order._id} className="hover:bg-base-200 transition-colors">
+                    <td className="py-5 font-mono text-sm">{order._id.slice(-10)}</td>
+                    <td className="py-5 font-medium">{order.firstName} {order.lastName}</td>
+                    <td className="py-5 font-semibold text-primary">{order.productTitle}</td>
+                    <td className="py-5 text-center font-bold text-lg">{order.quantity}</td>
+                    <td className="py-5 text-center text-sm">
+                      {new Date(order.orderDate || order.createdAt).toLocaleDateString('en-GB')} <br />
+                      <span className="text-gray-500">
+                        {new Date(order.orderDate || order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </span>
+                    </td>
+                    <td className="py-5 text-center">
+                      <span className="badge badge-warning badge-lg font-medium">Pending</span>
+                    </td>
+                    <td className="py-5 text-center">
+                      <div className="flex justify-center gap-3">
+                        <button
+                          onClick={() => handleApproveOrder(order)}
+                          disabled={isSuspended}
+                          className={`btn btn-sm btn-success ${isSuspended ? 'btn-disabled' : ''}`}
+                          title={isSuspended ? "Account suspended" : "Approve order"}
+                        >
+                          <FaCheck />
+                        </button>
+                        <button
+                          onClick={() => handleRejectOrder(order._id)}
+                          disabled={isSuspended}
+                          className={`btn btn-sm btn-error ${isSuspended ? 'btn-disabled' : ''}`}
+                          title={isSuspended ? "Account suspended" : "Reject order"}
+                        >
+                          <FaTimes />
+                        </button>
+                        <Link to={`order-details/${order._id}`}>
+                          <button className="btn btn-sm btn-primary">
+                            <FaEye />
+                          </button>
+                        </Link>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
