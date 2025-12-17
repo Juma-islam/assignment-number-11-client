@@ -46,7 +46,7 @@ const TrackOrderBuyer = () => {
         minute: "2-digit",
       });
     } catch (error) {
-        console.log(error)
+      console.log(error);
       return "Date Error";
     }
   };
@@ -74,7 +74,7 @@ const TrackOrderBuyer = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <LoadingSpinner/>
+          <LoadingSpinner />
           <p className="mt-4 text-gray-600">Loading your order details...</p>
         </div>
       </div>

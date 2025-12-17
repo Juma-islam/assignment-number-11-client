@@ -1,8 +1,10 @@
+
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
+import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import useAxios from "../../hooks/useAxios";
+import { format } from "date-fns";
 
 const OrderDetails = () => {
   const { orderId } = useParams();
@@ -10,8 +12,8 @@ const OrderDetails = () => {
 
   const {
     data: orderDetails,
-    isLoading,
-    isError,
+    isLoading: orderLoading,
+    isError: orderError,
   } = useQuery({
     queryKey: ["orders", orderId],
     queryFn: async () => {
@@ -20,7 +22,7 @@ const OrderDetails = () => {
     },
   });
 
-  const { data: users = [], isLoading: usersLoading } = useQuery({
+  const { data: users = [] } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await axiosSecure.get("/users");
@@ -36,8 +38,8 @@ const OrderDetails = () => {
     },
   });
 
-  if (isLoading) return <LoadingSpinner />;
-  if (isError) return <div>Error loading order details</div>;
+  if (orderLoading) return <LoadingSpinner />;
+  if (orderError || !orderDetails) return <div className="text-center py-20 text-red-600 text-2xl">Error loading order details</div>;
 
   const {
     firstName,
@@ -54,149 +56,142 @@ const OrderDetails = () => {
     paymentStatus,
     status,
     orderDate,
-    trackingHistory,
+    trackingHistory = [],
   } = orderDetails;
 
-  if (usersLoading) {
-    return <LoadingSpinner></LoadingSpinner>;
-  }
+  const buyer = users.find((u) => u.email === buyerEmail);
+  const product = products.find((p) => p.title === productTitle || p.productName === productTitle);
 
-  const buyer = users;
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "Pending": return "badge-warning";
+      case "Approved": return "badge-success";
+      case "Rejected": return "badge-error";
+      default: return "badge-ghost";
+    }
+  };
 
-  const product = products.find((prod) => prod.productName === productTitle);
+  const getPaymentColor = (status) => {
+    return status === "Paid" ? "badge-success" : "badge-warning";
+  };
+
+  const timelineSteps = [
+    { status: "Order Placed", icon: "🛒" },
+    { status: "Payment Completed", icon: "💳" },
+    { status: "In Production", icon: "⚙️" },
+    { status: "Quality Check Passed", icon: "✅" },
+    { status: "Packed", icon: "📦" },
+    { status: "Shipped", icon: "🚚" },
+    { status: "Delivered", icon: "🏠" },
+  ];
 
   return (
-    <div className="container mx-auto p-6 space-y-6">
-      <title> Order Details</title>
-      <h1 className="text-3xl font-bold text-center mb-4">Order Details</h1>
+    <div className="min-h-screen bg-base-200 py-8 px-4">
+      <title>Order #{orderId.slice(-8)} Details</title>
 
-      {/* Customer Information */}
-      <div className="bg-white p-6 shadow rounded-lg">
-        <h2 className="text-xl font-semibold text-gray-700 mb-4">Customer Information</h2>
-        <div className="flex flex-col md:flex-row justify-between items-center md:items-start mb-4">
-          <div className="flex justify-center mb-4 md:mb-0">
-            {buyer && buyer.photoURL ? (
-              <img
-                src={buyer?.photoURL}
-                alt={`${firstName} ${lastName}`}
-                className="w-48 h-48 object-cover rounded-lg md:w-64 md:h-64 lg:w-72 lg:h-72"
-              />
+      <div className="max-w-5xl mx-auto space-y-8">
+
+        <div className="bg-gradient-to-r from-primary to-secondary text-white rounded-2xl p-8 shadow-2xl text-center">
+          <h1 className="text-4xl font-bold mb-3">Order Details</h1>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-lg">
+            <p className="font-mono text-xl">Order ID: <span className="font-bold">{orderId.slice(-10)}</span></p>
+            <span className={`badge ${getStatusColor(status)} badge-lg font-bold py-4 px-6`}>
+              {status.toUpperCase()}
+            </span>
+            <span className={`badge ${getPaymentColor(paymentStatus)} badge-lg font-bold py-4 px-6`}>
+              {paymentStatus.toUpperCase()}
+            </span>
+          </div>
+          <p className="mt-4 opacity-90">Ordered on: {format(new Date(orderDate), "PPP")}</p>
+        </div>
+
+        {/* Customer Information */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="card bg-base-100 shadow-xl border border-base-300">
+            <div className="card-body">
+              <h2 className="card-title text-2xl mb-6">👤 Customer Information</h2>
+              <div className="flex flex-col sm:flex-row items-center gap-6">
+                <img
+                  src={buyer?.photoURL || "https://via.placeholder.com/150"}
+                  alt="Customer"
+                  className="w-32 h-32 rounded-full ring-4 ring-primary object-cover"
+                />
+                <div className="space-y-3 text-left">
+                  <p className="text-lg"><strong>Name:</strong> {firstName} {lastName}</p>
+                  <p><strong>Email:</strong> {buyerEmail}</p>
+                  <p><strong>Phone:</strong> {contact || "Not provided"}</p>
+                  <p><strong>Address:</strong> {address}</p>
+                  {notes && <p><strong>Notes:</strong> <span className="italic text-gray-600">{notes}</span></p>}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Product Information */}
+          <div className="card bg-base-100 shadow-xl border border-base-300">
+            <div className="card-body">
+              <h2 className="card-title text-2xl mb-6">📦 Product Information</h2>
+              <div className="flex flex-col sm:flex-row items-center gap-6">
+                <img
+                  src={product?.images?.[0] || "https://via.placeholder.com/150"}
+                  alt={productTitle}
+                  className="w-32 h-32 rounded-xl object-cover ring-4 ring-secondary"
+                />
+                <div className="space-y-3 text-left">
+                  <p className="text-lg"><strong>Product:</strong> {productTitle}</p>
+                  <p><strong>Quantity:</strong> <span className="font-bold text-xl">{quantity}</span></p>
+                  <p><strong>Unit Price:</strong> ${productPrice}</p>
+                  <p><strong>Total Price:</strong> <span className="text-2xl font-bold text-primary">${orderPrice}</span></p>
+                  <p><strong>Payment Method:</strong> {paymentMethod || "Cash on Delivery"}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Tracking Timeline */}
+        <div className="card bg-base-100 shadow-2xl border border-base-300">
+          <div className="card-body">
+            <h2 className="card-title text-2xl mb-8 text-center">📈 Order Tracking Timeline</h2>
+
+            {trackingHistory.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-xl text-gray-500">No tracking updates yet</p>
+              </div>
             ) : (
-              <div className="w-16 h-16 bg-gray-300 rounded-full"></div> // Placeholder if no image
+              <div className="timeline timeline-vertical">
+                {trackingHistory.map((entry, index) => {
+                  const isLast = index === trackingHistory.length - 1;
+                  const stepInfo = timelineSteps.find(s => s.status === entry.orderStatus) || { icon: "🔄" };
+
+                  return (
+                    <div key={index} className="timeline-item mb-10">
+                      <div className="timeline-left">
+                        <div className={`timeline-icon w-12 h-12 rounded-full flex items-center justify-center text-2xl shadow-lg
+                          ${isLast ? "bg-success text-white" : "bg-primary text-white"}`}>
+                          {stepInfo.icon}
+                        </div>
+                      </div>
+                      <hr className="timeline-hr" />
+                      <div className="timeline-right">
+                        <div className="bg-base-200 p-5 rounded-2xl shadow-md max-w-md">
+                          <h3 className="font-bold text-lg">{entry.orderStatus}</h3>
+                          <p className="text-sm text-gray-500 mt-1">
+                            {format(new Date(entry.entryDate), "PPP 'at' p")}
+                          </p>
+                          {entry.location && <p className="mt-2"><strong>Location:</strong> {entry.location}</p>}
+                          {entry.note && <p className="mt-2 italic text-gray-600">{entry.note}</p>}
+                        </div>
+                      </div>
+                      {index < trackingHistory.length - 1 && <hr className="timeline-hr" />}
+                    </div>
+                  );
+                })}
+              </div>
             )}
           </div>
-          <div className="space-y-4 md:ml-6 md:w-2/3">
-            <p>
-              <strong>Customer:</strong> {firstName} {lastName}
-            </p>
-            <p>
-              <strong>Email:</strong> {buyerEmail}
-            </p>
-            <p>
-              <strong>Contact:</strong> {contact}
-            </p>
-            <p>
-              <strong>Shipping Address:</strong> {address}
-            </p>
-            <p>
-              <strong>Notes:</strong> {notes || "No notes provided"}
-            </p>
-          </div>
         </div>
-      </div>
 
-      <div className="bg-white p-6 shadow rounded-lg">
-        <h2 className="text-xl font-semibold text-gray-700 mb-4">Order Information</h2>
-        <div className="flex flex-col md:flex-row justify-between items-center md:items-start mb-4">
-          {product && product.images && product.images.length > 0 ? (
-            <img
-              src={product.images[0]}
-              alt={productTitle}
-              className="w-48 h-48 object-cover rounded-lg md:w-64 md:h-64 lg:w-72 lg:h-72"
-            />
-          ) : (
-            <div className="w-48 h-48 bg-gray-300 mb-4 md:w-64 md:h-64 lg:w-72 lg:h-72"></div>
-          )}
-          <div className="space-y-4 mt-3 md:mt-0 md:ml-6 md:w-2/3">
-            <p>
-              <strong>Product:</strong> {productTitle}
-            </p>
-            <p>
-              <strong>Quantity:</strong> {quantity}
-            </p>
-            <p>
-              <strong>Product Price:</strong> ${productPrice}
-            </p>
-            <p>
-              <strong>Total Order Price:</strong> ${orderPrice}
-            </p>
-            <p>
-              <strong>Status:</strong>
-              <span
-                className={`px-2 py-1 text-sm font-semibold rounded ${
-                  status === "Pending"
-                    ? "bg-yellow-100 text-yellow-700"
-                    : status === "Approved"
-                    ? "bg-green-100 text-green-700"
-                    : "bg-red-100 text-red-700"
-                }`}
-              >
-                {status}
-              </span>
-            </p>
-            <p>
-              <strong>Payment Method:</strong> {paymentMethod}
-            </p>
-            <p>
-              <strong>Payment Status:</strong>
-              <span
-                className={`px-2 py-1 text-sm font-semibold rounded ${
-                  paymentStatus === "Pending" ? "bg-yellow-100 text-yellow-700" : "bg-green-100 text-green-700"
-                }`}
-              >
-                {paymentStatus}
-              </span>
-            </p>
-            <p>
-              <strong>Order Date:</strong> {new Date(orderDate).toLocaleDateString()}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-white p-6 shadow rounded-lg">
-        <h2 className="text-xl font-semibold text-gray-700 mb-4">Tracking History</h2>
-
-        {trackingHistory?.length === 0 ? (
-          <p>No tracking history available</p>
-        ) : (
-          <ul className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical">
-            {trackingHistory?.map((entry, index) => (
-              <li key={index}>
-                <hr />
-                <div className="timeline-middle">
-                  <div
-                    className={`w-4 h-4 rounded-full border-2 ${
-                      entry.orderStatus === "Rejected"
-                        ? "bg-red-500 border-red-700"
-                        : index === trackingHistory.length - 1
-                        ? "bg-green-500 border-green-700"
-                        : "bg-yellow-500 border-yellow-700"
-                    }`}
-                  ></div>
-                </div>
-
-                <div className="timeline-end mb-4">
-                  <div className="p-4 bg-gray-50 rounded-lg shadow-sm">
-                    <p className="text-sm font-semibold text-gray-700">{entry.orderStatus}</p>
-                    <p className="text-xs text-gray-500">{new Date(entry.entryDate).toLocaleString()}</p>
-                  </div>
-                </div>
-                <hr />
-              </li>
-            ))}
-          </ul>
-        )}
       </div>
     </div>
   );

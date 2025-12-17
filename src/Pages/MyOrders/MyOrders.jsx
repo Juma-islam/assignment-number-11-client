@@ -9,7 +9,6 @@ import useRoles from "../../hooks/useRoles";
 import BuyerApprovalPending from "../../components/Shared/BuyerApprovalPending/BuyerApprovalPending";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 
-
 const MyOrders = () => {
   const { user } = useAuth();
   const axiosSecure = useAxios();
@@ -54,7 +53,7 @@ const MyOrders = () => {
         }
       });
     } catch (err) {
-        console.log(err)
+      console.log(err);
       toast.error("Sorry, something went wrong!");
     }
   };
@@ -68,7 +67,6 @@ const MyOrders = () => {
       <title> My Orders - Buyer Dashboard</title>
       <h1 className="text-2xl font-bold mb-6">My Orders</h1>
 
-      {/* Mobile Card View */}
       <div className="md:hidden space-y-4">
         {myOrders.length === 0 ? (
           <div className="text-center py-10 shadow rounded-lg">
@@ -122,7 +120,6 @@ const MyOrders = () => {
         )}
       </div>
 
-      {/* Desktop Table View */}
       <div className="hidden md:block overflow-x-auto bg-base-300 shadow rounded-lg">
         <table className="min-w-full text-sm">
           <thead className="bg-base-200">

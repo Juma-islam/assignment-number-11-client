@@ -16,7 +16,7 @@ const AllProduct = () => {
   const limit = 9
   const skip = (page - 1) * limit
 
-  // Fetch all products
+  // all products
   const { data: products = [], isLoading } = useQuery({
     queryKey: ['products'],
     queryFn: async () => {
@@ -35,13 +35,12 @@ const AllProduct = () => {
     if (searchTerm) {
       const term = searchTerm.toLowerCase()
       result = result.filter(product => {
-        // productName 
+       
         return product.title?.toLowerCase().includes(term) ||
                product.category?.toLowerCase().includes(term)
       })
     }
 
-    // Category filter
     if (category !== 'all') {
       result = result.filter(product => 
         product.category === category
@@ -73,7 +72,6 @@ const AllProduct = () => {
       <h1 className="text-3xl font-bold mb-8 text-center">
         All Products
       </h1>
-
       <div className="mb-8 flex flex-col md:flex-row gap-4">
         <div className="flex-1">
           <input

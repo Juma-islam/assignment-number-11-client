@@ -1,20 +1,20 @@
-import { useQuery } from '@tanstack/react-query';
-import React from 'react';
-import { Link } from 'react-router';
-import { motion } from 'framer-motion';
-import LoadingSpinner from '../../components/Shared/LoadingSpinner';
-import useAxios from '../../hooks/useAxios';
-import AllProductCard from '../AllProductCard/AllProductCard';
+import { useQuery } from "@tanstack/react-query";
+import React from "react";
+import { Link } from "react-router";
+import { motion } from "framer-motion";
+import LoadingSpinner from "../../components/Shared/LoadingSpinner";
+import useAxios from "../../hooks/useAxios";
+import AllProductCard from "../AllProductCard/AllProductCard";
 
 const OurProducts = () => {
   const axiosSecure = useAxios();
 
   const { data: ourProducts = [], isLoading } = useQuery({
-    queryKey: ['topProducts'],
+    queryKey: ["topProducts"],
     queryFn: async () => {
-      const res = await axiosSecure.get('/topProducts');
+      const res = await axiosSecure.get("/topProducts");
       return res.data;
-    }
+    },
   });
 
   if (isLoading) return <LoadingSpinner />;
@@ -28,9 +28,7 @@ const OurProducts = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Featured Garment Collections
-          </h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Featured Garment Collections</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Ready-to-ship high-quality apparel trusted by global buyers
           </p>

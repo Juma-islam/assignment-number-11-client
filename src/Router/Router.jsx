@@ -71,13 +71,13 @@ const router = createBrowserRouter([
         element: <Payment></Payment>,
       },
       {
-        path: '/about-us',
-        element: <AboutUs></AboutUs>
+        path: "/about-us",
+        element: <AboutUs></AboutUs>,
       },
       {
-        path: '/contact',
-        element: <Contact></Contact>
-      }
+        path: "/contact",
+        element: <Contact></Contact>,
+      },
     ],
   },
 
@@ -122,12 +122,16 @@ const router = createBrowserRouter([
         ),
       },
       {
-                path: 'track-order/:id',
-                element: <TrackOrderBuyer></TrackOrderBuyer>
-            },
+        path: "track-order/:id",
+        element: <TrackOrderBuyer></TrackOrderBuyer>,
+      },
       {
         path: "my-profile",
-        element: <PrivateRouter><MyProfile></MyProfile></PrivateRouter>,
+        element: (
+          <PrivateRouter>
+            <MyProfile></MyProfile>
+          </PrivateRouter>
+        ),
       },
       {
         path: "all-products",
@@ -181,10 +185,10 @@ const router = createBrowserRouter([
           </ManagerRouter>
         ),
       },
-       {
-                path: 'pending-orders/order-details/:orderId',
-                element: <OrderDetails></OrderDetails>
-            },
+      {
+        path: "pending-orders/order-details/:orderId",
+        element: <OrderDetails></OrderDetails>,
+      },
       {
         path: "approved-orders",
         element: (
@@ -194,7 +198,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'approved-orders/view-tracking/:id',
+        path: "approved-orders/view-tracking/:id",
         element: (
           <ManagerRouter>
             <TrackOrderManager></TrackOrderManager>

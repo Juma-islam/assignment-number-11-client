@@ -1,13 +1,12 @@
-
 import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router"; 
+import { Link, NavLink } from "react-router";
 import { toast } from "react-toastify";
 import logo from "../../../assets/logo.png";
 import { FaHome, FaUser } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
 import { FiPhone, FiShoppingBag } from "react-icons/fi";
 import { MdDashboard } from "react-icons/md";
-import { Sun, Moon } from "lucide-react"; 
+import { Sun, Moon } from "lucide-react";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
@@ -32,31 +31,46 @@ const Navbar = () => {
     <>
       <li className="font-semibold hover:bg-secondary rounded-md text-white">
         <NavLink className={({ isActive }) => (isActive ? "bg-secondary font-semibold" : "")} to="/">
-          <span><FaHome /></span> Home
+          <span>
+            <FaHome />
+          </span>{" "}
+          Home
         </NavLink>
       </li>
       <li className="font-semibold hover:bg-secondary rounded-md text-white">
         <NavLink className={({ isActive }) => (isActive ? "bg-secondary font-semibold" : "")} to="/allProducts">
-          <span><FiShoppingBag /></span> All Products
+          <span>
+            <FiShoppingBag />
+          </span>{" "}
+          All Products
         </NavLink>
       </li>
-      
+
       {user ? (
         <li className="font-semibold hover:bg-secondary rounded-md text-white">
           <NavLink className={({ isActive }) => (isActive ? "bg-secondary font-semibold" : "")} to="/dashboard">
-            <span><MdDashboard /></span> Dashboard
+            <span>
+              <MdDashboard />
+            </span>{" "}
+            Dashboard
           </NavLink>
         </li>
       ) : (
         <>
           <li className="font-semibold hover:bg-secondary rounded-md text-white">
             <NavLink className={({ isActive }) => (isActive ? "bg-secondary font-semibold" : "")} to="/about-us">
-              <span><FaUser /></span> About Us
+              <span>
+                <FaUser />
+              </span>{" "}
+              About Us
             </NavLink>
           </li>
           <li className="font-semibold hover:bg-secondary rounded-md text-white">
             <NavLink className={({ isActive }) => (isActive ? "bg-secondary font-semibold" : "")} to="/contact">
-              <span><FiPhone /></span> Contact
+              <span>
+                <FiPhone />
+              </span>{" "}
+              Contact
             </NavLink>
           </li>
         </>
@@ -69,11 +83,20 @@ const Navbar = () => {
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
             </svg>
           </div>
-          <ul tabIndex={0} className="menu menu-sm dropdown-content bg-white dark:bg-black rounded-box z-1 mt-3 w-52 p-2 shadow-md">
+          <ul
+            tabIndex={0}
+            className="menu menu-sm dropdown-content bg-white dark:bg-black rounded-box z-1 mt-3 w-52 p-2 shadow-md"
+          >
             {links}
             {user && (
               <div className="mt-4 flex justify-center">
@@ -84,10 +107,14 @@ const Navbar = () => {
             )}
             <div className="flex flex-col gap-2 mt-3 lg:hidden">
               {!user && (
-                <NavLink to="/register" className="btn hover:text-indigo-500">Register</NavLink>
+                <NavLink to="/register" className="btn hover:text-indigo-500">
+                  Register
+                </NavLink>
               )}
               {user ? (
-                <button onClick={handleLogOut} className="btn hover:text-indigo-500">Log Out</button>
+                <button onClick={handleLogOut} className="btn hover:text-indigo-500">
+                  Log Out
+                </button>
               ) : (
                 <div className="flex justify-center">
                   <button onClick={toggleTheme} className="btn btn-ghost">
@@ -118,14 +145,20 @@ const Navbar = () => {
                 <img referrerPolicy="no-referrer" src={user.photoURL} alt="" />
               </div>
             </div>
-            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+            >
               {user && (
                 <li className="font-semibold text-center hover:text-indigo-500">
                   <Link to="/dashboard">Dashboard</Link>
                 </li>
               )}
               <li>
-                <button onClick={handleLogOut} className="btn btn-sm bg-green-200 border-none text-green-700 hover:bg-green-300 mt-2">
+                <button
+                  onClick={handleLogOut}
+                  className="btn btn-sm bg-green-200 border-none text-green-700 hover:bg-green-300 mt-2"
+                >
                   Logout
                 </button>
               </li>
@@ -153,11 +186,7 @@ const Navbar = () => {
         )}
 
         {/* Beautiful Moon/Sun Theme Toggle Button */}
-        <button
-          onClick={toggleTheme}
-          className="btn btn-ghost btn-circle hidden md:flex"
-          aria-label="Toggle Theme"
-        >
+        <button onClick={toggleTheme} className="btn btn-ghost btn-circle hidden md:flex" aria-label="Toggle Theme">
           <div className="relative w-6 h-6">
             <Sun
               className={`absolute inset-0 transition-all duration-500 text-yellow-500 ${

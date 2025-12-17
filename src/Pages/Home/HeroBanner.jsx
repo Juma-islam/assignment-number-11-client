@@ -1,37 +1,30 @@
-
-
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
-import bannerImg from "../../assets/3d-dress-fire-with-flames_23-2151073729(1).jpg"
+import bannerImg from "../../assets/3d-dress-fire-with-flames_23-2151073729(1).jpg";
 
 const HeroBanner = () => {
   return (
     <section className="relative bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-800 py-24 overflow-hidden">
-   
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml,...')]"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-        >
+        <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
           <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
-            Manage Your Garments Factory  
+            Manage Your Garments Factory
             <span className="text-yellow-300"> Smarter & Faster</span>
           </h1>
 
           <p className="text-lg text-gray-200 mt-6 leading-relaxed">
-            Track orders, monitor production stages, manage inventory, and deliver on time. 
-            All in one simple and powerful dashboard.
+            Track orders, monitor production stages, manage inventory, and deliver on time. All in one simple and
+            powerful dashboard.
           </p>
 
           <div className="mt-10 flex flex-col sm:flex-row gap-4">
             <Link
-              to="/all-products"
+              to="/allProducts"
               className="bg-white text-indigo-700 font-bold text-lg px-8 py-4 rounded-lg hover:bg-gray-100 transition flex items-center justify-center gap-3 shadow-lg"
             >
               View All Products
@@ -46,7 +39,6 @@ const HeroBanner = () => {
             </Link>
           </div>
 
-        
           <div className="mt-12 grid grid-cols-3 gap-6 text-white">
             <div className="text-center">
               <h3 className="text-3xl font-bold">500+</h3>
@@ -63,7 +55,6 @@ const HeroBanner = () => {
           </div>
         </motion.div>
 
-     
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}

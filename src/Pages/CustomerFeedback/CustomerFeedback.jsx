@@ -9,9 +9,10 @@ const testimonials = [
     role: "CEO, StyleX Fashion Ltd.",
     company: "Dhaka, Bangladesh",
     rating: 5,
-    comment: "This platform has completely transformed our production tracking. Now we can monitor everything from order to delivery with just one click. Truly outstanding!",
+    comment:
+      "This platform has completely transformed our production tracking. Now we can monitor everything from order to delivery with just one click. Truly outstanding!",
     avatar: "https://i.pravatar.cc/150?img=1",
-    verified: true
+    verified: true,
   },
   {
     id: 2,
@@ -19,9 +20,10 @@ const testimonials = [
     role: "Production Manager",
     company: "Moonlight Garments",
     rating: 5,
-    comment: "As a manager, my workload has reduced by 70%. Pending orders, tracking updates — everything is in one place. The UI is also incredibly beautiful and intuitive!",
+    comment:
+      "As a manager, my workload has reduced by 70%. Pending orders, tracking updates — everything is in one place. The UI is also incredibly beautiful and intuitive!",
     avatar: "https://i.pravatar.cc/150?img=2",
-    verified: true
+    verified: true,
   },
   {
     id: 3,
@@ -29,9 +31,10 @@ const testimonials = [
     role: "International Buyer",
     company: "Sweden",
     rating: 5,
-    comment: "As an international buyer, I can track my orders in real-time with production stages and live location updates. Never seen such a professional system from Bangladesh before!",
+    comment:
+      "As an international buyer, I can track my orders in real-time with production stages and live location updates. Never seen such a professional system from Bangladesh before!",
     avatar: "https://i.pravatar.cc/150?img=3",
-    verified: true
+    verified: true,
   },
   {
     id: 4,
@@ -39,10 +42,11 @@ const testimonials = [
     role: "Owner, TrendyWear BD",
     company: "Chattogram, Bangladesh",
     rating: 5,
-    comment: "No more paperwork in my factory. Everything is now digital. Customers are also very happy seeing real-time tracking. Thank you so much to the team!",
+    comment:
+      "No more paperwork in my factory. Everything is now digital. Customers are also very happy seeing real-time tracking. Thank you so much to the team!",
     avatar: "https://i.pravatar.cc/150?img=4",
-    verified: true
-  }
+    verified: true,
+  },
 ];
 
 const CustomerFeedback = () => {
@@ -64,7 +68,6 @@ const CustomerFeedback = () => {
   return (
     <section className="py-10 px-4 bg-gradient-to-br from-slate-50 via-white to-indigo-50 overflow-hidden">
       <div className="max-w-7xl mx-auto">
-       
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -80,7 +83,6 @@ const CustomerFeedback = () => {
           </p>
         </motion.div>
 
-        
         <div className="relative">
           <div className="flex items-center justify-center">
             <motion.div
@@ -91,25 +93,17 @@ const CustomerFeedback = () => {
               transition={{ duration: 0.7, ease: "easeInOut" }}
               className="relative max-w-5xl w-full"
             >
-              
               <div className="absolute -top-10 -left-10 text-9xl text-indigo-100 opacity-30">
                 <Quote className="w-48 h-48" />
               </div>
 
-            
               <div className="bg-white rounded-3xl shadow-2xl p-10 md:p-14 border border-gray-100 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-purple-500/5 to-pink-500/5" />
-                
+
                 <div className="relative z-10">
-                 
                   <div className="flex items-center mb-6">
                     {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: i * 0.1 }}
-                      >
+                      <motion.div key={i} initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: i * 0.1 }}>
                         <Star className="w-8 h-8 text-yellow-500 fill-yellow-500" />
                       </motion.div>
                     ))}
@@ -118,12 +112,10 @@ const CustomerFeedback = () => {
                     </span>
                   </div>
 
-                  
                   <p className="text-2xl md:text-3xl font-medium text-gray-800 leading-relaxed mb-10 italic">
                     "{testimonials[currentIndex].comment}"
                   </p>
 
-                  
                   <div className="flex items-center gap-6">
                     <div className="relative">
                       <img
@@ -133,20 +125,18 @@ const CustomerFeedback = () => {
                       />
                       <div className="absolute -bottom-1 -right-1 bg-green-500 text-white rounded-full p-2">
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          <path
+                            fillRule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clipRule="evenodd"
+                          />
                         </svg>
                       </div>
                     </div>
                     <div>
-                      <h4 className="text-xl font-bold text-gray-900">
-                        {testimonials[currentIndex].name}
-                      </h4>
-                      <p className="text-indigo-600 font-medium">
-                        {testimonials[currentIndex].role}
-                      </p>
-                      <p className="text-sm text-gray-500">
-                        {testimonials[currentIndex].company}
-                      </p>
+                      <h4 className="text-xl font-bold text-gray-900">{testimonials[currentIndex].name}</h4>
+                      <p className="text-indigo-600 font-medium">{testimonials[currentIndex].role}</p>
+                      <p className="text-sm text-gray-500">{testimonials[currentIndex].company}</p>
                     </div>
                   </div>
                 </div>
@@ -154,7 +144,6 @@ const CustomerFeedback = () => {
             </motion.div>
           </div>
 
-       
           <button
             onClick={prevTestimonial}
             className="absolute left-4 md:left-0 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white shadow-2xl rounded-full p-4 backdrop-blur-sm transition-all hover:scale-110 z-10"
@@ -170,7 +159,6 @@ const CustomerFeedback = () => {
             <ChevronRight className="w-8 h-8 text-indigo-600" />
           </button>
 
-          
           <div className="flex justify-center gap-3 mt-12">
             {testimonials.map((_, index) => (
               <button
@@ -187,7 +175,6 @@ const CustomerFeedback = () => {
           </div>
         </div>
 
-        
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -199,9 +186,12 @@ const CustomerFeedback = () => {
             { number: "500+", label: "Happy Factories" },
             { number: "50K+", label: "Orders Processed" },
             { number: "98%", label: "Satisfaction Rate" },
-            { number: "24/7", label: "Support Active" }
+            { number: "24/7", label: "Support Active" },
           ].map((stat, i) => (
-            <div key={i} className="bg-white/70 backdrop-blur-sm rounded-2xl py-8 px-6 shadow-lg hover:shadow-xl transition-shadow">
+            <div
+              key={i}
+              className="bg-white/70 backdrop-blur-sm rounded-2xl py-8 px-6 shadow-lg hover:shadow-xl transition-shadow"
+            >
               <h3 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
                 {stat.number}
               </h3>

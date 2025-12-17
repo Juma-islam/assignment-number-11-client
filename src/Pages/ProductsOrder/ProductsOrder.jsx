@@ -63,7 +63,7 @@ const ProductsOrder = () => {
       if (result.isConfirmed) {
         const res = await axiosSecure.post("/orders", finalOrder);
         const orderId = res.data.insertedId;
-// Cash on Delivery
+     
         if (product.paymentOptions === "Stripe") {
           Swal.fire({
             icon: "success",
@@ -86,13 +86,11 @@ const ProductsOrder = () => {
         navigate(`/product-details/${id}/order-form/payment?orderId=${orderId}`);
       }
     });
-
-    // Send to backend if needed:
-    // await axiosSecure.post("/orders", finalOrder);
   };
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-10">
+      <title>Products Order</title>
       <h1 className="text-3xl font-bold mb-6 text-center">Place Your Order</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">

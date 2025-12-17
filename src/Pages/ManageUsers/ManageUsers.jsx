@@ -105,7 +105,7 @@ const ManageUsers = () => {
             });
           }
         } catch (err) {
-            console.log(err)
+          console.log(err);
         }
       }
     });
@@ -160,17 +160,16 @@ const ManageUsers = () => {
         )}
       </div>
 
-      {/* Desktop Table View */}
       <div className="hidden md:block overflow-x-auto shadow rounded-lg">
         <table className="min-w-full text-sm">
-          <thead className="bg-base-200">
+          <thead className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
             <tr>
-              <th className="p-3 text-left">Profile</th>
-              <th className="p-3 text-left">Name</th>
-              <th className="p-3 text-left">Email</th>
-              <th className="p-3 text-left">Role</th>
-              <th className="p-3 text-left">Status</th>
-              <th className="p-3 text-center">Actions</th>
+              <th className="p-6 text-left">Profile</th>
+              <th className="p-6 text-left">Name</th>
+              <th className="p-6 text-left">Email</th>
+              <th className="p-6 text-left">Role</th>
+              <th className="p-6 text-left">Status</th>
+              <th className="p-6 text-center">Actions</th>
             </tr>
           </thead>
 
@@ -318,3 +317,5 @@ const ManageUsers = () => {
 };
 
 export default ManageUsers;
+
+

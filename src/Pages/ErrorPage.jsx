@@ -6,7 +6,7 @@ import Footer from "../components/Shared/Footer/Footer";
 
 const ErrorPage = () => {
   const error = useRouteError();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <>
       <Navbar></Navbar>
@@ -20,15 +20,20 @@ const ErrorPage = () => {
             The page you are looking for is not available.
           </p>
           <div className="flex gap-4">
-            <button onClick={() => navigate(-1)} className="btn bg-linear-to-r from-[#632EE3] to-[#9F62F2] text-white font-semibold">
-            Go Back
-          </button>
-          <button onClick={() => navigate()} className="btn bg-linear-to-r from-[#632EE3] to-[#9F62F2] text-white font-semibold">
-            Go Home
-          </button>
+            <button
+              onClick={() => navigate(-1)}
+              className="btn bg-linear-to-r from-[#632EE3] to-[#9F62F2] text-white font-semibold"
+            >
+              Go Back
+            </button>
+            <button
+              onClick={() => navigate()}
+              className="btn bg-linear-to-r from-[#632EE3] to-[#9F62F2] text-white font-semibold"
+            >
+              Go Home
+            </button>
           </div>
         </div>
-        
       </div>
 
       <Footer></Footer>
@@ -37,4 +42,3 @@ const ErrorPage = () => {
 };
 
 export default ErrorPage;
-

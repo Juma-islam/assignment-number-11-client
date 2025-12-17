@@ -6,8 +6,9 @@ import { Factory, Users, Globe, Target, HeartHandshake, Award } from "lucide-rea
 const AboutUs = () => {
   return (
     <>
-      {/* Hero Section */}
+      
       <section className="relative py-32 bg-gradient-to-br from-indigo-900 via-purple-900 to-indigo-800 overflow-hidden">
+        <title>About Us</title>
         <div className="absolute inset-0 bg-black/30" />
         <div className="container mx-auto px-6 relative z-10">
           <motion.div
@@ -26,7 +27,6 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* Mission & Vision */}
       <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-16 items-center">
@@ -63,7 +63,7 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* Story & Values */}
+   
       <section className="py-24 bg-white">
         <div className="container mx-auto px-6">
           <motion.div
@@ -103,7 +103,7 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* Team & Global Reach */}
+   
       <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto px-6 text-center">
           <motion.h2

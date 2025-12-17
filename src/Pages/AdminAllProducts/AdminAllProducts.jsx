@@ -94,7 +94,6 @@ const AdminAllProducts = () => {
       <title> Products - Admin Dashboard</title>
       <h1 className="text-2xl font-bold mb-6">All Products</h1>
 
-      {/* Mobile Card View */}
       <div className="md:hidden space-y-4">
         {products.length === 0 ? (
           <div className="text-center py-10 shadow rounded-lg">
@@ -139,7 +138,6 @@ const AdminAllProducts = () => {
         )}
       </div>
 
-      {/* Desktop Table View */}
       <div className="hidden md:block overflow-x-auto shadow rounded-lg">
         <table className="min-w-full text-sm">
           <thead className="bg-base-200">

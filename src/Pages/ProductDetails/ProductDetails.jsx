@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
@@ -13,7 +12,11 @@ const ProductDetails = () => {
   const navigate = useNavigate();
   const user = useRoles();
 
-  const { data: product, isLoading, error } = useQuery({
+  const {
+    data: product,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["product", id],
     queryFn: async () => {
       const res = await axiosSecure.get(`/products/${id}`);
@@ -34,7 +37,7 @@ const ProductDetails = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-6 grid lg:grid-cols-2 gap-10">
-      
+      <title>Product Details</title>
       <div>
         {product.images?.length === 1 && (
           <img
@@ -69,9 +72,7 @@ const ProductDetails = () => {
       <div className="space-y-6">
         <h1 className="text-3xl font-bold">{product.title}</h1>
 
-        <p className="text-gray-700 leading-relaxed">
-          {product.productDescription}
-        </p>
+        <p className="text-gray-700 leading-relaxed">{product.productDescription}</p>
 
         <div className="text-lg font-semibold space-y-1">
           <p>💲 Price: ৳{product.price}</p>
@@ -108,10 +109,7 @@ const ProductDetails = () => {
             </button>
           </Link>
 
-          <button
-            onClick={() => navigate(-1)}
-            className="btn btn-secondary rounded-lg shadow"
-          >
+          <button onClick={() => navigate(-1)} className="btn btn-secondary rounded-lg shadow">
             Back
           </button>
         </div>

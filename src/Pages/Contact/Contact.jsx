@@ -6,8 +6,9 @@ import { Mail, Phone, MapPin, Clock, Send } from "lucide-react";
 const Contact = () => {
   return (
     <>
-      {/* Hero Section */}
+   
       <section className="relative py-28 bg-gradient-to-r from-indigo-700 via-purple-700 to-indigo-900 text-white overflow-hidden">
+        <title>Contact Us</title>
         <div className="container mx-auto px-6 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -22,7 +23,7 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Contact Info + Form */}
+     
       <section className="py-24 bg-white">
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-start max-w-6xl mx-auto">

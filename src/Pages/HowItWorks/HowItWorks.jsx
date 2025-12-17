@@ -3,9 +3,21 @@ import { FaShoppingCart, FaCut, FaClipboardCheck, FaTruck } from "react-icons/fa
 
 const HowItWorks = () => {
   const steps = [
-    { icon: <FaShoppingCart className="w-12 h-12" />, title: "Place Order", desc: "Select styles & place bulk orders in minutes" },
-    { icon: <FaCut className="w-12 h-12" />, title: "Production Begins", desc: "Cutting, sewing & printing with live updates" },
-    { icon: <FaClipboardCheck className="w-12 h-12" />, title: "Quality Assurance", desc: "Multiple QC checks before packing" },
+    {
+      icon: <FaShoppingCart className="w-12 h-12" />,
+      title: "Place Order",
+      desc: "Select styles & place bulk orders in minutes",
+    },
+    {
+      icon: <FaCut className="w-12 h-12" />,
+      title: "Production Begins",
+      desc: "Cutting, sewing & printing with live updates",
+    },
+    {
+      icon: <FaClipboardCheck className="w-12 h-12" />,
+      title: "Quality Assurance",
+      desc: "Multiple QC checks before packing",
+    },
     { icon: <FaTruck className="w-12 h-12" />, title: "Ship & Track", desc: "Real-time delivery tracking worldwide" },
   ];
 
@@ -35,7 +47,10 @@ const HowItWorks = () => {
               <h3 className="text-2xl font-bold text-gray-800 mb-3">{step.title}</h3>
               <p className="text-gray-600">{step.desc}</p>
               {i < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-12 left-full w-full h-0.5 bg-gradient-to-r from-indigo-200 to-transparent -z-10" style={{ width: '100%', left: '50%' }} />
+                <div
+                  className="hidden lg:block absolute top-12 left-full w-full h-0.5 bg-gradient-to-r from-indigo-200 to-transparent -z-10"
+                  style={{ width: "100%", left: "50%" }}
+                />
               )}
             </motion.div>
           ))}

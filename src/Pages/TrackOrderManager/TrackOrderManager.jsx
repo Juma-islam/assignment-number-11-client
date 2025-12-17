@@ -21,7 +21,6 @@ import useAxios from "../../hooks/useAxios";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 
 const TrackOrderManager = () => {
-
   const { id } = useParams();
   const axiosSecure = useAxios();
 
@@ -48,7 +47,7 @@ const TrackOrderManager = () => {
         minute: "2-digit",
       });
     } catch (error) {
-        console.log(error)
+      console.log(error);
       return "Date Error";
     }
   };
@@ -62,7 +61,7 @@ const TrackOrderManager = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <LoadingSpinner/>
+        <LoadingSpinner />
       </div>
     );
   }

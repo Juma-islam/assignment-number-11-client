@@ -34,16 +34,10 @@ const PaymentSuccess = () => {
           Your payment has been processed successfully. Thank you for your purchase!
         </p>
         <div className="flex flex-col gap-4">
-          <Link
-            to="/dashboard/my-orders"
-            className="btn btn-primary text-lg font-semibold flex-1 hover:bg-primary/90"
-          >
+          <Link to="/dashboard/my-orders" className="btn btn-primary text-lg font-semibold flex-1 hover:bg-primary/90">
             My Orders
           </Link>
-          <Link
-            to="/"
-            className="btn btn-outline btn-secondary text-lg font-semibold flex-1"
-          >
+          <Link to="/" className="btn btn-outline btn-secondary text-lg font-semibold flex-1">
             Back to Home
           </Link>
         </div>
@@ -53,5 +47,3 @@ const PaymentSuccess = () => {
 };
 
 export default PaymentSuccess;
-
-

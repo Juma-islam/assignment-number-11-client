@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams, useNavigate } from "react-router";
+import { useParams, useNavigate, useLocation } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import useAxios from "../../hooks/useAxios";
@@ -11,6 +11,7 @@ const Payment = () => {
   const navigate = useNavigate();
   const axiosSecure = useAxios();
   const pendingOrder = JSON.parse(sessionStorage.getItem("pendingOrder"));
+  const location = useLocation()
 
   const { data: product, isLoading } = useQuery({
     queryKey: ["products", id],

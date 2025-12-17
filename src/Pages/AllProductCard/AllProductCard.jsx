@@ -1,6 +1,6 @@
-import React from 'react'
-import { motion } from 'motion/react'
-import { Link } from 'react-router'
+import React from "react";
+import { motion } from "motion/react";
+import { Link } from "react-router";
 
 const AllProductCard = ({ product }) => {
   return (
@@ -34,7 +34,7 @@ const AllProductCard = ({ product }) => {
         </Link>
       </div>
     </motion.div>
-  )
-}
+  );
+};
 
-export default AllProductCard
+export default AllProductCard;
