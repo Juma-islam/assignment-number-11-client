@@ -1,115 +1,124 @@
 import React from 'react';
-import { FaBox, FaEye, FaEdit, FaTrash, FaHome } from 'react-icons/fa';
+import { FaEye, FaEdit, FaTrash, FaBoxOpen, FaHome } from 'react-icons/fa';
 
 export const ProductsTable = ({ products = [], title = "Products" }) => {
-    if (products.length === 0) {
-        return (
-            <div className="cardshadow-lg">
-                <div className="card-body">
-                    <h3 className="card-title mb-4">{title}</h3>
-                    <div className="text-center py-8">
-                        <FaBox className="text-4xl text-gray-300 mx-auto mb-3" />
-                        <p className="text-gray-500">No products found</p>
-                        <p className="text-sm text-gray-400 mt-1">Products will appear here once added</p>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+  const homePageCount = products.filter(p => p.showOnHomePage).length;
 
+  if (products.length === 0) {
     return (
-        <div className="card shadow-lg">
-            <div className="card-body">
-                <div className="flex justify-between items-center mb-4">
-                    <h3 className="card-title">{title}</h3>
-                    <div className="flex items-center gap-2">
-                        <div className="badge badge-primary">
-                            Total: {products.length}
-                        </div>
-                        <div className="badge badge-success">
-                            <FaHome className="mr-1" />
-                            {products.filter(p => p.showOnHomePage).length} on Home
-                        </div>
-                    </div>
-                </div>
-                <div className="overflow-x-auto">
-                    <table className="table table-zebra">
-                        <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th>Category</th>
-                                <th>Price</th>
-                                <th>Stock</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {products.slice(0, 5).map((product) => (
-                                <tr key={product._id}>
-                                    <td>
-                                        <div className="flex items-center gap-3">
-                                            <div className="avatar">
-                                                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
-                                                    <FaBox className="text-blue-600" />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <p className="font-medium">{product.title}</p>
-                                                <p className="text-xs text-gray-500 truncate max-w-[200px]">
-                                                    {product.productDescription?.substring(0, 50)}...
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span className="badge badge-outline">{product.category}</span>
-                                    </td>
-                                    <td>
-                                        <div className="font-bold">${product.price}</div>
-                                        <div className="text-xs text-gray-500">
-                                            Min: {product.minimumOrderQuantity}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className={`font-bold ${product.availableQuantity < product.minimumOrderQuantity ? 'text-red-600' : 'text-green-600'}`}>
-                                            {product.availableQuantity}
-                                        </div>
-                                        <div className="w-full bg-gray-200 rounded-full h-2">
-                                            <div
-                                                className={`h-2 rounded-full ${product.availableQuantity < product.minimumOrderQuantity ? 'bg-red-500' : 'bg-green-500'}`}
-                                                style={{
-                                                    width: `${Math.min((product.availableQuantity / (product.minimumOrderQuantity * 10)) * 100, 100)}%`
-                                                }}
-                                            ></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        {product.showOnHomePage ? (
-                                            <span className="badge badge-success">Homepage</span>
-                                        ) : (
-                                            <span className="badge badge-ghost">Hidden</span>
-                                        )}
-                                    </td>
-                                    <td>
-                                        <div className="flex gap-1">
-                                            <button className="btn btn-ghost btn-xs">
-                                                <FaEye />
-                                            </button>
-                                            <button className="btn btn-ghost btn-xs">
-                                                <FaEdit />
-                                            </button>
-                                            <button className="btn btn-ghost btn-xs text-red-500">
-                                                <FaTrash />
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+      <div className="card shadow-xl bg-base-100 border border-base-300 rounded-2xl">
+        <div className="card-body">
+          <h3 className="card-title text-xl mb-6">{title}</h3>
+          <div className="flex flex-col items-center justify-center py-12">
+            <FaBoxOpen className="w-16 h-16 text-base-content/20 mb-4" />
+            <p className="text-lg text-base-content/60">No products found</p>
+            <p className="text-sm text-base-content/40 mt-1">Once products are added, they will appear here</p>
+          </div>
         </div>
+      </div>
     );
+  }
+
+  const displayedProducts = products.slice(0, 5);
+
+  return (
+    <div className="card shadow-xl hover:shadow-2xl transition-shadow bg-base-100 border border-base-300 rounded-2xl">
+      <div className="card-body p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="card-title text-xl">{title}</h3>
+          <div className="flex items-center gap-3">
+            <div className="badge badge-lg badge-primary font-bold">
+              Total: {products.length}
+            </div>
+            <div className="badge badge-lg badge-success font-bold">
+              <FaHome className="w-4 h-4 mr-1" />
+              {homePageCount} on Home
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          {displayedProducts.map((product) => {
+            const isLowStock = product.availableQuantity < product.minimumOrderQuantity;
+            const stockPercentage = Math.min(
+              (product.availableQuantity / (product.minimumOrderQuantity * 10)) * 100,
+              100
+            );
+
+            return (
+              <div
+                key={product._id}
+                className="flex items-center justify-between p-5 bg-base-200/50 hover:bg-base-200 rounded-xl transition-colors"
+              >
+                <div className="flex items-center gap-4 flex-1 min-w-0">
+                  <div className="avatar">
+                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
+                      <FaBoxOpen className="w-8 h-8 text-blue-600" />
+                    </div>
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <p className="font-bold text-lg">{product.title}</p>
+                    <p className="text-sm text-base-content/70 truncate mt-1">
+                      {product.productDescription?.substring(0, 80)}...
+                    </p>
+                    <div className="flex items-center gap-2 mt-2">
+                      <span className="badge badge-outline badge-sm">{product.category}</span>
+                      {product.showOnHomePage ? (
+                        <span className="badge badge-success badge-sm">Homepage</span>
+                      ) : (
+                        <span className="badge badge-ghost badge-sm">Hidden</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-center mx-6">
+                  <p className="text-2xl font-bold">${product.price}</p>
+                  <p className="text-sm text-base-content/60">Min: {product.minimumOrderQuantity}</p>
+                </div>
+
+                <div className="text-center mx-6">
+                  <p className={`text-2xl font-bold ${isLowStock ? 'text-error' : 'text-success'}`}>
+                    {product.availableQuantity}
+                  </p>
+                  <progress
+                    className={`progress w-32 mt-2 ${isLowStock ? 'progress-error' : 'progress-success'}`}
+                    value={stockPercentage}
+                    max="100"
+                  ></progress>
+                </div>
+
+                <div className="flex gap-2">
+                  <div className="tooltip" data-tip="View">
+                    <button className="btn btn-ghost btn-sm">
+                      <FaEye className="w-5 h-5" />
+                    </button>
+                  </div>
+                  <div className="tooltip" data-tip="Edit">
+                    <button className="btn btn-ghost btn-sm">
+                      <FaEdit className="w-5 h-5" />
+                    </button>
+                  </div>
+                  <div className="tooltip" data-tip="Delete">
+                    <button className="btn btn-ghost btn-sm text-error">
+                      <FaTrash className="w-5 h-5" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {products.length > 5 && (
+          <div className="mt-6 pt-6 border-t border-base-300 text-center">
+            <p className="text-sm text-base-content/70">
+              Showing 5 of {products.length} products
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };

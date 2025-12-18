@@ -27,9 +27,9 @@ const HowItWorks = () => {
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-20"
+          className="text-5xl md:text-6xl text-center font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-15"
         >
-          How It <span className="text-indigo-600">Works</span>
+          How It Works
         </motion.h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">

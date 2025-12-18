@@ -16,11 +16,8 @@ const WhyChooseUs = () => {
     <section className="py-10 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Why Global Buyers{" "}
-            <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              Trust Us
-            </span>
+          <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+            Why Global Buyers Trust Us
           </h2>
           <p className="text-xl text-gray-600">Join 500+ factories growing faster with our platform</p>
         </motion.div>

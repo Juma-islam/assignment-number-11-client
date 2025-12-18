@@ -28,7 +28,7 @@ const OurProducts = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Featured Garment Collections</h2>
+          <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">Featured Garment Collections</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Ready-to-ship high-quality apparel trusted by global buyers
           </p>

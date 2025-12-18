@@ -1,7 +1,6 @@
 import React from 'react';
 import {
-  PieChart, Pie, Cell, Tooltip, Legend,
-  ResponsiveContainer
+  PieChart, Pie, Cell, Tooltip, ResponsiveContainer
 } from 'recharts';
 
 export const OrderStatusChart = ({ orders = [] }) => {
@@ -30,16 +29,17 @@ export const OrderStatusChart = ({ orders = [] }) => {
   };
 
   const chartData = getOrderStatusData();
-  
+  const totalOrders = orders.length;
+
   if (chartData.length === 0) {
     return (
-      <div className="card shadow-lg">
+      <div className="card shadow-xl bg-base-100 border border-base-300 rounded-2xl">
         <div className="card-body">
-          <h3 className="card-title mb-4">Order Status Distribution</h3>
-          <div className="h-64 flex items-center justify-center">
+          <h3 className="card-title text-xl mb-6">Order Status Distribution</h3>
+          <div className="h-80 flex items-center justify-center">
             <div className="text-center">
-              <p className="text-gray-500 mb-2">No orders data available</p>
-              <p className="text-sm text-gray-400">Orders will appear here once placed</p>
+              <p className="text-lg text-base-content/60 mb-2">No orders data available</p>
+              <p className="text-sm text-base-content/40">Orders will appear here once placed</p>
             </div>
           </div>
         </div>
@@ -47,69 +47,89 @@ export const OrderStatusChart = ({ orders = [] }) => {
     );
   }
 
-  const totalOrders = orders.length;
+  const RADIAN = Math.PI / 180;
+  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central" className="text-sm font-bold">
+        {(percent * 100).toFixed(1)}%
+      </text>
+    );
+  };
 
   return (
-    <div className="card shadow-lg">
-      <div className="card-body">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="card-title">Order Status Distribution</h3>
-          <div className="badge badge-lg badge-primary">
+    <div className="card shadow-xl hover:shadow-2xl transition-shadow bg-base-100 border border-base-300 rounded-2xl">
+      <div className="card-body p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="card-title text-xl">Order Status Distribution</h3>
+          <div className="badge badge-lg badge-primary font-bold">
             Total: {totalOrders}
           </div>
         </div>
-        <div className="h-64">
+
+        <div className="h-80 relative">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
                 data={chartData}
                 cx="50%"
                 cy="50%"
-                innerRadius={60}
-                outerRadius={80}
-                paddingAngle={2}
-                dataKey="value"
-                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(1)}%`}
                 labelLine={false}
+                label={renderCustomizedLabel}
+                innerRadius={80}
+                outerRadius={120}
+                paddingAngle={3}
+                dataKey="value"
               >
                 {chartData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
-              <Tooltip 
-                formatter={(value, name, props) => {
-                  const percent = (value / totalOrders * 100).toFixed(1);
-                  return [`${value} orders (${percent}%)`, props.payload.name];
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '12px',
+                  padding: '12px',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
                 }}
-                contentStyle={{ 
-                  backgroundColor: 'white', 
-                  border: '1px solid #E5E7EB',
-                  borderRadius: '8px',
-                  padding: '12px'
+                formatter={(value) => {
+                  const percent = ((value / totalOrders) * 100).toFixed(1);
+                  return `${value} orders (${percent}%)`;
                 }}
-              />
-              <Legend 
-                verticalAlign="bottom" 
-                height={36}
-                formatter={(value, entry) => (
-                  <span className="text-sm text-gray-700">
-                    {value} ({((entry.payload.value / totalOrders) * 100).toFixed(1)}%)
-                  </span>
-                )}
               />
             </PieChart>
           </ResponsiveContainer>
-        </div>
-        <div className="mt-4 grid grid-cols-2 gap-2">
-          {chartData.map((item, index) => (
-            <div key={index} className="flex items-center justify-between p-2 bg-base-200 rounded">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }}></div>
-                <span className="text-sm font-medium">{item.name}</span>
-              </div>
-              <span className="text-sm font-bold">{item.value}</span>
+
+          {/* Center Total Text */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="text-center">
+              <p className="text-4xl font-bold text-base-content">{totalOrders}</p>
+              <p className="text-sm text-base-content/60 mt-1">Total Orders</p>
             </div>
-          ))}
+          </div>
+        </div>
+
+        {/* Status List */}
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {chartData.map((item) => {
+            const percent = ((item.value / totalOrders) * 100).toFixed(1);
+            return (
+              <div key={item.name} className="flex items-center justify-between p-4 bg-base-200/50 hover:bg-base-200 rounded-xl transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="w-4 h-4 rounded-full shadow-md" style={{ backgroundColor: item.color }}></div>
+                  <div>
+                    <p className="font-semibold text-base">{item.name}</p>
+                    <p className="text-sm text-base-content/60">{percent}%</p>
+                  </div>
+                </div>
+                <p className="text-2xl font-bold text-base-content">{item.value}</p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

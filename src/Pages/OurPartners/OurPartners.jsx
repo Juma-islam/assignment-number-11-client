@@ -40,7 +40,7 @@ const OurPartners = () => {
   return (
     <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-6">
-        {/* Heading */}
+  
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -48,15 +48,14 @@ const OurPartners = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-20"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
             Our Trusted Partners
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Proudly collaborating with world-renowned fashion brands and retailers
           </p>
         </motion.div>
-
-        {/* Static Responsive Grid - No Slider */}
+  
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-8 gap-12 items-center justify-items-center">
           {partners.map((partner, index) => (
             <motion.div

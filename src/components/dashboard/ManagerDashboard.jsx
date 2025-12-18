@@ -104,3 +104,4 @@ export const ManagerDashboard = ({ userData, user, products = [], orders = [] })
     </div>
   );
 };
+
