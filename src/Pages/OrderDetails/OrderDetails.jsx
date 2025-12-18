@@ -81,7 +81,6 @@ const OrderDetails = () => {
 
   const getPaymentColor = (s) => (s === "Paid" ? "badge-success" : "badge-warning");
 
-  // Native date formatting without date-fns
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -117,7 +116,7 @@ const OrderDetails = () => {
       <title>Order #{orderId?.slice(-8)} Details</title>
 
       <div className="max-w-5xl mx-auto space-y-8">
-        {/* Header */}
+ 
         <div className="bg-gradient-to-r from-primary to-secondary text-white rounded-2xl p-8 shadow-2xl text-center">
           <h1 className="text-4xl font-bold mb-3">Order Details</h1>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-lg">
@@ -136,9 +135,9 @@ const OrderDetails = () => {
           </p>
         </div>
 
-        {/* Customer & Product Grid */}
+      
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Customer Card */}
+        
           <div className="card bg-base-100 shadow-xl border border-base-300">
             <div className="card-body">
               <h2 className="card-title text-2xl mb-6">Customer Information</h2>
@@ -159,7 +158,6 @@ const OrderDetails = () => {
             </div>
           </div>
 
-          {/* Product Card */}
           <div className="card bg-base-100 shadow-xl border border-base-300">
             <div className="card-body">
               <h2 className="card-title text-2xl mb-6">Product Information</h2>
@@ -181,7 +179,7 @@ const OrderDetails = () => {
           </div>
         </div>
 
-        {/* Tracking Timeline */}
+       
         <div className="card bg-base-100 shadow-2xl border border-base-300">
           <div className="card-body">
             <h2 className="card-title text-2xl mb-8 text-center">Order Tracking Timeline</h2>

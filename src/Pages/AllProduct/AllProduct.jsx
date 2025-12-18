@@ -16,7 +16,6 @@ const AllProduct = () => {
   const limit = 9
   const skip = (page - 1) * limit
 
-  // all products
   const { data: products = [], isLoading } = useQuery({
     queryKey: ['products'],
     queryFn: async () => {
@@ -25,13 +24,11 @@ const AllProduct = () => {
     }
   })
 
-  // Filter products
   useEffect(() => {
     if (!products || products.length === 0) return
 
     let result = [...products]
 
-    // Search filter
     if (searchTerm) {
       const term = searchTerm.toLowerCase()
       result = result.filter(product => {
@@ -50,10 +47,9 @@ const AllProduct = () => {
     setFilteredProducts(result)
   }, [products, searchTerm, category])
 
-  // Categories 
   const categories = ['all', ...new Set(products.map(p => p.category).filter(Boolean))]
 
-  // Pagination calculation
+
   const totalProducts = filteredProducts.length
   const totalPages = Math.ceil(totalProducts / limit)
   const paginatedProducts = filteredProducts.slice(skip, skip + limit)

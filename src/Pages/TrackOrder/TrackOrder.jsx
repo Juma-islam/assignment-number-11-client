@@ -91,7 +91,6 @@ const TrackOrder = () => {
     navigate(`${orderId}`);
   };
 
-  // ✅ Safe filtering
   const filteredOrders = orders.filter((order) => {
     const productTitle = order?.productTitle || "";
     const orderId = order?._id || "";
@@ -111,7 +110,7 @@ const TrackOrder = () => {
     <div className="min-h-screen p-4 md:p-6">
       <title>Track Order</title>
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
+   
         <div className="mb-8">
           <h1 className="text-3xl font-bold">Order Tracking</h1>
           <p className="text-gray-600 mt-2">Track and manage all your orders</p>
@@ -169,7 +168,7 @@ const TrackOrder = () => {
           </div>
         </div>
 
-        {/* Search & Filter */}
+
         <div className="card bg-base-100 shadow-md mb-6">
           <div className="card-body p-4 md:p-6 flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
@@ -200,7 +199,6 @@ const TrackOrder = () => {
           </div>
         </div>
 
-        {/* Orders Table */}
         <div className="hidden lg:block card bg-base-100 shadow-md">
           <div className="card-body p-0 overflow-x-auto">
             <table className="table w-full">

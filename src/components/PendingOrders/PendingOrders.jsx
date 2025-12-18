@@ -1,4 +1,4 @@
-// {`order-details/${order._id}`}
+
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
 import { toast } from "react-toastify";

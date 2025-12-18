@@ -78,13 +78,12 @@ const ManageProducts = () => {
   return (
     <div className="min-h-screen bg-base-200 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
+       
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-base-content">Manage Products</h1>
           <p className="text-base-content/70 mt-2">View, update, or delete your listed products</p>
         </div>
 
-        {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
           <div className="stat bg-base-100 rounded-2xl shadow-md">
             <div className="stat-title">Total Products</div>
@@ -100,7 +99,6 @@ const ManageProducts = () => {
           </div>
         </div>
 
-        {/* Search & Filter */}
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
           <div className="flex-1">
             <input
@@ -123,7 +121,6 @@ const ManageProducts = () => {
           </select>
         </div>
 
-        {/* Mobile Card View */}
         <div className="md:hidden space-y-4">
           {filteredProducts.length === 0 ? (
             <div className="card bg-base-100 shadow-xl rounded-2xl">
@@ -176,7 +173,6 @@ const ManageProducts = () => {
           )}
         </div>
 
-        {/* Desktop Table View */}
         <div className="hidden md:block">
           <div className="card bg-base-100 shadow-xl rounded-2xl overflow-hidden">
             <div className="overflow-x-auto">

@@ -96,7 +96,6 @@ const ProductsOrder = () => {
           Place Your Order
         </h1>
 
-        {/* Product Preview Card */}
         <div className="card bg-base-100 shadow-xl rounded-2xl mb-8 overflow-hidden">
           <div className="card-body p-6">
             <div className="flex flex-col md:flex-row gap-6">
@@ -127,7 +126,7 @@ const ProductsOrder = () => {
           </div>
         </div>
 
-        {/* Order Form */}
+     
         <div className="card bg-base-100 shadow-xl rounded-2xl">
           <div className="card-body p-8">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">

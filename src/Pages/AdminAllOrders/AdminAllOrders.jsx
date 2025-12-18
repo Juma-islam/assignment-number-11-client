@@ -30,7 +30,6 @@ const AdminAllOrders = () => {
     return searchMatch && statusMatch;
   });
 
-  // Stats calculation
   const totalOrders = orders.length;
   const pendingCount = orders.filter(o => o.status === "Pending").length;
   const approvedCount = orders.filter(o => o.status === "Approved").length;
@@ -57,7 +56,6 @@ const AdminAllOrders = () => {
           <p className="text-base-content/70 mt-2">Manage and track all customer orders</p>
         </div>
 
-        {/* Stats Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <div className="stat bg-base-100 rounded-2xl shadow-md">
             <div className="stat-title">Total Orders</div>
@@ -77,7 +75,6 @@ const AdminAllOrders = () => {
           </div>
         </div>
 
-        {/* Search & Filter */}
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
           <input
             type="text"
@@ -99,7 +96,7 @@ const AdminAllOrders = () => {
           </select>
         </div>
 
-        {/* Mobile Card View */}
+
         <div className="md:hidden space-y-4">
           {filteredOrders.length === 0 ? (
             <div className="card bg-base-100 shadow-xl rounded-2xl">
@@ -155,7 +152,6 @@ const AdminAllOrders = () => {
           )}
         </div>
 
-        {/* Desktop Table View */}
         <div className="hidden md:block">
           <div className="card bg-base-100 shadow-xl rounded-2xl overflow-hidden">
             <div className="overflow-x-auto">

@@ -81,7 +81,6 @@ const ProductDetails = () => {
           <p>💳 Payment: {product.paymentOptionss}</p>
         </div>
 
-        {/* ================= Demo Video ================= */}
         {product.demoVideo && (
           <div className="mt-6">
             <h2 className="text-xl font-bold mb-2">Product Demo Video</h2>
@@ -98,7 +97,6 @@ const ProductDetails = () => {
           Category: <span className="font-semibold">{product.category}</span>
         </p>
 
-        {/* ================= Buttons ================= */}
         <div className="flex gap-4 mt-4">
           <Link to="order-form">
             <button
