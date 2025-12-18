@@ -64,6 +64,7 @@ const MyProfile = () => {
 
   return (
     <div className="min-h-screen p-4 md:p-6">
+      <title>My Profile</title>
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div>
@@ -316,3 +317,4 @@ const MyProfile = () => {
 };
 
 export default MyProfile;
+
