@@ -62,17 +62,14 @@ const UpdateProductModal = ({ modalRef, selectedProduct, refetchProducts }) => {
   const handlePrevImage = () => {
     setCurrentIndex((prev) => (prev - 1 + imageUrls.length) % imageUrls.length);
   };
-
   const handleNextImage = () => {
     setCurrentIndex((prev) => (prev + 1) % imageUrls.length);
   };
-
   const onSubmit = async (data) => {
     const finalProduct = {
       ...data,
       images: imageUrls.filter((img) => img.trim() !== ""),
     };
-
     try {
       const res = await axiosSecure.patch(`/products/${selectedProduct._id}`, finalProduct);
       if (res.data.modifiedCount > 0) {
