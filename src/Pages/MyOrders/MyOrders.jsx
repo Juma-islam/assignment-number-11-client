@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router"; 
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
@@ -28,165 +28,187 @@ const MyOrders = () => {
   });
 
   const handleOrderDelete = async (id) => {
-    try {
-      Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-      }).then(async (result) => {
-        if (result.isConfirmed) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, Cancel Order",
+      cancelButtonText: "No, Keep It",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
           const res = await axiosSecure.delete(`/orders/${id}/my-order`);
           if (res.data.success) {
-            Swal.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
-              icon: "success",
-            });
+            Swal.fire("Cancelled!", "Your order has been cancelled.", "success");
             refetch();
           } else {
-            toast.error(res.data.message);
+            toast.error(res.data.message || "Failed to cancel order");
           }
+        } catch (err) {
+          console.log(err)
+          toast.error("Something went wrong!");
         }
-      });
-    } catch (err) {
-      console.log(err);
-      toast.error("Sorry, something went wrong!");
+      }
+    });
+  };
+
+
+  if (users?.role === "buyer" && users?.status === "pending") {
+    return <BuyerApprovalPending />;
+  }
+
+  if (isLoading) return <LoadingSpinner />;
+
+  const getStatusBadge = (status) => {
+    switch (status) {
+      case "Pending":
+        return "badge badge-warning badge-outline";
+      case "Approved":
+        return "badge badge-success badge-outline";
+      case "Rejected":
+        return "badge badge-error badge-outline";
+      case "Delivered":
+        return "badge badge-success";
+      default:
+        return "badge badge-ghost";
     }
   };
 
-  if (users?.role === "buyer" && users?.status === "pending") return <BuyerApprovalPending></BuyerApprovalPending>;
-
-  if (isLoading) return <LoadingSpinner></LoadingSpinner>;
-
   return (
-    <div className="p-4 md:p-8 min-h-screen">
-      <title> My Orders - Buyer Dashboard</title>
-      <h1 className="text-2xl font-bold mb-6">My Orders</h1>
+    <div className="min-h-screen bg-base-200 p-4 md:p-8">
+      <div className="max-w-7xl mx-auto">
+    
+        <div className="mb-8 text-center md:text-left">
+          <h1 className="text-4xl font-bold text-primary mb-2">My Orders</h1>
+          <p className="text-base-content/70">Track and manage all your garment orders in one place</p>
+        </div>
 
-      <div className="md:hidden space-y-4">
-        {myOrders.length === 0 ? (
-          <div className="text-center py-10 shadow rounded-lg">
-            <p className="text-gray-500">No orders found</p>
-          </div>
-        ) : (
-          myOrders.map((order) => (
-            <div key={order._id} className="shadow rounded-lg p-4 border border-gray-100">
-              <div className="flex justify-between items-start mb-3">
-                <div>
-                  <h3 className="font-semibold">{order.productTitle}</h3>
-                  <p className="text-xs text-gray-500 mt-1">Order ID: {order._id}</p>
+        <div className="block md:hidden space-y-6">
+          {myOrders.length === 0 ? (
+            <div className="card bg-base-100 shadow-xl border border-base-300">
+              <div className="card-body text-center py-16">
+                <div className="mx-auto w-24 h-24 mb-4 opacity-50">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2a2 2 0 00-2 2v3a2 2 0 002 2h2m-8-10h4" />
+                  </svg>
                 </div>
-                <span
-                  className={`px-2 py-1 rounded text-xs font-semibold whitespace-nowrap ${
-                    order.status === "Shipped" ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"
-                  }`}
-                >
-                  {order.status}
-                </span>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4 text-sm mb-4">
-                <div>
-                  <p className="text-gray-500 text-xs">Quantity</p>
-                  <p className="font-medium">{order.quantity}</p>
-                </div>
-                <div>
-                  <p className="text-gray-500 text-xs">Payment Method</p>
-                  <p className="font-medium">{order.paymentMethod}</p>
-                </div>
-              </div>
-
-              <div className="flex gap-2">
-                <button
-                  onClick={() => navigate(`order-details/${order._id}`)}
-                  className="btn btn-primary hover:bg-primary/90 text-white rounded text-sm font-medium transition-colors flex-1"
-                >
-                  View Details
-                </button>
-                <button
-                  disabled={order?.status !== "Pending"}
-                  onClick={() => handleOrderDelete(order._id)}
-                  className="btn btn-error text-white rounded text-sm font-medium transition-colors flex-1"
-                >
-                  Cancel
-                </button>
+                <h3 className="text-xl font-semibold text-base-content/70">No orders yet</h3>
+                <p className="text-base-content/60 mt-2">Start shopping and your orders will appear here</p>
               </div>
             </div>
-          ))
-        )}
-      </div>
-
-      <div className="hidden md:block overflow-x-auto bg-base-300 shadow rounded-lg">
-        <table className="min-w-full text-sm">
-          <thead className="bg-base-200">
-            <tr>
-              <th className="p-3 text-left font-semibold">Order ID</th>
-              <th className="p-3 text-left font-semibold">Product</th>
-              <th className="p-3 text-left font-semibold">Quantity</th>
-              <th className="p-3 text-left font-semibold">Status</th>
-              <th className="p-3 text-left font-semibold">Payment</th>
-              <th className="p-3 text-center font-semibold">Actions</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {myOrders.length === 0 ? (
-              <tr>
-                <td colSpan="6" className="p-8 text-center text-gray-500">
-                  No orders found
-                </td>
-              </tr>
-            ) : (
-              myOrders.map((order) => (
-                <tr key={order._id} className="border-b">
-                  <td className="p-3 font-mono">{order._id}</td>
-                  <td className="p-3 font-medium">{order.productTitle}</td>
-                  <td className="p-3">{order.quantity}</td>
-
-                  <td className="p-3">
-                    <span
-                      className={`px-2 py-1 rounded text-xs font-semibold ${
-                        order?.status === "Pending"
-                          ? "bg-yellow-100 text-yellow-700"
-                          : order?.status === "Approved"
-                          ? "bg-green-100 text-green-700"
-                          : order?.status === "Delivered"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-red-100 text-red-700"
-                      }`}
-                    >
-                      {order.status}
-                    </span>
-                  </td>
-
-                  <td className="p-3">{order.paymentMethod}</td>
-
-                  <td className="p-3">
-                    <div className="flex gap-2 justify-center">
-                      <Link to={`order-details/${order._id}`}>
-                        <button className="btn btn-primary hover:bg-primary/90 text-white rounded text-sm font-medium transition-colors">
-                          View Details
-                        </button>
-                      </Link>
-
-                      <button
-                        disabled={order?.status !== "Pending"}
-                        onClick={() => handleOrderDelete(order._id)}
-                        className="btn btn-error text-white rounded text-sm font-medium transition-colors"
-                      >
-                        Cancel
-                      </button>
+          ) : (
+            myOrders.map((order) => (
+              <div key={order._id} className="card bg-base-100 shadow-xl border border-base-300 hover:shadow-2xl transition-shadow">
+                <div className="card-body p-5">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h3 className="text-lg font-bold text-primary">{order.productTitle}</h3>
+                      <p className="text-sm text-base-content/60 mt-1">Order ID: <span className="font-mono">{order._id.slice(-8)}</span></p>
                     </div>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+                    <div className={getStatusBadge(order.status)}>
+                      {order.status}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 text-sm mb-6">
+                    <div className="bg-base-200 rounded-lg p-3">
+                      <p className="text-base-content/60">Quantity</p>
+                      <p className="font-bold text-lg">{order.quantity}</p>
+                    </div>
+                    <div className="bg-base-200 rounded-lg p-3">
+                      <p className="text-base-content/60">Payment</p>
+                      <p className="font-bold">{order.paymentMethod || "N/A"}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => navigate(`/dashboard/order-details/${order._id}`)}
+                      className="btn btn-primary flex-1"
+                    >
+                      View Details
+                    </button>
+                    <button
+                      onClick={() => handleOrderDelete(order._id)}
+                      disabled={order.status !== "Pending"}
+                      className={`btn flex-1 ${order.status === "Pending" ? "btn-error" : "btn-disabled"}`}
+                    >
+                      {order.status === "Pending" ? "Cancel Order" : "Cannot Cancel"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
+        <div className="hidden md:block">
+          <div className="card bg-base-100 shadow-2xl border border-base-300 overflow-hidden">
+            <div className="card-body p-0">
+              {myOrders.length === 0 ? (
+                <div className="text-center py-20">
+                  <div className="mx-auto w-32 h-32 mb-6 opacity-50">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-base-content/70">No Orders Found</h3>
+                  <p className="text-base-content/60 mt-3">When you place orders, they will appear here</p>
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="table table-zebra w-full">
+                    <thead className="bg-primary text-white text-sm">
+                      <tr>
+                        <th className="py-4">Order ID</th>
+                        <th className="py-4">Product</th>
+                        <th className="py-4 text-center">Quantity</th>
+                        <th className="py-4 text-center">Status</th>
+                        <th className="py-4">Payment Method</th>
+                        <th className="py-4 text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {myOrders.map((order) => (
+                        <tr key={order._id} className="hover:bg-base-200 transition-colors">
+                          <td className="py-5 font-mono text-sm">{order._id.slice(-10)}</td>
+                          <td className="py-5 font-semibold text-primary">{order.productTitle}</td>
+                          <td className="py-5 text-center font-bold text-lg">{order.quantity}</td>
+                          <td className="py-5 text-center">
+                            <div className={getStatusBadge(order.status)}>
+                              {order.status}
+                            </div>
+                          </td>
+                          <td className="py-5">{order.paymentMethod || "N/A"}</td>
+                          <td className="py-5">
+                            <div className="flex justify-center gap-3">
+                              <button
+                                onClick={() => navigate(`order-details/${order._id}`)}
+                                className="btn btn-primary btn-sm"
+                              >
+                                View Details
+                              </button>
+                              <button
+                                onClick={() => handleOrderDelete(order._id)}
+                                disabled={order.status !== "Pending"}
+                                className={`btn btn-sm ${order.status === "Pending" ? "btn-error" : "btn-disabled"}`}
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router"; 
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../hooks/useAxios";
 import useRoles from "../../hooks/useRoles";
@@ -44,7 +44,6 @@ const ProductDetails = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
           
           <div className="space-y-4">
-           
             <div className="relative">
               <img
                 src={images[selectedImage] || "https://via.placeholder.com/600"}
@@ -88,7 +87,6 @@ const ProductDetails = () => {
             </div>
 
             <div className="space-y-6">
-           
               <div className="grid grid-cols-2 gap-6">
                 <div className="bg-base-100 rounded-2xl p-5 shadow-md">
                   <p className="text-base-content/60 text-sm">Unit Price</p>
@@ -134,14 +132,13 @@ const ProductDetails = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-6">
-              <Link to="order-form" className="flex-1">
-                <button
-                  disabled={!(user?.role === "buyer" && user?.status === "approved")}
-                  className="btn btn-primary btn-lg w-full gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <span className="font-bold text-lg">Order Now</span>
-                </button>
-              </Link>
+              <button
+                disabled={!(user?.role === "buyer" && user?.status === "approved")}
+                onClick={() => navigate("order-form")}  
+                className="btn btn-primary btn-lg flex-1 gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <span className="font-bold text-lg">Order Now</span>
+              </button>
 
               <button
                 onClick={() => navigate(-1)}
