@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
-import { Link } from 'react-router';
+import { Link } from 'react-router'; 
 import LoadingSpinner from '../Shared/LoadingSpinner';
 import useAxios from '../../hooks/useAxios';
 import useRoles from '../../hooks/useRoles';
@@ -75,16 +75,12 @@ const ApprovedOrders = () => {
       status: data.orderStatus,
       location: data.location,
       note: data.note,
-      trackingUpdate: {
-        orderStatus: data.orderStatus,
-        location: data.location,
-        note: data.note,
-        entryDate: new Date(),
-      },
     };
 
     try {
-      const res = await axiosSecure.patch(`/orders/${selectedOrder._id}/tracking`, updateData);
+      
+      const res = await axiosSecure.patch(`/orders/${selectedOrder._id}`, updateData);
+
       if (res.data.modifiedCount > 0) {
         toast.success('Tracking updated successfully!');
         modalRef.current.close();
@@ -95,7 +91,7 @@ const ApprovedOrders = () => {
       }
     } catch (err) {
       console.error(err);
-      toast.error('Update failed!');
+      toast.error(err.response?.data?.message || 'Update failed!');
     }
   };
 
