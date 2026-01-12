@@ -33,6 +33,8 @@ import Contact from "../Pages/Contact/Contact";
 import AdminAllOrders from "../Pages/AdminAllOrders/AdminAllOrders";
 import Blog from "../Pages/Blog/Blog";
 import BlogDetails from "../Pages/BlogDetails/BlogDetails";
+import PrivacyPolicy from "../Pages/PrivacyPolicy/PrivacyPolicy";
+import TermsAndConditions from "../Pages/TermsAndConditions/TermsAndConditions";
 
 const router = createBrowserRouter([
   {
@@ -59,9 +61,9 @@ const router = createBrowserRouter([
       {
         path: "product-details/:id",
         element: (
-          <PrivateRouter>
+          // <PrivateRouter>
             <ProductDetails></ProductDetails>
-          </PrivateRouter>
+          // </PrivateRouter>
         ),
       },
       {
@@ -87,6 +89,14 @@ const router = createBrowserRouter([
       {
         path: "/blog/:id",
         element: <BlogDetails />,
+      },
+      {
+        path: '/privacy-policy',
+        element: <PrivacyPolicy></PrivacyPolicy>
+      },
+      {
+        path: '/terms-conditions',
+        element: <TermsAndConditions></TermsAndConditions>
       },
     ],
   },

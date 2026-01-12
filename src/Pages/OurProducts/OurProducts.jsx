@@ -1,4 +1,3 @@
-
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
 import { motion } from "framer-motion";
@@ -6,6 +5,18 @@ import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import useAxios from "../../hooks/useAxios";
 import AllProductCard from "../AllProductCard/AllProductCard";
 import { ArrowRight } from "lucide-react";
+
+const ProductSkeleton = () => (
+  <div className="bg-white/70 dark:bg-gray-800/40 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/50 dark:border-gray-700/50 shadow-xl animate-pulse">
+    <div className="aspect-[3/4] bg-gray-200/70 dark:bg-gray-700/70" />
+    <div className="p-6 space-y-4">
+      <div className="h-6 bg-gray-200/70 dark:bg-gray-700/70 rounded w-3/4" />
+      <div className="h-4 bg-gray-200/70 dark:bg-gray-700/70 rounded w-full" />
+      <div className="h-4 bg-gray-200/70 dark:bg-gray-700/70 rounded w-5/6" />
+      <div className="h-10 bg-gray-200/70 dark:bg-gray-700/70 rounded mt-4" />
+    </div>
+  </div>
+);
 
 const OurProducts = () => {
   const axiosSecure = useAxios();
@@ -18,12 +29,14 @@ const OurProducts = () => {
     },
   });
 
-  if (isLoading) return <LoadingSpinner />;
+  if (isLoading && !ourProducts.length) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <section className="py-20 md:py-24 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-950 dark:via-indigo-950/60 dark:to-purple-950/40 transition-colors duration-500">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
-        {/* Header - Consistent modern style */}
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -42,20 +55,23 @@ const OurProducts = () => {
           </p>
         </motion.div>
 
-        {/* Product Grid - Cards unchanged, only grid styling */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
-          {ourProducts.slice(0, 8).map((product, i) => (
-            <motion.div
-              key={product._id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08, duration: 0.6 }}
-              whileHover={{ y: -8, scale: 1.02 }}
-            >
-              <AllProductCard product={product} />
-            </motion.div>
-          ))}
+          {isLoading
+            ? Array(8)
+                .fill(0)
+                .map((_, index) => <ProductSkeleton key={index} />)
+            : ourProducts.slice(0, 8).map((product, i) => (
+                <motion.div
+                  key={product._id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08, duration: 0.6 }}
+                  whileHover={{ y: -8, scale: 1.02 }}
+                >
+                  <AllProductCard product={product} />
+                </motion.div>
+              ))}
         </div>
 
         {/* View All Button */}

@@ -1,214 +1,6 @@
-// import { motion } from "framer-motion";
-// import { Check } from "lucide-react";
-
-// const plans = [
-//   {
-//     name: "Starter",
-//     price: "Free",
-//     features: ["Up to 50 orders/month", "Basic tracking", "Email support"],
-//     popular: false,
-//   },
-//   {
-//     name: "Pro",
-//     price: "$49",
-//     period: "/month",
-//     features: ["Unlimited orders", "Advanced analytics", "Priority support", "API access"],
-//     popular: true,
-//   },
-//   {
-//     name: "Enterprise",
-//     price: "Custom",
-//     features: ["All Pro features", "Dedicated manager", "Custom integrations", "On-premise option"],
-//     popular: false,
-//   },
-// ];
-
-// const PricingPlans = () => {
-//   return (
-//     <section className="py-24 bg-gradient-to-b from-indigo-50 to-white dark:from-gray-900 dark:to-gray-800">
-//       <div className="max-w-7xl mx-auto px-6">
-//         <motion.h2
-//           initial={{ opacity: 0 }}
-//           whileInView={{ opacity: 1 }}
-//           className="text-5xl md:text-6xl text-center font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-16"
-//         >
-//           Simple, Transparent Pricing
-//         </motion.h2>
-
-//         <div className="grid md:grid-cols-3 gap-8">
-//           {plans.map((plan, i) => (
-//             <motion.div
-//               key={i}
-//               initial={{ opacity: 0, y: 40 }}
-//               whileInView={{ opacity: 1, y: 0 }}
-//               transition={{ delay: i * 0.2 }}
-//               className={`relative p-8 rounded-3xl border ${
-//                 plan.popular
-//                   ? "border-indigo-500 shadow-2xl scale-105 bg-white dark:bg-gray-800"
-//                   : "border-gray-200 dark:border-gray-700 bg-white/70 dark:bg-gray-800/50"
-//               }`}
-//             >
-//               {plan.popular && (
-//                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-600 text-white px-6 py-1 rounded-full text-sm font-bold">
-//                   Most Popular
-//                 </span>
-//               )}
-//               <h3 className="text-3xl font-bold mb-4">{plan.name}</h3>
-//               <div className="mb-8">
-//                 <span className="text-5xl font-extrabold">{plan.price}</span>
-//                 {plan.period && <span className="text-xl">{plan.period}</span>}
-//               </div>
-//               <ul className="space-y-4 mb-8">
-//                 {plan.features.map((f, idx) => (
-//                   <li key={idx} className="flex items-center gap-3">
-//                     <Check className="text-green-500" />
-//                     {f}
-//                   </li>
-//                 ))}
-//               </ul>
-//               <button className="w-full py-4 rounded-xl font-bold bg-indigo-600 text-white hover:bg-indigo-700 transition">
-//                 Get Started →
-//               </button>
-//             </motion.div>
-//           ))}
-//         </div>
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default PricingPlans;
-
-// import { motion } from "framer-motion";
-// import { Check, ArrowRight } from "lucide-react";
-
-// const plans = [
-//   {
-//     name: "Starter",
-//     price: "Free",
-//     desc: "For small production units just getting started.",
-//     features: ["Up to 50 orders/month", "Basic live tracking", "Email support", "Standard Analytics"],
-//     popular: false,
-//   },
-//   {
-//     name: "Pro",
-//     price: "$49",
-//     period: "/mo",
-//     desc: "Advanced features for scaling garment factories.",
-//     features: ["Unlimited orders", "Advanced AI analytics", "Priority 24/7 support", "Full API access", "Bulk Import/Export"],
-//     popular: true,
-//   },
-//   {
-//     name: "Enterprise",
-//     price: "Custom",
-//     desc: "Full-scale solution for global enterprises.",
-//     features: ["Dedicated Account Manager", "Custom integrations", "On-premise deployment", "SLA Guarantee", "White-labeling"],
-//     popular: false,
-//   },
-// ];
-
-// const PricingPlans = () => {
-//   return (
-//     <section className="py-24 bg-white dark:bg-[#050505] transition-colors duration-500 overflow-hidden border-t dark:border-zinc-800">
-//       <div className="max-w-7xl mx-auto px-6">
-        
-//         {/* Header - Matching Left-Aligned Theme */}
-//         <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
-//           <motion.div 
-//             initial={{ opacity: 0, x: -30 }}
-//             whileInView={{ opacity: 1, x: 0 }}
-//             transition={{ duration: 0.8 }}
-//             className="max-w-2xl"
-//           >
-//             <span className="text-xs tracking-[0.4em] font-bold text-indigo-600 dark:text-indigo-400 uppercase mb-4 block">
-//               Investment
-//             </span>
-//             <h2 className="text-4xl md:text-6xl font-serif font-black text-gray-900 dark:text-white uppercase leading-tight">
-//               Simple & <br /> Transparent Pricing
-//             </h2>
-//           </motion.div>
-          
-//           <motion.p 
-//             initial={{ opacity: 0 }}
-//             whileInView={{ opacity: 1 }}
-//             className="text-gray-500 dark:text-zinc-400 text-lg max-w-xs md:text-right border-l-2 md:border-l-0 md:border-r-2 border-indigo-600 px-4"
-//           >
-//             Choose the right plan to scale your production efficiency globally.
-//           </motion.p>
-//         </div>
-
-//         {/* Pricing Grid - Minimalist System Style */}
-//         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-t border-l border-gray-100 dark:border-zinc-800">
-//           {plans.map((plan, i) => (
-//             <motion.div
-//               key={i}
-//               initial={{ opacity: 0, y: 20 }}
-//               whileInView={{ opacity: 1, y: 0 }}
-//               transition={{ delay: i * 0.1 }}
-//               className={`relative p-10 border-r border-b border-gray-100 dark:border-zinc-800 transition-all duration-500 group
-//                 ${plan.popular ? "bg-gray-50/50 dark:bg-zinc-900/20" : "bg-white dark:bg-transparent"}
-//               `}
-//             >
-//               {plan.popular && (
-//                 <div className="absolute top-0 right-0 bg-indigo-600 text-white text-[10px] font-black uppercase tracking-widest px-4 py-1">
-//                   Most Popular
-//                 </div>
-//               )}
-
-//               <div className="mb-10">
-//                 <h3 className="text-xs tracking-[0.3em] font-black text-indigo-600 dark:text-indigo-400 uppercase mb-6">
-//                   {plan.name}
-//                 </h3>
-//                 <div className="flex items-baseline gap-1 mb-4">
-//                   <span className="text-5xl font-serif font-black text-gray-900 dark:text-white">
-//                     {plan.price}
-//                   </span>
-//                   {plan.period && (
-//                     <span className="text-gray-400 dark:text-zinc-500 font-medium tracking-tighter">
-//                       {plan.period}
-//                     </span>
-//                   )}
-//                 </div>
-//                 <p className="text-gray-500 dark:text-zinc-500 text-sm leading-relaxed">
-//                   {plan.desc}
-//                 </p>
-//               </div>
-
-//               <ul className="space-y-4 mb-12">
-//                 {plan.features.map((f, idx) => (
-//                   <li key={idx} className="flex items-start gap-3 text-sm text-gray-600 dark:text-zinc-400">
-//                     <Check size={16} className="text-indigo-600 mt-0.5 shrink-0" />
-//                     {f}
-//                   </li>
-//                 ))}
-//               </ul>
-
-//               <button className={`
-//                 w-full py-4 px-6 flex items-center justify-between font-bold uppercase text-xs tracking-[0.2em] transition-all duration-300
-//                 ${plan.popular 
-//                   ? "bg-black dark:bg-white text-white dark:text-black hover:bg-indigo-600 dark:hover:bg-indigo-500 dark:hover:text-white" 
-//                   : "border border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"}
-//               `}>
-//                 Get Started <ArrowRight size={16} />
-//               </button>
-//             </motion.div>
-//           ))}
-//         </div>
-        
-//         {/* Footer Info */}
-//         <div className="mt-12 text-center">
-//             <p className="text-[10px] tracking-[0.3em] text-gray-400 dark:text-zinc-600 uppercase">
-//                 All plans include 14-day free trial • No credit card required
-//             </p>
-//         </div>
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default PricingPlans;
 import { motion } from "framer-motion";
 import { Check, ArrowRight } from "lucide-react";
+import { Link } from "react-router";
 
 const plans = [
   {
@@ -315,15 +107,11 @@ const PricingPlans = () => {
                     {plan.price}
                   </span>
                   {plan.period && (
-                    <span className="text-xl text-gray-500 dark:text-gray-400 font-medium">
-                      {plan.period}
-                    </span>
+                    <span className="text-xl text-gray-500 dark:text-gray-400 font-medium">{plan.period}</span>
                   )}
                 </div>
 
-                <p className="mt-3 text-gray-600 dark:text-gray-400 text-sm">
-                  {plan.desc}
-                </p>
+                <p className="mt-3 text-gray-600 dark:text-gray-400 text-sm">{plan.desc}</p>
               </div>
 
               {/* Features */}
@@ -352,10 +140,11 @@ const PricingPlans = () => {
                   }
                 `}
               >
+              <Link to='/register'>
                 <span className="relative z-10 flex items-center justify-center gap-3">
                   Get Started
                   <ArrowRight className="group-hover:translate-x-1 transition-transform" size={18} />
-                </span>
+                </span></Link>
 
                 {/* Shine effect on hover */}
                 <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />

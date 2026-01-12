@@ -1,4 +1,4 @@
-// components/ScrollToggle.jsx
+
 import { useState, useEffect } from 'react';
 import { FaArrowUp, FaArrowDown } from 'react-icons/fa';
 

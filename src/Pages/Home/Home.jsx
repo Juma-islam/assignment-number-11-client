@@ -1,42 +1,5 @@
-// import React from "react";
-// import HeroBanner from "./HeroBanner";
-// import Container from "../../components/Shared/Container";
-// import HowItWorks from "../HowItWorks/HowItWorks";
-// import WhyChooseUs from "../WhyChooseUs/WhyChooseUs";
-// import OurPartners from "../OurPartners/OurPartners";
-// import CustomerFeedback from "../CustomerFeedback/CustomerFeedback";
-// import OurProducts from "../OurProducts/OurProducts";
-// import FeaturesGrid from "./FeaturesGrid";
-// import PricingPlans from "./PricingPlans";
-// import FAQSection from "./FAQSection";
-// import Newsletter from "./Newsletter";
-// import FinalCTA from "./FinalCTA";
-// import StatisticsCounter from "./StatisticsCounter";
-
-
-// const Home = () => {
-//   return (
-//     <Container>
-//       <HeroBanner></HeroBanner>
-//       <OurProducts></OurProducts>
-//       <HowItWorks></HowItWorks>
-//       <CustomerFeedback></CustomerFeedback>
-//      <WhyChooseUs></WhyChooseUs>
-//      <OurPartners></OurPartners>
-//      <StatisticsCounter></StatisticsCounter>
-//      <FeaturesGrid></FeaturesGrid>
-//      <PricingPlans></PricingPlans>
-//      <FAQSection></FAQSection>
-//      <Newsletter></Newsletter>
-//      <FinalCTA></FinalCTA>
-//     </Container>
-//   );
-// };
-
-// export default Home;
 import React from "react";
 import HeroBanner from "./HeroBanner";
-// import Container from "../../components/Shared/Container";
 import HowItWorks from "../HowItWorks/HowItWorks";
 import WhyChooseUs from "../WhyChooseUs/WhyChooseUs";
 import OurPartners from "../OurPartners/OurPartners";
@@ -47,7 +10,6 @@ import FeaturesGrid from "./FeaturesGrid";
 import PricingPlans from "./PricingPlans";
 import FAQSection from "./FAQSection";
 import Newsletter from "./Newsletter";
-
 
 const Home = () => {
   return (
