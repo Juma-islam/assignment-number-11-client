@@ -106,7 +106,7 @@ const UpdateProductModal = ({ modalRef, selectedProduct, refetchProducts }) => {
               <div>
                 <label className="block text-sm font-medium">Product Name</label>
                 <input
-                  {...register("productName", { required: "Product name is required" })}
+                  {...register("title", { required: "Product name is required" })}
                   className="input input-bordered w-full"
                 />
                 {errors.productName && <p className="text-red-500 text-sm">{errors.productName.message}</p>}
