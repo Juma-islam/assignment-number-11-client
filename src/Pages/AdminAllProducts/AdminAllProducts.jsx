@@ -119,7 +119,7 @@ const AdminAllProducts = () => {
                     className="toggle toggle-primary"
                     onChange={() => handleToggleHome(product)}
                     checked={product.showOnHomePage}
-                    disabled={topLoading ? true : topProducts.length >= 6 && !product.showOnHomePage}
+                    disabled={topLoading ? true : topProducts.length >= 8 && !product.showOnHomePage}
                   />
                   <label className="ml-2 text-sm">Show on Home</label>
                 </div>
@@ -179,7 +179,7 @@ const AdminAllProducts = () => {
                       className="toggle toggle-primary"
                       onChange={() => handleToggleHome(product)}
                       checked={product.showOnHomePage}
-                      disabled={topProducts.length >= 6 && !product.showOnHomePage}
+                      disabled={topProducts.length >= 8 && !product.showOnHomePage}
                     />
                   </td>
                   <td className="p-3 text-center">

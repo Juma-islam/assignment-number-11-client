@@ -31,6 +31,8 @@ import TrackOrderManager from "../Pages/TrackOrderManager/TrackOrderManager";
 import AboutUs from "../Pages/AboutUs/AboutUs";
 import Contact from "../Pages/Contact/Contact";
 import AdminAllOrders from "../Pages/AdminAllOrders/AdminAllOrders";
+import Blog from "../Pages/Blog/Blog";
+import BlogDetails from "../Pages/BlogDetails/BlogDetails";
 
 const router = createBrowserRouter([
   {
@@ -77,6 +79,14 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact></Contact>,
+      },
+      {
+        path: "/blog",
+        element: <Blog></Blog>,
+      },
+      {
+        path: "/blog/:id",
+        element: <BlogDetails />,
       },
     ],
   },

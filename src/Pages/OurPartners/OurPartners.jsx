@@ -1,101 +1,302 @@
-import React from "react";
+// import React from "react";
+// import { motion } from "framer-motion";
+
+// const partners = [
+//   {
+//     name: "H&M",
+//     logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/H%26M-Logo.svg/1024px-H%26M-Logo.svg.png",
+//   },
+//   {
+//     name: "Zara",
+//     logo: "https://logomakerr.ai/blog/wp-content/uploads/2022/08/2019-to-Present-Zara-logo-design.jpg",
+//   },
+//   {
+//     name: "Uniqlo",
+//     logo: "https://www.shutterstock.com/image-vector/uniqlo-logo-rt-design-template-260nw-2269890225.jpg",
+//   },
+//   {
+//     name: "Levi's",
+//     logo: "https://fabrikbrands.com/wp-content/uploads/Levis-Logo-History-1b.png",
+//   },
+//   {
+//     name: "Nike",
+//     logo: "https://pngimg.com/d/nike_PNG6.png",
+//   },
+//   {
+//     name: "Adidas",
+//     logo: "https://1000logos.net/wp-content/uploads/2019/06/Adidas-Logo-1991.jpg",
+//   },
+//   {
+//     name: "Puma",
+//     logo: "https://download.logo.wine/logo/Puma_(brand)/Puma_(brand)-Logo.wine.png",
+//   },
+//   {
+//     name: "Gap",
+//     logo: "https://i.logos-download.com/1336/30360-s1280-e4cebc00594cc4dd8e1b5cd0abb0fcd8.png/Gap_Logo_1988_wordmark-s1280.png",
+//   },
+// ];
+
+// const OurPartners = () => {
+//   return (
+//     <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
+//       <div className="container mx-auto px-6">
+  
+//         <motion.div
+//           initial={{ opacity: 0, y: 30 }}
+//           whileInView={{ opacity: 1, y: 0 }}
+//           viewport={{ once: true }}
+//           transition={{ duration: 0.8 }}
+//           className="text-center mb-20"
+//         >
+//           <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+//             Our Trusted Partners
+//           </h2>
+//           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+//             Proudly collaborating with world-renowned fashion brands and retailers
+//           </p>
+//         </motion.div>
+  
+//         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-8 gap-12 items-center justify-items-center">
+//           {partners.map((partner, index) => (
+//             <motion.div
+//               key={index}
+//               initial={{ opacity: 0, y: 40 }}
+//               whileInView={{ opacity: 1, y: 0 }}
+//               viewport={{ once: true }}
+//               transition={{ duration: 0.6, delay: index * 0.1 }}
+//               whileHover={{ scale: 1.15, y: -10 }}
+//               className="group flex flex-col items-center"
+//             >
+//               <div className="bg-white rounded-3xl p-8 shadow-md hover:shadow-2xl transition-all duration-500 border border-gray-100">
+//                 <div className="h-28 flex items-center justify-center">
+//                   <img
+//                     src={partner.logo}
+//                     alt={`${partner.name} logo`}
+//                     className="max-h-20 max-w-full object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+//                   />
+//                 </div>
+//               </div>
+//               <p className="text-center text-gray-700 font-semibold text-lg mt-6 opacity-70 group-hover:opacity-100 transition-opacity">
+//                 {partner.name}
+//               </p>
+//             </motion.div>
+//           ))}
+//         </div>
+
+//         <motion.div
+//           initial={{ opacity: 0, scale: 0.9 }}
+//           whileInView={{ opacity: 1, scale: 1 }}
+//           viewport={{ once: true }}
+//           transition={{ duration: 0.8, delay: 0.3 }}
+//           className="text-center mt-24"
+//         >
+//           <p className="text-6xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+//             150+
+//           </p>
+//           <p className="text-2xl text-gray-700 mt-4 font-medium">
+//             Partner Brands Worldwide
+//           </p>
+//         </motion.div>
+//       </div>
+//     </section>
+//   );
+// };
+
+// export default OurPartners;
+
+// import React from "react";
+// import { motion } from "framer-motion";
+
+// const partners = [
+//   { name: "H&M", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/H%26M-Logo.svg/1024px-H%26M-Logo.svg.png" },
+//   { name: "Zara", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Zara_Logo.svg/1024px-Zara_Logo.svg.png" },
+//   { name: "Uniqlo", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/UNIQLO_logo.svg/1024px-UNIQLO_logo.svg.png" },
+//   { name: "Levi's", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Levi%27s_logo.svg/1024px-Levi%27s_logo.svg.png" },
+//   { name: "Nike", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Logo_NIKE.svg/1024px-Logo_NIKE.svg.png" },
+//   { name: "Adidas", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Adidas_Logo.svg/1024px-Adidas_Logo.svg.png" },
+//   { name: "Puma", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Puma_complete_logo.svg/1024px-Puma_complete_logo.svg.png" },
+//   { name: "Gap", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Gap_logo.svg/1024px-Gap_logo.svg.png" },
+// ];
+
+// const OurPartners = () => {
+//   return (
+//     <section className="py-24 bg-white dark:bg-[#050505] transition-colors duration-500 overflow-hidden border-t dark:border-zinc-800">
+//       <div className="max-w-7xl mx-auto px-6">
+        
+//         {/* Header - Matching Left-Aligned Theme */}
+//         <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+//           <motion.div 
+//             initial={{ opacity: 0, x: -30 }}
+//             whileInView={{ opacity: 1, x: 0 }}
+//             transition={{ duration: 0.8 }}
+//             className="max-w-2xl"
+//           >
+//             <span className="text-xs tracking-[0.4em] font-bold text-indigo-600 dark:text-indigo-400 uppercase mb-4 block">
+//               Network
+//             </span>
+//             <h2 className="text-4xl md:text-6xl font-serif font-black text-gray-900 dark:text-white uppercase leading-tight">
+//               Our Trusted <br /> Global Partners
+//             </h2>
+//           </motion.div>
+          
+//           <motion.p 
+//             initial={{ opacity: 0 }}
+//             whileInView={{ opacity: 1 }}
+//             className="text-gray-500 dark:text-zinc-400 text-lg max-w-xs md:text-right border-l-2 md:border-l-0 md:border-r-2 border-indigo-600 px-4"
+//           >
+//             Proudly collaborating with world-renowned fashion brands and global retailers.
+//           </motion.p>
+//         </div>
+
+//         {/* Partners Grid with Minimalist Border */}
+//         <div className="grid grid-cols-2 md:grid-cols-4 border-t border-l border-gray-100 dark:border-zinc-800">
+//           {partners.map((partner, i) => (
+//             <motion.div
+//               key={i}
+//               initial={{ opacity: 0 }}
+//               whileInView={{ opacity: 1 }}
+//               transition={{ delay: i * 0.05 }}
+//               viewport={{ once: true }}
+//               className="group p-12 border-r border-b border-gray-100 dark:border-zinc-800 flex flex-col items-center justify-center grayscale hover:grayscale-0 hover:bg-gray-50 dark:hover:bg-zinc-900/40 transition-all duration-700"
+//             >
+//               <div className="h-16 w-full flex items-center justify-center">
+//                 <img
+//                   src={partner.logo}
+//                   alt={partner.name}
+//                   className="max-h-full max-w-[120px] object-contain opacity-40 group-hover:opacity-100 transition-opacity duration-500 dark:invert"
+//                 />
+//               </div>
+//               <span className="mt-6 text-[10px] tracking-[0.3em] font-black text-gray-300 dark:text-zinc-700 uppercase group-hover:text-indigo-600 transition-colors">
+//                 {partner.name}
+//               </span>
+//             </motion.div>
+//           ))}
+//         </div>
+
+//         {/* Global Stats - Matching Hero Counter Style */}
+//         <div className="mt-20 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-12">
+//             <div className="h-[1px] w-20 bg-gray-200 dark:bg-zinc-800 hidden md:block"></div>
+//             <motion.div 
+//                 initial={{ opacity: 0, y: 20 }}
+//                 whileInView={{ opacity: 1, y: 0 }}
+//                 className="text-center"
+//             >
+//                 <p className="text-5xl md:text-7xl font-serif font-black text-indigo-600 dark:text-indigo-400">
+//                     150+
+//                 </p>
+//                 <p className="text-[10px] tracking-[0.4em] text-gray-400 dark:text-zinc-600 uppercase font-bold mt-2">
+//                     Partner Brands Worldwide
+//                 </p>
+//             </motion.div>
+//             <div className="h-[1px] w-20 bg-gray-200 dark:bg-zinc-800 hidden md:block"></div>
+//         </div>
+//       </div>
+//     </section>
+//   );
+// };
+
+// export default OurPartners;
 import { motion } from "framer-motion";
 
 const partners = [
-  {
-    name: "H&M",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/H%26M-Logo.svg/1024px-H%26M-Logo.svg.png",
-  },
-  {
-    name: "Zara",
-    logo: "https://logomakerr.ai/blog/wp-content/uploads/2022/08/2019-to-Present-Zara-logo-design.jpg",
-  },
-  {
-    name: "Uniqlo",
-    logo: "https://www.shutterstock.com/image-vector/uniqlo-logo-rt-design-template-260nw-2269890225.jpg",
-  },
-  {
-    name: "Levi's",
-    logo: "https://fabrikbrands.com/wp-content/uploads/Levis-Logo-History-1b.png",
-  },
-  {
-    name: "Nike",
-    logo: "https://pngimg.com/d/nike_PNG6.png",
-  },
-  {
-    name: "Adidas",
-    logo: "https://1000logos.net/wp-content/uploads/2019/06/Adidas-Logo-1991.jpg",
-  },
-  {
-    name: "Puma",
-    logo: "https://download.logo.wine/logo/Puma_(brand)/Puma_(brand)-Logo.wine.png",
-  },
-  {
-    name: "Gap",
-    logo: "https://i.logos-download.com/1336/30360-s1280-e4cebc00594cc4dd8e1b5cd0abb0fcd8.png/Gap_Logo_1988_wordmark-s1280.png",
-  },
+  { name: "H&M", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/H%26M-Logo.svg/1024px-H%26M-Logo.svg.png" },
+  { name: "Zara", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Zara_Logo.svg/1024px-Zara_Logo.svg.png" },
+  { name: "Uniqlo", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/UNIQLO_logo.svg/1024px-UNIQLO_logo.svg.png" },
+  { name: "Levi's", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Levi%27s_logo.svg/1024px-Levi%27s_logo.svg.png" },
+  { name: "Nike", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Logo_NIKE.svg/1024px-Logo_NIKE.svg.png" },
+  { name: "Adidas", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Adidas_Logo.svg/1024px-Adidas_Logo.svg.png" },
+  { name: "Puma", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Puma_complete_logo.svg/1024px-Puma_complete_logo.svg.png" },
+  { name: "Gap", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Gap_logo.svg/1024px-Gap_logo.svg.png" },
 ];
 
 const OurPartners = () => {
   return (
-    <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
-      <div className="container mx-auto px-6">
-  
+    <section className="py-20 md:py-24 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-950 dark:via-indigo-950/60 dark:to-purple-950/40 transition-colors duration-500">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+        {/* Header - Consistent modern style */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-20"
+          className="text-center mb-16 md:mb-20"
         >
-          <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
-            Our Trusted Partners
+          <span className="inline-block px-5 py-2 rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 text-sm font-medium tracking-wider mb-5">
+            GLOBAL NETWORK
+          </span>
+
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent mb-6">
+            Trusted by World-Class Brands
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Proudly collaborating with world-renowned fashion brands and retailers
+
+          <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+            Proudly partnering with leading international fashion houses and retailers
           </p>
         </motion.div>
-  
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-8 gap-12 items-center justify-items-center">
-          {partners.map((partner, index) => (
+
+        {/* Partners Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8">
+          {partners.map((partner, i) => (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 40 }}
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ scale: 1.15, y: -10 }}
-              className="group flex flex-col items-center"
+              transition={{ delay: i * 0.08, duration: 0.6 }}
+              whileHover={{ y: -8, scale: 1.04 }}
+              className={`
+                group relative
+                bg-white/70 dark:bg-gray-800/40 
+                backdrop-blur-xl 
+                rounded-2xl 
+                p-8 
+                shadow-xl dark:shadow-2xl dark:shadow-indigo-950/30
+                border border-white/50 dark:border-gray-700/50
+                hover:shadow-2xl hover:dark:shadow-indigo-700/40
+                transition-all duration-400
+                flex flex-col items-center justify-center
+              `}
             >
-              <div className="bg-white rounded-3xl p-8 shadow-md hover:shadow-2xl transition-all duration-500 border border-gray-100">
-                <div className="h-28 flex items-center justify-center">
-                  <img
-                    src={partner.logo}
-                    alt={`${partner.name} logo`}
-                    className="max-h-20 max-w-full object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
-                  />
-                </div>
+              <div className="h-20 w-full flex items-center justify-center mb-6">
+                <img
+                  src={partner.logo}
+                  alt={partner.name}
+                  className={`
+                    max-h-14 max-w-[140px] object-contain 
+                    transition-all duration-500
+                    grayscale opacity-60 
+                    group-hover:grayscale-0 group-hover:opacity-100
+                    dark:invert dark:group-hover:invert-0
+                  `}
+                />
               </div>
-              <p className="text-center text-gray-700 font-semibold text-lg mt-6 opacity-70 group-hover:opacity-100 transition-opacity">
+
+              <span className="text-xs font-bold text-gray-500 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors tracking-wide">
                 {partner.name}
-              </p>
+              </span>
+
+              {/* Subtle decorative gradient */}
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent dark:from-indigo-400/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none rounded-2xl" />
             </motion.div>
           ))}
         </div>
 
+        {/* Global Stat Highlight */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-center mt-24"
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="mt-16 md:mt-20 text-center"
         >
-          <p className="text-6xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-            150+
-          </p>
-          <p className="text-2xl text-gray-700 mt-4 font-medium">
-            Partner Brands Worldwide
-          </p>
+          <div className="inline-block px-8 py-6 rounded-2xl bg-white/50 dark:bg-gray-800/30 backdrop-blur-lg border border-white/30 dark:border-gray-700/30 shadow-xl">
+            <p className="text-5xl sm:text-6xl md:text-7xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-700 dark:from-indigo-400 dark:to-purple-500 bg-clip-text text-transparent">
+              150+
+            </p>
+            <p className="mt-3 text-base sm:text-lg font-medium text-gray-700 dark:text-gray-300 tracking-wide">
+              Partner Brands Worldwide
+            </p>
+          </div>
         </motion.div>
       </div>
     </section>
@@ -103,4 +304,3 @@ const OurPartners = () => {
 };
 
 export default OurPartners;
-

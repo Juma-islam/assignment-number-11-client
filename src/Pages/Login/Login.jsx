@@ -1,125 +1,279 @@
+
+import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
-import { useState } from "react";
-import { FaEye } from "react-icons/fa";
-import { IoEyeOff } from "react-icons/io5";
+import { motion } from "framer-motion";
+import { Eye, EyeOff, LogIn, Chrome } from "lucide-react";
 import { toast } from "react-toastify";
-import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
-import useAxios from "../../hooks/useAxios";
 
 const Login = () => {
-  const { signIn, setUser, signInWithGoogleFunc } = useAuth();
+  const { signIn, signInWithGoogleFunc } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const [show, setShow] = useState(false);
-  const axiosSecure = useAxios();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const form = e.target;
+    const email = form.email.value.trim();
+    const password = form.password.value;
 
-  const onSubmit = async (data) => {
     try {
-      const result = await signIn(data.email, data.password);
-      setUser(result.user);
-      toast.success("Login Successful!");
-      navigate(location.state ? location.state : "/", { replace: true });
-    } catch (error) {
-      toast.error(error.message);
+      await signIn(email, password);
+      toast.success("Welcome back!");
+      navigate(location.state?.from?.pathname || "/");
+    } catch (err) {
+      toast.error(err.message || "Login failed. Please check your credentials.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleGoogleSignIn = async () => {
+  const handleGoogleLogin = async () => {
     try {
-      const res = await signInWithGoogleFunc();
-      const user = res.user;
+      await signInWithGoogleFunc();
+      toast.success("Google Login Successful!");
+      navigate(location.state?.from?.pathname || "/");
+    } catch (err) {
+      toast.error("Google login failed. Please try again.");
+    }
+  };
 
-      const saveUser = {
-        name: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL,
-        role: "buyer",
-        status: "pending",
-      };
+  // Demo credentials
+  const demoCredentials = [
+    { label: "Demo Buyer", email: "buyer@demo.com", password: "Buyer1234" },
+    { label: "Demo Manager", email: "manager@garments.com", password: "Manager123" },
+    { label: "Demo Admin", email: "admin@garments.com", password: "Admin123" },
+  ];
 
-      await axiosSecure.post("/users", saveUser);
-      setUser(user);
+  const autoFillDemo = (email, password) => {
+    const emailInput = document.querySelector('input[name="email"]');
+    const passInput = document.querySelector('input[name="password"]');
 
-      toast.success(`Logged in Successfully! ${user.displayName}`);
-      navigate(location.state ? location.state : "/", { replace: true });
-    } catch (error) {
-      toast.error(error.message);
+    if (emailInput && passInput) {
+      emailInput.value = email;
+      passInput.value = password;
+      toast.info(`Auto-filled ${email.split("@")[0]} demo credentials!`, {
+        autoClose: 4000,
+      });
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-100 via-white to-pink-200 px-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+    <div className="relative min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-950 dark:via-indigo-950/70 dark:to-purple-950/50 transition-colors duration-500 overflow-hidden">
+      {/* Background decorative blobs */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-20 left-10 md:left-20 w-64 md:w-96 h-64 md:h-96 bg-purple-500/10 dark:bg-purple-700/20 rounded-full blur-3xl animate-pulse-slow" />
+        <div className="absolute bottom-10 right-10 md:right-32 w-80 md:w-[500px] h-80 md:h-[500px] bg-pink-500/10 dark:bg-pink-700/20 rounded-full blur-3xl animate-pulse-slow delay-1000" />
+      </div>
 
-        <div className="text-center mb-6">
-          <h1 className="text-3xl font-bold text-gray-800">Welcome Back</h1>
-          <p className="text-sm text-gray-500">Login to your account</p>
-        </div>
-
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-
-          <div>
-            <label className="text-sm font-medium text-gray-600">Email</label>
-            <input
-              type="email"
-              placeholder="you@example.com"
-              className="mt-1 w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-400 outline-none"
-              {...register("email", { required: "Email is required" })}
-            />
-            {errors.email && <p className="text-error text-sm">{errors.email.message}</p>}
-          </div>
-
-          <div className="relative">
-            <label className="text-sm font-medium text-gray-600">Password</label>
-            <input
-              type={show ? "text" : "password"}
-              placeholder="••••••••"
-              className="mt-1 w-full px-4 py-3 pr-10 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-400 outline-none"
-              {...register("password", { required: "Password is required" })}
-            />
-            <button
-              type="button"
-              onClick={() => setShow(!show)}
-              className="absolute right-3 top-11 text-gray-500"
+      <div className="relative z-10 flex min-h-screen items-center justify-center px-5 py-12">
+        <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left Side - Visual / Illustration */}
+          <div className="hidden lg:block relative">
+            <motion.div
+              initial={{ opacity: 0, x: -60 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="relative"
             >
-              {show ? <FaEye /> : <IoEyeOff />}
-            </button>
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/20 to-purple-600/20 rounded-3xl blur-3xl opacity-30" />
+              <img
+                src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=2400"
+                alt="Modern Garment Production Dashboard"
+                className="relative z-10 rounded-2xl shadow-2xl object-cover w-full h-auto max-h-[680px] drop-shadow-2xl"
+              />
+            </motion.div>
           </div>
 
-          <button
-            type="submit"
-            className="w-full py-3 cursor-pointer rounded-lg bg-gradient-to-r from-pink-500 to-pink-600 text-white font-semibold hover:opacity-90 transition"
+          {/* Right Side - Login Form*/}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9 }}
+            className={`
+              bg-white/75 dark:bg-gray-900/65 
+              backdrop-blur-2xl 
+              border border-white/40 dark:border-gray-700/50 
+              rounded-3xl 
+              shadow-2xl dark:shadow-indigo-950/40 
+              p-8 md:p-12 lg:p-16 
+              transition-all duration-500
+            `}
           >
-            Sign In
-          </button>
+            <div className="text-center mb-10">
+              <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent mb-3">
+                Welcome Back
+              </h1>
+              <p className="text-lg text-gray-600 dark:text-gray-400">
+                Sign in to access your dashboard
+              </p>
+            </div>
 
-          <button
-            onClick={handleGoogleSignIn}
-            type="button"
-            className="w-full cursor-pointer flex items-center justify-center gap-3 border rounded-lg py-2 hover:bg-gray-100 transition"
-          >
-            <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="w-5" />
-            Continue with Google
-          </button>
+            {/* Demo Quick Access */}
+            <div className="mb-10">
+              <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-4">
+                Quick Demo Access
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {demoCredentials.map((cred, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => autoFillDemo(cred.email, cred.password)}
+                    className={`
+                      py-3 px-4 rounded-xl text-sm font-medium 
+                      bg-gradient-to-r from-indigo-500/10 to-purple-500/10 
+                      dark:from-indigo-600/20 dark:to-purple-600/20
+                      border border-indigo-200/70 dark:border-indigo-700/50
+                      hover:border-indigo-400 dark:hover:border-indigo-500
+                      text-indigo-700 dark:text-indigo-300 
+                      hover:shadow-md transition-all duration-300
+                    `}
+                  >
+                    {cred.label}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-          <p className="text-center text-sm mt-3">
-            Don’t have an account?{" "}
-            <Link to="/register" className="text-pink-500 underline">
-              Sign Up
-            </Link>
-          </p>
+            <form onSubmit={handleSubmit} className="space-y-7">
+              {/* Email Field */}
+              <div className="relative">
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  className={`
+                    w-full px-5 py-5 bg-white/40 dark:bg-gray-800/40 
+                    border border-gray-300/70 dark:border-gray-600/70 
+                    rounded-xl text-gray-900 dark:text-white 
+                    placeholder-transparent focus:outline-none 
+                    focus:border-indigo-500 dark:focus:border-indigo-400 
+                    peer transition-all duration-300
+                  `}
+                  placeholder=" "
+                />
+                <label
+                  className={`
+                    absolute left-5 top-1/2 -translate-y-1/2 
+                    text-gray-500 dark:text-gray-400 pointer-events-none 
+                    transition-all duration-300 
+                    peer-focus:-top-2 peer-focus:text-xs peer-focus:text-indigo-600 dark:peer-focus:text-indigo-400
+                    peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500
+                  `}
+                >
+                  Email Address
+                </label>
+              </div>
 
-        </form>
+              {/* Password Field */}
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  required
+                  className={`
+                    w-full px-5 py-5 pr-14 bg-white/40 dark:bg-gray-800/40 
+                    border border-gray-300/70 dark:border-gray-600/70 
+                    rounded-xl text-gray-900 dark:text-white 
+                    placeholder-transparent focus:outline-none 
+                    focus:border-indigo-500 dark:focus:border-indigo-400 
+                    peer transition-all duration-300
+                  `}
+                  placeholder=" "
+                />
+                <label
+                  className={`
+                    absolute left-5 top-1/2 -translate-y-1/2 
+                    text-gray-500 dark:text-gray-400 pointer-events-none 
+                    transition-all duration-300 
+                    peer-focus:-top-2 peer-focus:text-xs peer-focus:text-indigo-600 dark:peer-focus:text-indigo-400
+                    peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500
+                  `}
+                >
+                  Password
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                >
+                  {showPassword ? <EyeOff size={22} /> : <Eye size={22} />}
+                </button>
+              </div>
+
+              {/* Submit Button */}
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                disabled={loading}
+                type="submit"
+                className={`
+                  w-full py-5 px-8 rounded-xl font-bold text-white 
+                  bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 
+                  dark:from-indigo-500 dark:via-purple-500 dark:to-indigo-500
+                  hover:from-indigo-700 hover:via-purple-700 hover:to-indigo-700 
+                  shadow-lg hover:shadow-xl transition-all duration-300
+                  disabled:opacity-60 disabled:cursor-not-allowed
+                  flex items-center justify-center gap-2
+                `}
+              >
+                {loading ? (
+                  <>Signing in...</>
+                ) : (
+                  <>
+                    Sign In <LogIn size={20} />
+                  </>
+                )}
+              </motion.button>
+            </form>
+
+            {/* Divider */}
+            <div className="relative my-8">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300/70 dark:border-gray-600/70" />
+              </div>
+              <div className="relative flex justify-center">
+                <span className="bg-white dark:bg-gray-900 px-6 text-sm text-gray-500 dark:text-gray-400">
+                  or
+                </span>
+              </div>
+            </div>
+
+            {/* Google Sign In */}
+            <button
+              onClick={handleGoogleLogin}
+              className={`
+                w-full py-5 px-8 rounded-xl font-medium 
+                bg-white dark:bg-gray-800 
+                border border-gray-300 dark:border-gray-700 
+                text-gray-800 dark:text-white 
+                hover:bg-gray-50 dark:hover:bg-gray-700 
+                transition-all duration-300 flex items-center justify-center gap-3 shadow-sm
+              `}
+            >
+              <Chrome size={22} className="text-red-500" />
+              Continue with Google
+            </button>
+
+            {/* Register Link */}
+            <p className="text-center mt-8 text-gray-600 dark:text-gray-400">
+              Don't have an account?{" "}
+              <Link
+                to="/register"
+                className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline"
+              >
+                Create Account
+              </Link>
+            </p>
+          </motion.div>
+        </div>
       </div>
     </div>
   );
 };
 
 export default Login;
+
