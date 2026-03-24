@@ -44,7 +44,7 @@ const Dashboard = () => {
         </nav>
         {/* Page content here */}
         <Outlet></Outlet>
-        <Footer></Footer>
+       
       </div>
 
       <div className="drawer-side is-drawer-close:overflow-visible">

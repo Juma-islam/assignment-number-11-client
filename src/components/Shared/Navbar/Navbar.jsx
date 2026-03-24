@@ -144,7 +144,7 @@ const Navbar = () => {
                   </Link>
                   <Link
                     to="/register"
-                    className="btn bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-none"
+                    className="btn dark:bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-none"
                   >
                     Register
                   </Link>
@@ -205,7 +205,7 @@ const Navbar = () => {
             </Link>
             <Link
               to="/register"
-              className="btn bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-none rounded-xl px-6 shadow-lg"
+              className="btn bg-[#0D9488] dark:bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-none rounded-xl px-6 shadow-lg"
             >
               Register
             </Link>
