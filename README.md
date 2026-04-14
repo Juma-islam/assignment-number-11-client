@@ -1,4 +1,5 @@
 # Garments Order & Production Tracker System
+ <div><img src="https://i.ibb.co.com/5W55KB1P/pictures-banner.png" alt="" /></div>
 
 A modern, full-stack web application designed for small and medium-sized garment factories to efficiently manage buyer orders, production stages (cutting, sewing, finishing), inventory, payments, and delivery tracking.
 
